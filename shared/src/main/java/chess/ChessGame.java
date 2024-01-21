@@ -7,6 +7,8 @@ import java.util.Collection;
  * <p>
  * Note: You can add to this class, but you may not alter
  * signature of the existing methods.
+ *
+ * Responsible for executing moves as well as recording the game status
  */
 public class ChessGame {
 
@@ -51,6 +53,9 @@ public class ChessGame {
 
     /**
      * Makes a move in a chess game
+     * Receives a given move and executes it, provided it is a legal move. If the move is illegal,
+     * it throws an InvalidMoveException. A move is illegal if the chess piece cannot move there,
+     * if the move leaves the team’s king in danger, or if it’s not the corresponding team's turn.
      *
      * @param move chess move to preform
      * @throws InvalidMoveException if move is invalid

@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -9,8 +10,11 @@ import java.util.Collection;
  * signature of the existing methods.
  */
 public class ChessPiece {
-
+    ChessGame.TeamColor chessPieceColor;
+    ChessPiece.PieceType chessType;
     public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
+        chessPieceColor = pieceColor;
+        chessType = type;
     }
 
     /**
@@ -29,14 +33,14 @@ public class ChessPiece {
      * @return Which team this chess piece belongs to
      */
     public ChessGame.TeamColor getTeamColor() {
-        throw new RuntimeException("Not implemented");
+        return chessPieceColor;
     }
 
     /**
      * @return which type of chess piece this piece is
      */
     public PieceType getPieceType() {
-        throw new RuntimeException("Not implemented");
+        return chessType;
     }
 
     /**
@@ -44,9 +48,16 @@ public class ChessPiece {
      * Does not take into account moves that are illegal due to leaving the king in
      * danger
      *
+     * This method is similar to ChessGame.validMoves, except it does not honor whose
+     * turn it is or check if the king is being attacked. This method does account for
+     * enemy and friendly pieces blocking movement paths. The pieceMoves method will need
+     * to take into account the type of piece, and the location of other pieces on the board.
+     *
      * @return Collection of valid moves
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        throw new RuntimeException("Not implemented");
+        //NEED TO CHANGE
+        //Saying no moves
+        return new ArrayList<>();
     }
 }

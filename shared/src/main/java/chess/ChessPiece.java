@@ -962,20 +962,20 @@ public class ChessPiece {
                 ChessPosition [] chessPositions9 = new ChessPosition[10];
                 ChessMove [] chessMoves9 = new ChessMove[10];
                 z = 0;
-                for (int i = myPosition.getRow(); i < 9; i++ ) {
+                for (int i = 0; i < 9; i++ ) {
                     j--;
                     if (j < 1) {
                         break;
                     }
-                    else if (board.getBoardSquares()[i-1][j-1] == null) {
-                        chessPositions9[z] = new ChessPosition(i, j);
+                    else if (board.getBoardSquares()[myPosition.getRow()-1][j-1] == null) {
+                        chessPositions9[z] = new ChessPosition(myPosition.getRow(), j);
                         chessMoves9[z] = new ChessMove(myPosition, chessPositions9[z], null);
                         movesCollection.add(chessMoves9[z]);
                         z++;
                     }
                     else {
-                        if (board.getBoardSquares()[i-1][j-1].getTeamColor() != board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getTeamColor()) {
-                            chessPositions9[z] = new ChessPosition(i, j);
+                        if (board.getBoardSquares()[myPosition.getRow()-1][j-1].getTeamColor() != board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getTeamColor()) {
+                            chessPositions9[z] = new ChessPosition(myPosition.getRow(), j);
                             chessMoves9[z] = new ChessMove(myPosition, chessPositions9[z], null);
                             movesCollection.add(chessMoves9[z]);
                             //to move piece in
@@ -1017,20 +1017,20 @@ public class ChessPiece {
                 ChessPosition [] chessPositions11 = new ChessPosition[10];
                 ChessMove [] chessMoves11 = new ChessMove[10];
                 z = 0;
-                for (int i = myPosition.getRow(); i > 0; i-- ) {
+                for (int i = 9; i > 0; i-- ) {
                     j++;
                     if (j > 8) {
                         break;
                     }
-                    else if (board.getBoardSquares()[i-1][j-1] == null) {
-                        chessPositions11[z] = new ChessPosition(i, j);
+                    else if (board.getBoardSquares()[myPosition.getRow()-1][j-1] == null) {
+                        chessPositions11[z] = new ChessPosition(myPosition.getRow(), j);
                         chessMoves11[z] = new ChessMove(myPosition, chessPositions11[z], null);
                         movesCollection.add(chessMoves11[z]);
                         z++;
                     }
                     else {
-                        if (board.getBoardSquares()[i-1][j-1].getTeamColor() != board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getTeamColor()) {
-                            chessPositions11[z] = new ChessPosition(i, j);
+                        if (board.getBoardSquares()[myPosition.getRow()-1][j-1].getTeamColor() != board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getTeamColor()) {
+                            chessPositions11[z] = new ChessPosition(myPosition.getRow(), j);
                             chessMoves11[z] = new ChessMove(myPosition, chessPositions11[z], null);
                             movesCollection.add(chessMoves11[z]);
                             //to move piece in

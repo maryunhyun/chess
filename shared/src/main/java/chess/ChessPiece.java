@@ -1276,7 +1276,10 @@ public class ChessPiece {
         return chessPieceColor == that.chessPieceColor && chessType == that.chessType;
     }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(chessPieceColor, chessType);
+    }
 
     @Override
     public String toString() {

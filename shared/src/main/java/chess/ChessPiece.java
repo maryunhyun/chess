@@ -1,7 +1,6 @@
 package chess;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 /**
  * Represents a single chess piece
@@ -43,6 +42,14 @@ public class ChessPiece {
         return chessType;
     }
 
+    public void setChessPieceColor(ChessGame.TeamColor tempColor) {
+        this.chessPieceColor = tempColor;
+    }
+
+    public void setChessType(ChessPiece.PieceType tempType) {
+        this.chessType = tempType;
+    }
+
     /**
      * Calculates all the positions a chess piece can move to
      * Does not take into account moves that are illegal due to leaving the king in
@@ -55,9 +62,147 @@ public class ChessPiece {
      *
      * @return Collection of valid moves
      */
-    public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        //NEED TO CHANGE
-        //Saying no moves
-        return new ArrayList<>();
+    public HashSet<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
+        //pawn not promoted and need end positions
+        HashSet<ChessMove> movesCollection = new HashSet<>();
+        //ChessMove tempChessMove = new ChessMove(myPosition,null, null);
+        //a specific move the bishop can make of going to the diagonal one space up and to the left
+
+        if (board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1] != null) {
+            if (board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getPieceType() == PieceType.BISHOP) {
+
+                //increasing row and column
+                int j = myPosition.getColumn();
+                ChessPosition [] chessPositions1 = new ChessPosition[10];
+                ChessMove [] chessMoves1 = new ChessMove[10];
+                int z = 0;
+                for (int i = myPosition.getRow()+1; i < 9; i++ ) {
+                    j++;
+                    if (j > 8) {
+                        break;
+                    }
+                    else if (board.getBoardSquares()[i-1][j-1] == null) {
+                        chessPositions1[z] = new ChessPosition(i, j);
+                        chessMoves1[z] = new ChessMove(myPosition, chessPositions1[z], null);
+                        movesCollection.add(chessMoves1[z]);
+                        z++;
+                    }
+                    else {
+                        if (board.getBoardSquares()[i-1][j-1].getTeamColor() != board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getTeamColor()) {
+                            chessPositions1[z] = new ChessPosition(i, j);
+                            chessMoves1[z] = new ChessMove(myPosition, chessPositions1[z], null);
+                            movesCollection.add(chessMoves1[z]);
+                            //to move piece in
+                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
+                        }
+                        break;
+                    }
+                }
+
+                //increasing row and decreasing column
+                j = myPosition.getColumn();
+                ChessPosition [] chessPositions2 = new ChessPosition[10];
+                ChessMove [] chessMoves2 = new ChessMove[10];
+                z = 0;
+                for (int i = myPosition.getRow()+1; i < 9; i++ ) {
+                    j--;
+                    if (j < 1) {
+                        break;
+                    }
+                    else if (board.getBoardSquares()[i-1][j-1] == null) {
+                        chessPositions2[z] = new ChessPosition(i, j);
+                        chessMoves2[z] = new ChessMove(myPosition, chessPositions2[z], null);
+                        movesCollection.add(chessMoves2[z]);
+                        z++;
+                    }
+                    else {
+                        if (board.getBoardSquares()[i-1][j-1].getTeamColor() != board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getTeamColor()) {
+                            chessPositions2[z] = new ChessPosition(i, j);
+                            chessMoves2[z] = new ChessMove(myPosition, chessPositions2[z], null);
+                            movesCollection.add(chessMoves2[z]);
+                            //to move piece in
+                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
+                        }
+                        break;
+                    }
+                }
+                //decreasing row and decreasing column
+                j = myPosition.getColumn();
+                ChessPosition [] chessPositions3 = new ChessPosition[10];
+                ChessMove [] chessMoves3 = new ChessMove[10];
+                z = 0;
+                for (int i = myPosition.getRow()-1; i > 0; i-- ) {
+                    j--;
+                    if (j < 1) {
+                        break;
+                    }
+                    else if (board.getBoardSquares()[i-1][j-1] == null) {
+                        chessPositions3[z] = new ChessPosition(i, j);
+                        chessMoves3[z] = new ChessMove(myPosition, chessPositions3[z], null);
+                        movesCollection.add(chessMoves3[z]);
+                        z++;
+                    }
+                    else {
+                        if (board.getBoardSquares()[i-1][j-1].getTeamColor() != board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getTeamColor()) {
+                            chessPositions3[z] = new ChessPosition(i, j);
+                            chessMoves3[z] = new ChessMove(myPosition, chessPositions3[z], null);
+                            movesCollection.add(chessMoves3[z]);
+                            //to move piece in
+                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
+                        }
+                        break;
+                    }
+                }
+
+                //decreasing row and increasing column
+                j = myPosition.getColumn();
+                ChessPosition [] chessPositions4 = new ChessPosition[10];
+                ChessMove [] chessMoves4 = new ChessMove[10];
+                z = 0;
+                for (int i = myPosition.getRow()-1; i > 0; i-- ) {
+                    j++;
+                    if (j > 8) {
+                        break;
+                    }
+                    else if (board.getBoardSquares()[i-1][j-1] == null) {
+                        chessPositions4[z] = new ChessPosition(i, j);
+                        chessMoves4[z] = new ChessMove(myPosition, chessPositions4[z], null);
+                        movesCollection.add(chessMoves4[z]);
+                        z++;
+                    }
+                    else {
+                        if (board.getBoardSquares()[i-1][j-1].getTeamColor() != board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getTeamColor()) {
+                            chessPositions4[z] = new ChessPosition(i, j);
+                            chessMoves4[z] = new ChessMove(myPosition, chessPositions4[z], null);
+                            movesCollection.add(chessMoves4[z]);
+                            //to move piece in
+                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
+                        }
+                        break;
+                    }
+                }
+
+            }
+        }
+        //pieceMoves().add()
+        return movesCollection;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessPiece that = (ChessPiece) o;
+        return chessPieceColor == that.chessPieceColor && chessType == that.chessType;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "ChessPiece{" +
+                "chessPieceColor=" + chessPieceColor +
+                ", chessType=" + chessType +
+                '}';
     }
 }

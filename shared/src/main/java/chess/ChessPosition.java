@@ -16,8 +16,8 @@ import java.util.Objects;
  * signature of the existing methods.
  */
 public class ChessPosition {
-    private final int chessRow;
-    private final int chessCol;
+    public int chessRow;
+    public int chessCol;
     public ChessPosition(int row, int col) {
         this.chessRow = row;
         this.chessCol = col;
@@ -39,6 +39,15 @@ public class ChessPosition {
     public int getColumn() {
         return chessCol;
     }
+
+    public void setChessRow(int tempRow) {
+        this.chessRow = tempRow;
+    }
+
+    public void setChessCol(int tempCol) {
+        this.chessCol = tempCol;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

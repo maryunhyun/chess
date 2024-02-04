@@ -132,12 +132,13 @@ public class ChessGame {
         HashSet<ChessPosition> pawnPossiblePlaces = new HashSet<>();
         HashSet<ChessPosition> closePawnPossiblePlaces = new HashSet<>();
         ChessPosition tempKingPosition = new ChessPosition(0,0);
-        ChessPosition tempPiecePosition = new ChessPosition(0,0);
+        ChessPosition [] tempPiecePositions = new ChessPosition[70];
         ChessPosition [] pawnPositions = new ChessPosition[70];
         HashSet<ChessMove> movesCollectionCheck = new HashSet<>();
         //ChessMove tempMove1 = new ChessMove(null, null, null);
         //ChessMove tempMove2 = new ChessMove(null, null, null);
         int z = 0;
+        int d = 0;
 
         //find the correct king's position
         for (int i = 0; i < 8; i++) {
@@ -149,8 +150,7 @@ public class ChessGame {
                         kingPossibleMoves.addAll(this.chessBoard.squares[i][j].pieceMoves(this.chessBoard, tempKingPosition));
                     }
                     else {
-                        tempPiecePosition.setChessRow(i+1);
-                        tempPiecePosition.setChessCol(j+1);
+                        tempPiecePositions[d] = new ChessPosition(i + 1,j + 1);
                         if (this.chessBoard.squares[i][j].chessType == ChessPiece.PieceType.PAWN && this.chessBoard.squares[i][j].chessPieceColor != teamColor) {
                             pawnPositions[z] = new ChessPosition(i +1, j + 1);
                             pawnPossiblePlaces.add(pawnPositions[z]);
@@ -165,7 +165,8 @@ public class ChessGame {
                         /*for (int z = 0; z < chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempPiecePosition).size(); z++) {
                             movesCollectionCheck.add(chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempPiecePosition)[z]);
                         }*/
-                        movesCollectionCheck.addAll(chessBoard.squares[i][j].pieceMoves(this.chessBoard, tempPiecePosition));
+                        movesCollectionCheck.addAll(chessBoard.squares[i][j].pieceMoves(this.chessBoard, tempPiecePositions[d]));
+                        d++;
                     }
                 }
             }

@@ -103,9 +103,7 @@ public class ChessGame {
                         /*for (int z = 0; z < chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempPiecePosition).size(); z++) {
                             movesCollectionCheck.add(chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempPiecePosition)[z]);
                         }*/
-                        for (ChessMove chessMove : chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempPiecePosition)) {
-                            movesCollectionCheck.add(chessMove);
-                        }
+                        movesCollectionCheck.addAll(chessBoard.squares[i][j].pieceMoves(this.chessBoard, tempPiecePosition));
                     }
                 }
             }
@@ -131,10 +129,15 @@ public class ChessGame {
         //all of king's possible moves are isInCheck (true for function isInCheck)
         boolean checkMate = true;
         HashSet<ChessMove> kingPossibleMoves = new HashSet<>();
+        HashSet<ChessPosition> pawnPossiblePlaces = new HashSet<>();
+        HashSet<ChessPosition> closePawnPossiblePlaces = new HashSet<>();
         ChessPosition tempKingPosition = new ChessPosition(0,0);
         ChessPosition tempPiecePosition = new ChessPosition(0,0);
+        ChessPosition [] pawnPositions = new ChessPosition[70];
         HashSet<ChessMove> movesCollectionCheck = new HashSet<>();
-        ChessMove tempMove = new ChessMove(null, null, null);
+        //ChessMove tempMove1 = new ChessMove(null, null, null);
+        //ChessMove tempMove2 = new ChessMove(null, null, null);
+        int z = 0;
 
         //find the correct king's position
         for (int i = 0; i < 8; i++) {
@@ -143,23 +146,26 @@ public class ChessGame {
                     if (this.chessBoard.squares[i][j].chessType == ChessPiece.PieceType.KING && this.chessBoard.squares[i][j].chessPieceColor == teamColor) {
                         tempKingPosition.setChessRow(i + 1);
                         tempKingPosition.setChessCol(j + 1);
-                        for (ChessMove chessMove : this.chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempKingPosition)) {
-                            kingPossibleMoves.add(chessMove);
-                        }
+                        kingPossibleMoves.addAll(this.chessBoard.squares[i][j].pieceMoves(this.chessBoard, tempKingPosition));
                     }
                     else {
                         tempPiecePosition.setChessRow(i+1);
                         tempPiecePosition.setChessCol(j+1);
-                        if (this.chessBoard.squares[i][j].chessType == ChessPiece.PieceType.PAWN) {
-                            //tempMove
-                            movesCollectionCheck.add(tempMove);
+                        if (this.chessBoard.squares[i][j].chessType == ChessPiece.PieceType.PAWN && this.chessBoard.squares[i][j].chessPieceColor != teamColor) {
+                            pawnPositions[z] = new ChessPosition(i +1, j + 1);
+                            pawnPossiblePlaces.add(pawnPositions[z]);
+                            z++;
                         }
+                         /*   tempMove1.setChessStartPosition(tempPiecePosition);
+                            tempPiecePosition1.setChessRow(tempPiecePosition.chessRow - 1);
+                            tempPiecePosition1.setChessCol(tempPiecePosition.chessCol + 1);
+                            tempMove1.setChessEndPosition(tempPiecePosition.chessRow - 1,tempPiecePosition.chessCol + 1);
+                            movesCollectionCheck.add(tempMove1);
+                        }*/
                         /*for (int z = 0; z < chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempPiecePosition).size(); z++) {
                             movesCollectionCheck.add(chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempPiecePosition)[z]);
                         }*/
-                        for (ChessMove chessMove : chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempPiecePosition)) {
-                            movesCollectionCheck.add(chessMove);
-                        }
+                        movesCollectionCheck.addAll(chessBoard.squares[i][j].pieceMoves(this.chessBoard, tempPiecePosition));
                     }
                 }
             }
@@ -170,8 +176,30 @@ public class ChessGame {
         //checkMate = false;
         // }
         // else {
+
+        //check if pawn close by and add to new set of close pawns
+        for (ChessPosition chessPosition : pawnPossiblePlaces) {
+            if (chessPosition.chessRow < tempKingPosition.chessRow + 3 && chessPosition.chessRow > tempKingPosition.chessRow - 3 && chessPosition.chessCol < tempKingPosition.chessCol + 3 && chessPosition.chessCol > tempKingPosition.chessCol - 3) {
+                closePawnPossiblePlaces.add(chessPosition);
+            }
+        }
+
         for (ChessMove chessMoveKing : kingPossibleMoves) {
             spaceCanBeTaken = false;
+            for (ChessPosition chessPosition : closePawnPossiblePlaces) {
+                if (chessMoveKing.chessEndPosition.chessRow + 1 == chessPosition.chessRow && chessMoveKing.chessEndPosition.chessCol + 1 == chessPosition.chessCol) {
+                    spaceCanBeTaken = true;
+                }
+                else if (chessMoveKing.chessEndPosition.chessRow + 1 == chessPosition.chessRow && chessMoveKing.chessEndPosition.chessCol - 1 == chessPosition.chessCol) {
+                    spaceCanBeTaken = true;
+                }
+                else if (chessMoveKing.chessEndPosition.chessRow - 1 == chessPosition.chessRow && chessMoveKing.chessEndPosition.chessCol - 1 == chessPosition.chessCol) {
+                    spaceCanBeTaken = true;
+                }
+                else if (chessMoveKing.chessEndPosition.chessRow - 1 == chessPosition.chessRow && chessMoveKing.chessEndPosition.chessCol + 1 == chessPosition.chessCol) {
+                    spaceCanBeTaken = true;
+                }
+            }
             for (ChessMove chessMoveEnemy : movesCollectionCheck) {
                 if (chessMoveEnemy.chessEndPosition.chessRow == chessMoveKing.chessEndPosition.chessRow && chessMoveEnemy.chessEndPosition.chessCol == chessMoveKing.chessEndPosition.chessCol) {
                     spaceCanBeTaken = true;

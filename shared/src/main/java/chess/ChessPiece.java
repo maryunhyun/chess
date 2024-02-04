@@ -575,25 +575,29 @@ public class ChessPiece {
                             //checking for enemies in diagonal
 
                             j--;
-                            if (board.getBoardSquares()[i-1][j-1] != null) {
-                                if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                                    chessPositions7[z] = new ChessPosition(i, j);
-                                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                                    movesCollection.add(chessMoves7[z]);
-                                    //to move piece in
-                                    //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
-                                    z++;
+                            if (j > 0) {
+                                if (board.getBoardSquares()[i - 1][j - 1] != null) {
+                                    if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
+                                        chessPositions7[z] = new ChessPosition(i, j);
+                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
+                                        movesCollection.add(chessMoves7[z]);
+                                        //to move piece in
+                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
+                                        z++;
+                                    }
                                 }
                             }
                             j = j+2;
-                            if (board.getBoardSquares()[i-1][j-1] != null) {
-                                if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                                    chessPositions7[z] = new ChessPosition(i, j);
-                                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                                    movesCollection.add(chessMoves7[z]);
-                                    //to move piece in
-                                    //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
-                                    z++;
+                            if (j < 9) {
+                                if (board.getBoardSquares()[i - 1][j - 1] != null) {
+                                    if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
+                                        chessPositions7[z] = new ChessPosition(i, j);
+                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
+                                        movesCollection.add(chessMoves7[z]);
+                                        //to move piece in
+                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
+                                        z++;
+                                    }
                                 }
                             }
                             i = myPosition.getRow();
@@ -614,25 +618,29 @@ public class ChessPiece {
                             //checking for enemies in diagonal
 
                             j--;
-                            if (board.getBoardSquares()[i-1][j-1] != null) {
-                                if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                                    chessPositions7[z] = new ChessPosition(i, j);
-                                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                                    movesCollection.add(chessMoves7[z]);
-                                    //to move piece in
-                                    //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
-                                    z++;
+                            if (j > 0) {
+                                if (board.getBoardSquares()[i - 1][j - 1] != null) {
+                                    if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
+                                        chessPositions7[z] = new ChessPosition(i, j);
+                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
+                                        movesCollection.add(chessMoves7[z]);
+                                        //to move piece in
+                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
+                                        z++;
+                                    }
                                 }
                             }
                             j = j+2;
-                            if (board.getBoardSquares()[i-1][j-1] != null) {
-                                if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                                    chessPositions7[z] = new ChessPosition(i, j);
-                                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                                    movesCollection.add(chessMoves7[z]);
-                                    //to move piece in
-                                    //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
-                                    z++;
+                            if (j < 9) {
+                                if (board.getBoardSquares()[i - 1][j - 1] != null) {
+                                    if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
+                                        chessPositions7[z] = new ChessPosition(i, j);
+                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
+                                        movesCollection.add(chessMoves7[z]);
+                                        //to move piece in
+                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
+                                        z++;
+                                    }
                                 }
                             }
                             i = myPosition.getRow();
@@ -656,25 +664,29 @@ public class ChessPiece {
                             //checking for enemies in diagonal
 
                             j++;
-                            if (board.getBoardSquares()[i-1][j-1] != null) {
-                                if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                                    chessPositions7[z] = new ChessPosition(i, j);
-                                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                                    movesCollection.add(chessMoves7[z]);
-                                    //to move piece in
-                                    //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
-                                    z++;
+                            if (j < 9) {
+                                if (board.getBoardSquares()[i - 1][j - 1] != null) {
+                                    if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
+                                        chessPositions7[z] = new ChessPosition(i, j);
+                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
+                                        movesCollection.add(chessMoves7[z]);
+                                        //to move piece in
+                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
+                                        z++;
+                                    }
                                 }
                             }
                             j = j-2;
-                            if (board.getBoardSquares()[i-1][j-1] != null) {
-                                if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                                    chessPositions7[z] = new ChessPosition(i, j);
-                                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                                    movesCollection.add(chessMoves7[z]);
-                                    //to move piece in
-                                    //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
-                                    z++;
+                            if (j > 0) {
+                                if (board.getBoardSquares()[i - 1][j - 1] != null) {
+                                    if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
+                                        chessPositions7[z] = new ChessPosition(i, j);
+                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
+                                        movesCollection.add(chessMoves7[z]);
+                                        //to move piece in
+                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
+                                        z++;
+                                    }
                                 }
                             }
                             i = myPosition.getRow();
@@ -695,25 +707,29 @@ public class ChessPiece {
                             //checking for enemies in diagonal
 
                             j++;
-                            if (board.getBoardSquares()[i-1][j-1] != null) {
-                                if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                                    chessPositions7[z] = new ChessPosition(i, j);
-                                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                                    movesCollection.add(chessMoves7[z]);
-                                    //to move piece in
-                                    //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
-                                    z++;
+                            if (j < 9) {
+                                if (board.getBoardSquares()[i - 1][j - 1] != null) {
+                                    if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
+                                        chessPositions7[z] = new ChessPosition(i, j);
+                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
+                                        movesCollection.add(chessMoves7[z]);
+                                        //to move piece in
+                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
+                                        z++;
+                                    }
                                 }
                             }
                             j = j-2;
-                            if (board.getBoardSquares()[i-1][j-1] != null) {
-                                if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                                    chessPositions7[z] = new ChessPosition(i, j);
-                                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                                    movesCollection.add(chessMoves7[z]);
-                                    //to move piece in
-                                    //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
-                                    z++;
+                            if (j > 0) {
+                                if (board.getBoardSquares()[i - 1][j - 1] != null) {
+                                    if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
+                                        chessPositions7[z] = new ChessPosition(i, j);
+                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
+                                        movesCollection.add(chessMoves7[z]);
+                                        //to move piece in
+                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
+                                        z++;
+                                    }
                                 }
                             }
                             i = myPosition.getRow();

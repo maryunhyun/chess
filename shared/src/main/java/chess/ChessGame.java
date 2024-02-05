@@ -12,6 +12,8 @@ import java.util.HashSet;
 public class ChessGame {
     public TeamColor turnTeamColor = TeamColor.WHITE;
     public ChessBoard chessBoard;
+    public ChessBoard tempBoard = new ChessBoard();
+    //public ChessPiece[][] tempSquares = new ChessPiece[8][8];
     public ChessGame() {
 
     }
@@ -204,13 +206,49 @@ public class ChessGame {
             for (ChessMove chessMoveEnemy : movesCollectionCheck) {
                 if (chessMoveEnemy.chessEndPosition.chessRow == chessMoveKing.chessEndPosition.chessRow && chessMoveEnemy.chessEndPosition.chessCol == chessMoveKing.chessEndPosition.chessCol) {
                     spaceCanBeTaken = true;
+                    break;
                 }
+                if (chessBoard.squares[chessMoveKing.chessEndPosition.chessRow-1][chessMoveKing.chessEndPosition.chessCol-1] != null) {
+                    copyBoard(chessBoard);
+
+                    //deleting piece in old spot (start position) and putting it into new spot (end position)
+                    ChessPiece tempPiece = new ChessPiece(null,null);
+                    tempPiece.setChessPieceColor(tempBoard.squares[chessMoveKing.chessStartPosition.getRow()-1][chessMoveKing.chessStartPosition.getColumn()-1].getTeamColor());
+                    tempPiece.setChessType(tempBoard.squares[chessMoveKing.chessStartPosition.getRow()-1][chessMoveKing.chessStartPosition.getColumn()-1].getPieceType());
+
+
+                    tempBoard.squares[chessMoveKing.chessStartPosition.getRow()-1][chessMoveKing.chessStartPosition.getColumn()-1] = null;
+
+                    tempBoard.squares[chessMoveKing.chessEndPosition.getRow()-1][chessMoveKing.chessEndPosition.getColumn()-1] = tempPiece;
+
+                    if (tempIsInCheck(teamColor,tempBoard)) {
+                        spaceCanBeTaken = true;
+                    }
+                }
+                //check if move of king is a move someone else could make if the king killed a person and opened that space to an enemy cokming to get him
+                //if king's move is != null (killed someone from enemy team)...
+                //make new temporary board that copies old board and moves king (make funtion copy board? - for loop through old board and add into new one)
+                //then see all possible moves of pieces with new setup
+                //check if king's move matches with an enemy's
+                //else if ()
             }
             if (!spaceCanBeTaken) {
                 checkMate = false;
             }
         }
         //}
+        boolean danger = false;
+        if (kingPossibleMoves.size() == 0) {
+            for (ChessMove chessMove : movesCollectionCheck) {
+                if (chessMove.chessEndPosition.chessCol == tempKingPosition.chessCol && chessMove.chessEndPosition.chessRow == tempKingPosition.chessRow) {
+                    danger = true;
+                }
+            }
+            if (!danger) {
+                checkMate = false;
+            }
+        }
+
 
 
         return checkMate;
@@ -234,6 +272,55 @@ public class ChessGame {
      */
     public void setBoard(ChessBoard board) {
         this.chessBoard = board;
+    }
+
+    public void copyBoard(ChessBoard board) {
+        //tempBoard.resetBoard();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (board.squares[i][j] != null) {
+                    tempBoard.squares[i][j] = new ChessPiece(board.squares[i][j].chessPieceColor, board.squares[i][j].chessType);
+                }
+            }
+        }
+    }
+
+    public boolean tempIsInCheck(TeamColor teamColor, ChessBoard tempBoard) {
+        boolean check = false;
+        //go through squares and find king of the correct team color to get his position
+        //go through opposing team's moves and see if his position is one of them
+        ChessPosition tempKingPosition = new ChessPosition(0,0);
+        ChessPosition tempPiecePosition = new ChessPosition(0,0);
+        HashSet<ChessMove> movesCollectionCheck = new HashSet<>();
+
+        //find the correct king's position
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (tempBoard.squares[i][j] != null) {
+                    if (tempBoard.squares[i][j].chessType == ChessPiece.PieceType.KING && tempBoard.squares[i][j].chessPieceColor == teamColor) {
+                        tempKingPosition.setChessRow(i + 1);
+                        tempKingPosition.setChessCol(j + 1);
+                    }
+                    else {
+                        tempPiecePosition.setChessRow(i+1);
+                        tempPiecePosition.setChessCol(j+1);
+                        /*for (int z = 0; z < chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempPiecePosition).size(); z++) {
+                            movesCollectionCheck.add(chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempPiecePosition)[z]);
+                        }*/
+                        movesCollectionCheck.addAll(tempBoard.squares[i][j].pieceMoves(this.tempBoard, tempPiecePosition));
+                    }
+                }
+            }
+        }
+
+        //see if king's position is a possible move for a piece
+        for (ChessMove chessMove : movesCollectionCheck) {
+            if (chessMove.chessEndPosition.chessRow == tempKingPosition.chessRow && chessMove.chessEndPosition.chessCol == tempKingPosition.chessCol) {
+                check = true;
+                break;
+            }
+        }
+        return check;
     }
 
     /**

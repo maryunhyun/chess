@@ -19,6 +19,7 @@ import static chess.ChessPiece.PieceType.*;
  */
 public class ChessBoard {
     public ChessPiece[][] squares = new ChessPiece[8][8];
+
     public ChessBoard() {
         
     }

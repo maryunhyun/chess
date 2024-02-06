@@ -94,6 +94,28 @@ public class ChessGame {
         tempPiece.setChessPieceColor(chessBoard.squares[move.chessStartPosition.getRow()-1][move.chessStartPosition.getColumn()-1].getTeamColor());
         tempPiece.setChessType(chessBoard.squares[move.chessStartPosition.getRow()-1][move.chessStartPosition.getColumn()-1].getPieceType());
 
+
+        //what if scenario of deleting piece in old spot (start position) and putting it into new spot (end position)
+        boolean danger = false;
+        copyBoard(chessBoard);
+
+        ChessPiece tempPiece1 = new ChessPiece(null,null);
+        tempPiece1.setChessPieceColor(tempBoard.squares[move.chessStartPosition.getRow()-1][move.chessStartPosition.getColumn()-1].getTeamColor());
+        tempPiece1.setChessType(tempBoard.squares[move.chessStartPosition.getRow()-1][move.chessStartPosition.getColumn()-1].getPieceType());
+
+
+        tempBoard.squares[move.chessStartPosition.getRow()-1][move.chessStartPosition.getColumn()-1] = null;
+
+        tempBoard.squares[move.chessEndPosition.getRow()-1][move.chessEndPosition.getColumn()-1] = tempPiece1;
+
+        if (tempIsInCheck(getTeamTurn(),tempBoard)) {
+            danger = true;
+        }
+        if (danger) {
+            throw invalidMoveException;
+        }
+
+
         //check for promotion and promote
         if (move.chessPromotionPiece != null) {
             tempPiece.setChessType(move.chessPromotionPiece);

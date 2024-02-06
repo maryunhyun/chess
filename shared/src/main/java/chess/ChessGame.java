@@ -52,7 +52,47 @@ public class ChessGame {
      * startPosition
      */
     public HashSet<ChessMove> validMoves(ChessPosition startPosition) {
-        return this.chessBoard.squares[startPosition.getRow()-1][startPosition.getColumn()-1].pieceMoves(this.chessBoard,startPosition);
+        copyBoard(chessBoard);
+        HashSet<ChessMove> possibleMoves = new HashSet<>();
+        HashSet<ChessMove> validMoves = new HashSet<>();
+        possibleMoves.addAll(this.chessBoard.squares[startPosition.getRow()-1][startPosition.getColumn()-1].pieceMoves(this.chessBoard,startPosition));
+
+        for (ChessMove tempMove : possibleMoves) {
+            //deleting piece in old spot (start position) and putting it into new spot (end position)
+            ChessPiece tempPiece = new ChessPiece(null, null);
+            ChessPiece enemyPiece = new ChessPiece(null, null);
+            if (tempBoard.squares[tempMove.chessStartPosition.getRow() - 1][tempMove.chessStartPosition.getColumn() - 1] != null) {
+                tempPiece.setChessPieceColor(tempBoard.squares[tempMove.chessStartPosition.getRow() - 1][tempMove.chessStartPosition.getColumn() - 1].getTeamColor());
+                tempPiece.setChessType(tempBoard.squares[tempMove.chessStartPosition.getRow() - 1][tempMove.chessStartPosition.getColumn() - 1].getPieceType());
+
+
+                tempBoard.squares[tempMove.chessStartPosition.getRow() - 1][tempMove.chessStartPosition.getColumn() - 1] = null;
+                boolean deadBody = false;
+                //save if someone was killed so they can be put back
+                if (tempBoard.squares[tempMove.chessEndPosition.getRow() - 1][tempMove.chessEndPosition.getColumn() - 1] != null){
+                    enemyPiece.setChessType(tempBoard.squares[tempMove.chessEndPosition.getRow() - 1][tempMove.chessEndPosition.getColumn() - 1].chessType);
+                    enemyPiece.setChessPieceColor(tempBoard.squares[tempMove.chessEndPosition.getRow() - 1][tempMove.chessEndPosition.getColumn() - 1].chessPieceColor);
+                    deadBody = true;
+                }
+
+                tempBoard.squares[tempMove.chessEndPosition.getRow() - 1][tempMove.chessEndPosition.getColumn() - 1] = tempPiece;
+
+                if (!tempIsInCheck(tempBoard.squares[tempMove.chessEndPosition.getRow() - 1][tempMove.chessEndPosition.getColumn() - 1].chessPieceColor, tempBoard)) {
+                    validMoves.add(tempMove);
+                }
+                //move pieces back for next move check
+                tempBoard.squares[tempMove.chessStartPosition.getRow() - 1][tempMove.chessStartPosition.getColumn() - 1] = tempPiece;
+
+                tempBoard.squares[tempMove.chessEndPosition.getRow() - 1][tempMove.chessEndPosition.getColumn() - 1] = null;
+                if (deadBody) {
+                    tempBoard.squares[tempMove.chessEndPosition.getRow() - 1][tempMove.chessEndPosition.getColumn() - 1] = enemyPiece;
+                }
+            }
+
+        }
+
+        return validMoves;
+        //return this.chessBoard.squares[startPosition.getRow()-1][startPosition.getColumn()-1].pieceMoves(this.chessBoard,startPosition);
     }
 
     /**
@@ -76,7 +116,7 @@ public class ChessGame {
             }
             boolean moveValid = false;
             HashSet<ChessMove> validTempMoves = new HashSet<>();
-            validTempMoves.addAll(validMoves(move.chessStartPosition));
+            validTempMoves.addAll(this.chessBoard.squares[move.chessStartPosition.getRow()-1][move.chessStartPosition.getColumn()-1].pieceMoves(this.chessBoard,move.chessStartPosition));
 
             for (ChessMove chessMove : validTempMoves) {
                 if (move.chessEndPosition.chessCol == chessMove.chessEndPosition.chessCol && move.chessEndPosition.chessRow == chessMove.chessEndPosition.chessRow) {

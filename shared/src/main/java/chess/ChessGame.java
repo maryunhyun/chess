@@ -13,6 +13,8 @@ public class ChessGame {
     public TeamColor turnTeamColor = TeamColor.WHITE;
     public ChessBoard chessBoard;
     public ChessBoard tempBoard = new ChessBoard();
+
+    public InvalidMoveException invalidMoveException = new InvalidMoveException();
     //public ChessPiece[][] tempSquares = new ChessPiece[8][8];
     public ChessGame() {
 
@@ -50,7 +52,7 @@ public class ChessGame {
      * startPosition
      */
     public HashSet<ChessMove> validMoves(ChessPosition startPosition) {
-        return this.chessBoard.squares[startPosition.getRow()][startPosition.getColumn()].pieceMoves(this.chessBoard,startPosition);
+        return this.chessBoard.squares[startPosition.getRow()-1][startPosition.getColumn()-1].pieceMoves(this.chessBoard,startPosition);
     }
 
     /**
@@ -64,6 +66,29 @@ public class ChessGame {
      * change piece's end position to make a move
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
+        //add function to promote/change promotion part?????
+        
+        if (chessBoard.squares[move.chessStartPosition.chessRow-1][move.chessStartPosition.chessCol-1] != null) {
+            if (chessBoard.squares[move.chessStartPosition.chessRow - 1][move.chessStartPosition.chessCol - 1].chessPieceColor != getTeamTurn()) {
+                throw invalidMoveException;
+            }
+            else if (move.chessEndPosition.chessRow > 8 | move.chessEndPosition.chessRow < 1 | move.chessEndPosition.chessCol > 8 | move.chessEndPosition.chessCol < 1) {
+                throw invalidMoveException;
+            }
+            boolean moveValid = false;
+            HashSet<ChessMove> validTempMoves = new HashSet<>();
+            validTempMoves.addAll(validMoves(move.chessStartPosition));
+
+            for (ChessMove chessMove : validTempMoves) {
+                if (move.chessEndPosition.chessCol == chessMove.chessEndPosition.chessCol && move.chessEndPosition.chessRow == chessMove.chessEndPosition.chessRow) {
+                    moveValid = true;
+                }
+            }
+            if (!moveValid) {
+                throw new InvalidMoveException();
+            }
+        }
+
         //deleting piece in old spot (start position) and putting it into new spot (end position)
         ChessPiece tempPiece = new ChessPiece(null,null);
         tempPiece.setChessPieceColor(chessBoard.squares[move.chessStartPosition.getRow()-1][move.chessStartPosition.getColumn()-1].getTeamColor());
@@ -73,6 +98,15 @@ public class ChessGame {
         chessBoard.squares[move.chessStartPosition.getRow()-1][move.chessStartPosition.getColumn()-1] = null;
 
         chessBoard.squares[move.chessEndPosition.getRow()-1][move.chessEndPosition.getColumn()-1] = tempPiece;
+        //now other player's turn
+        if (turnTeamColor == TeamColor.BLACK) {
+            setTeamTurn(TeamColor.WHITE);
+        }
+        else {
+            setTeamTurn(TeamColor.BLACK);
+        }
+
+
 
 
     }
@@ -262,7 +296,11 @@ public class ChessGame {
      * @return True if the specified team is in stalemate, otherwise false
      */
     public boolean isInStalemate(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        //add up set of valid moves with function valid moves and only add moves with teamColor
+        //if not valid moves, stalemate is true
+        boolean stalemate = false;
+
+        return stalemate;
     }
 
     /**

@@ -874,64 +874,66 @@ public class ChessPiece {
                             //checking for enemies in diagonal
 
                             j++;
-                            if (board.getBoardSquares()[i-1][j-1] != null) {
-                                if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                                    //promotion if reach end of board
-                                    if (i == 8) {
-                                        //get chosen promotion option and insert
-                                        chessPositions7[z] = new ChessPosition(i, j);
-                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.BISHOP);
-                                        movesCollection.add(chessMoves7[z]);
-                                        z++;
-                                        chessPositions7[z] = new ChessPosition(i, j);
-                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.KNIGHT);
-                                        movesCollection.add(chessMoves7[z]);
-                                        z++;
-                                        chessPositions7[z] = new ChessPosition(i, j);
-                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.QUEEN);
-                                        movesCollection.add(chessMoves7[z]);
-                                        z++;
-                                        chessPositions7[z] = new ChessPosition(i, j);
-                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.ROOK);
-                                        movesCollection.add(chessMoves7[z]);
-                                        z++;
-                                    }
-                                    else {
-                                        chessPositions7[z] = new ChessPosition(i, j);
-                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                                        movesCollection.add(chessMoves7[z]);
-                                        z++;
+                            if (j < 9) {
+                                if (board.getBoardSquares()[i - 1][j - 1] != null) {
+                                    if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
+                                        //promotion if reach end of board
+                                        if (i == 8) {
+                                            //get chosen promotion option and insert
+                                            chessPositions7[z] = new ChessPosition(i, j);
+                                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.BISHOP);
+                                            movesCollection.add(chessMoves7[z]);
+                                            z++;
+                                            chessPositions7[z] = new ChessPosition(i, j);
+                                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.KNIGHT);
+                                            movesCollection.add(chessMoves7[z]);
+                                            z++;
+                                            chessPositions7[z] = new ChessPosition(i, j);
+                                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.QUEEN);
+                                            movesCollection.add(chessMoves7[z]);
+                                            z++;
+                                            chessPositions7[z] = new ChessPosition(i, j);
+                                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.ROOK);
+                                            movesCollection.add(chessMoves7[z]);
+                                            z++;
+                                        } else {
+                                            chessPositions7[z] = new ChessPosition(i, j);
+                                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
+                                            movesCollection.add(chessMoves7[z]);
+                                            z++;
+                                        }
                                     }
                                 }
                             }
                             j = j-2;
-                            if (board.getBoardSquares()[i-1][j-1] != null) {
-                                if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                                    //promotion if reach end of board
-                                    if (i == 8) {
-                                        //get chosen promotion option and insert
-                                        chessPositions7[z] = new ChessPosition(i, j);
-                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.BISHOP);
-                                        movesCollection.add(chessMoves7[z]);
-                                        z++;
-                                        chessPositions7[z] = new ChessPosition(i, j);
-                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.KNIGHT);
-                                        movesCollection.add(chessMoves7[z]);
-                                        z++;
-                                        chessPositions7[z] = new ChessPosition(i, j);
-                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.QUEEN);
-                                        movesCollection.add(chessMoves7[z]);
-                                        z++;
-                                        chessPositions7[z] = new ChessPosition(i, j);
-                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.ROOK);
-                                        movesCollection.add(chessMoves7[z]);
-                                        z++;
-                                    }
-                                    else {
-                                        chessPositions7[z] = new ChessPosition(i, j);
-                                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                                        movesCollection.add(chessMoves7[z]);
-                                        z++;
+                            if (j > 0) {
+                                if (board.getBoardSquares()[i - 1][j - 1] != null) {
+                                    if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
+                                        //promotion if reach end of board
+                                        if (i == 8) {
+                                            //get chosen promotion option and insert
+                                            chessPositions7[z] = new ChessPosition(i, j);
+                                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.BISHOP);
+                                            movesCollection.add(chessMoves7[z]);
+                                            z++;
+                                            chessPositions7[z] = new ChessPosition(i, j);
+                                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.KNIGHT);
+                                            movesCollection.add(chessMoves7[z]);
+                                            z++;
+                                            chessPositions7[z] = new ChessPosition(i, j);
+                                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.QUEEN);
+                                            movesCollection.add(chessMoves7[z]);
+                                            z++;
+                                            chessPositions7[z] = new ChessPosition(i, j);
+                                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], PieceType.ROOK);
+                                            movesCollection.add(chessMoves7[z]);
+                                            z++;
+                                        } else {
+                                            chessPositions7[z] = new ChessPosition(i, j);
+                                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
+                                            movesCollection.add(chessMoves7[z]);
+                                            z++;
+                                        }
                                     }
                                 }
                             }

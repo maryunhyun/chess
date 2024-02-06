@@ -66,8 +66,7 @@ public class ChessGame {
      * change piece's end position to make a move
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-        //add function to promote/change promotion part?????
-        
+
         if (chessBoard.squares[move.chessStartPosition.chessRow-1][move.chessStartPosition.chessCol-1] != null) {
             if (chessBoard.squares[move.chessStartPosition.chessRow - 1][move.chessStartPosition.chessCol - 1].chessPieceColor != getTeamTurn()) {
                 throw invalidMoveException;
@@ -91,9 +90,14 @@ public class ChessGame {
 
         //deleting piece in old spot (start position) and putting it into new spot (end position)
         ChessPiece tempPiece = new ChessPiece(null,null);
+
         tempPiece.setChessPieceColor(chessBoard.squares[move.chessStartPosition.getRow()-1][move.chessStartPosition.getColumn()-1].getTeamColor());
         tempPiece.setChessType(chessBoard.squares[move.chessStartPosition.getRow()-1][move.chessStartPosition.getColumn()-1].getPieceType());
 
+        //check for promotion and promote
+        if (move.chessPromotionPiece != null) {
+            tempPiece.setChessType(move.chessPromotionPiece);
+        }
 
         chessBoard.squares[move.chessStartPosition.getRow()-1][move.chessStartPosition.getColumn()-1] = null;
 

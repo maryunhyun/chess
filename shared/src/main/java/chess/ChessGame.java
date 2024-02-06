@@ -218,7 +218,7 @@ public class ChessGame {
                             pawnPossiblePlaces.add(pawnPositions[z]);
                             z++;
                         }
-                         
+
                         movesCollectionCheck.addAll(chessBoard.squares[i][j].pieceMoves(this.chessBoard, tempPiecePositions[d]));
                         d++;
                     }
@@ -316,8 +316,25 @@ public class ChessGame {
     public boolean isInStalemate(TeamColor teamColor) {
         //add up set of valid moves with function valid moves and only add moves with teamColor
         //if not valid moves, stalemate is true
-        boolean stalemate = false;
 
+        boolean stalemate = false;
+        ChessPosition tempPiecePosition = new ChessPosition(0,0);
+        HashSet<ChessMove> movesCollectionCheck = new HashSet<>();
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (this.chessBoard.squares[i][j] != null && this.chessBoard.squares[i][j].chessPieceColor == teamColor && this.chessBoard.squares[i][j].chessType != ChessPiece.PieceType.KING) {
+                    tempPiecePosition.setChessRow(i+1);
+                    tempPiecePosition.setChessCol(j+1);
+
+                    movesCollectionCheck.addAll(chessBoard.squares[i][j].pieceMoves(chessBoard, tempPiecePosition));
+
+                }
+            }
+        }
+        if (movesCollectionCheck.size() == 0 && isInCheckmate(teamColor)) {
+            stalemate = true;
+        }
         return stalemate;
     }
 

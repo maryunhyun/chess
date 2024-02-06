@@ -218,15 +218,7 @@ public class ChessGame {
                             pawnPossiblePlaces.add(pawnPositions[z]);
                             z++;
                         }
-                         /*   tempMove1.setChessStartPosition(tempPiecePosition);
-                            tempPiecePosition1.setChessRow(tempPiecePosition.chessRow - 1);
-                            tempPiecePosition1.setChessCol(tempPiecePosition.chessCol + 1);
-                            tempMove1.setChessEndPosition(tempPiecePosition.chessRow - 1,tempPiecePosition.chessCol + 1);
-                            movesCollectionCheck.add(tempMove1);
-                        }*/
-                        /*for (int z = 0; z < chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempPiecePosition).size(); z++) {
-                            movesCollectionCheck.add(chessBoard.squares[i][j].pieceMoves(this.chessBoard,tempPiecePosition)[z]);
-                        }*/
+                         
                         movesCollectionCheck.addAll(chessBoard.squares[i][j].pieceMoves(this.chessBoard, tempPiecePositions[d]));
                         d++;
                     }

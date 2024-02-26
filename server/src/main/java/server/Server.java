@@ -14,6 +14,7 @@ import spark.Spark;
 //are exceptions supposed to be handled like down below?
 //for dataaccess/DAOs, do you need to make ResponseException?
 //MemoryDAO correct?
+//do I make the random authToken with UUID in memoryauthDAO?
 
 public class Server {
     private final ClearService clearService = new ClearService();

@@ -1,4 +1,14 @@
 package dataAccess;
 
-public class UserDAO {
+import model.UserData;
+
+import java.util.Collection;
+
+public interface UserDAO {
+    UserData addUserData(UserData userData);
+    Collection<UserData> listUserDatas();
+    UserData getUserData(String username);
+    void deleteUserData(String username);
+    void clearUserDatas();
+
 }

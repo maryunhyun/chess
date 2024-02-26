@@ -1,4 +1,13 @@
 package dataAccess;
 
-public class GameDAO {
+import model.GameData;
+
+import java.util.Collection;
+
+public interface GameDAO {
+        GameData addGameData(GameData gameData);
+        Collection<GameData> listGameDatas();
+        GameData getGameData(int gameID);
+        void deleteGameData(Integer gameID);
+        void clearGameDatas();
 }

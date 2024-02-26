@@ -81,7 +81,7 @@ DataAccess -> db: SELECT authToken from auth
 DataAccess --> RegistrationService: AuthData
 RegistrationService -> DataAccess: getGame(gameID)
 DataAccess -> db: SELECT gameID from game
-DataAccess ->RegistrationService: GameData
+DataAccess -->RegistrationService: GameData
 RegistrationService ->DataAccess: addPlayer(gameID, username (which username to update determined with ClientColor))
 DataAccess -> db: INSERT username INTO game
 DataAccess --> RegistrationService: null

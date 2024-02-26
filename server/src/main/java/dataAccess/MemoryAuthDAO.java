@@ -4,13 +4,12 @@ import model.AuthData;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.UUID;
 
 public class MemoryAuthDAO implements AuthDAO{
-    final private HashMap<String, AuthData> authDatas = new HashMap<>();
+    private HashMap<String, AuthData> authDatas = new HashMap<>();
 
     public AuthData addAuthData(AuthData authData) {
-        authData = new AuthData(UUID.randomUUID().toString(),authData.getUsername());
+        authData = new AuthData(authData.getAuthToken(),authData.getUsername());
         authDatas.put(authData.getAuthToken(),authData);
         return authData;
     }

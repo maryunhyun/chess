@@ -1,13 +1,13 @@
-package results;
+package server.results;
 
 import java.util.Objects;
 
-public class ListGamesResult {
+public class CreateGameResult {
     String message;
     Boolean success;
-    //with success games [] listed
+    //with success, gameID given
 
-    public ListGamesResult(String message, Boolean success) {
+    public CreateGameResult(String message, Boolean success) {
         this.message = message;
         this.success = success;
     }
@@ -32,7 +32,7 @@ public class ListGamesResult {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ListGamesResult that = (ListGamesResult) o;
+        CreateGameResult that = (CreateGameResult) o;
         return Objects.equals(message, that.message) && Objects.equals(success, that.success);
     }
 
@@ -43,7 +43,7 @@ public class ListGamesResult {
 
     @Override
     public String toString() {
-        return "ListGamesResult{" +
+        return "CreateGameResult{" +
                 "message='" + message + '\'' +
                 ", success=" + success +
                 '}';

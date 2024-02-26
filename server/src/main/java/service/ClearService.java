@@ -1,20 +1,27 @@
 package service;
 
-import results.ClearResult;
+import dataAccess.AuthDAO;
+import dataAccess.GameDAO;
+import dataAccess.UserDAO;
 
 public class ClearService {
-    public ClearResult clear() {
+    //public ClearResult clear() {
         //clear UserDAO
         //clear GameDAO
         //clear AuthDAO
-//        public AuthDAO authDAO;
-//        private final GameDAO gameDAO;
-//        private final UserDAO userDAO;
-//
-//        public ClearService (AuthDAO authDAO, GameDAO gameDAO, UserDAO userDAO) {
-//
-//        }
+    private final AuthDAO authDAO;
+    private final GameDAO gameDAO;
+    private final UserDAO userDAO;
 
-        return null;
+    public ClearService (AuthDAO authDAO, GameDAO gameDAO, UserDAO userDAO) {
+        this.authDAO = authDAO;
+        this.gameDAO = gameDAO;
+        this.userDAO = userDAO;
     }
+    public void clearAll() {
+        authDAO.clearAuthDatas();
+        gameDAO.clearGameDatas();
+        userDAO.clearUserDatas();
+    }
+
 }

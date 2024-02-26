@@ -1,12 +1,13 @@
-package results;
+package server.results;
 
 import java.util.Objects;
 
-public class LogoutResult {
+public class ListGamesResult {
     String message;
     Boolean success;
+    //with success games [] listed
 
-    public LogoutResult(String message, Boolean success) {
+    public ListGamesResult(String message, Boolean success) {
         this.message = message;
         this.success = success;
     }
@@ -31,7 +32,7 @@ public class LogoutResult {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LogoutResult that = (LogoutResult) o;
+        ListGamesResult that = (ListGamesResult) o;
         return Objects.equals(message, that.message) && Objects.equals(success, that.success);
     }
 
@@ -42,7 +43,7 @@ public class LogoutResult {
 
     @Override
     public String toString() {
-        return "LogoutResult{" +
+        return "ListGamesResult{" +
                 "message='" + message + '\'' +
                 ", success=" + success +
                 '}';

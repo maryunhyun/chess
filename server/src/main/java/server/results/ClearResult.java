@@ -1,12 +1,12 @@
-package results;
+package server.results;
 
 import java.util.Objects;
 
-public class JoinGameResult {
+public class ClearResult {
     String message;
     Boolean success;
 
-    public JoinGameResult(String message, Boolean success) {
+    public ClearResult(String message, Boolean success) {
         this.message = message;
         this.success = success;
     }
@@ -31,7 +31,7 @@ public class JoinGameResult {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        JoinGameResult that = (JoinGameResult) o;
+        ClearResult that = (ClearResult) o;
         return Objects.equals(message, that.message) && Objects.equals(success, that.success);
     }
 
@@ -42,7 +42,7 @@ public class JoinGameResult {
 
     @Override
     public String toString() {
-        return "JoinGameResult{" +
+        return "ClearResult{" +
                 "message='" + message + '\'' +
                 ", success=" + success +
                 '}';

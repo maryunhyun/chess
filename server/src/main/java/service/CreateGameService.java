@@ -1,7 +1,7 @@
 package service;
 
-import requests.CreateGameRequest;
-import results.CreateGameResult;
+import server.requests.CreateGameRequest;
+import server.results.CreateGameResult;
 
 public class CreateGameService {
     public CreateGameResult createGame(CreateGameRequest r) {

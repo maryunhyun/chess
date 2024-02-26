@@ -1,23 +1,28 @@
 package server;
 
+import com.google.gson.Gson;
+import dataAccess.*;
+import model.UserData;
+import server.results.ClearResult;
 import service.ClearService;
+import service.RegisterService;
 import spark.Request;
 import spark.Response;
 import spark.Spark;
-//what is game in GameData? is it the board/ChessPiece[][]
-//does what I'm doing look right so far?
-//requests and responses for each class? And is it alright if they're separate?
-//what exactly is the MemoryUserDAO?
-//in the catch in the Server, is this where I handle all of the failure responses and output stuff? Or is this in the results?
-//do I handle headers here or in the requests?
-//what is the difference between the body and headers?
-//are exceptions supposed to be handled like down below?
-//for dataaccess/DAOs, do you need to make ResponseException?
-//MemoryDAO correct?
-//do I make the random authToken with UUID in memoryauthDAO?
+
+//does clear not need a request?
+
+
 
 public class Server {
-    private final ClearService clearService = new ClearService();
+    AuthDAO authDAO = new MemoryAuthDAO();
+    GameDAO gameDAO = new MemoryGameDAO();
+    UserDAO userDAO = new MemoryUserDAO();
+    private ClearService clearService = new ClearService(authDAO,gameDAO,userDAO);
+    public ClearResult clearResult = new ClearResult("",false);
+
+    private RegisterService registerService = new RegisterService();
+
     //private final WebSocketHandler webSocketHandler;
 
 
@@ -29,8 +34,8 @@ public class Server {
         // Register your endpoints and handle exceptions here.
 
         //try {
-            Spark.delete("/db",this::clear);
-            //Spark.post("/user", ((request, response) -> RegisterHandler.handleRequest(request,response)));
+            Spark.delete("/db", this::clear);
+            Spark.post("/user", this::register);
             //Spark.post("/session", ((request, response) -> LoginHandler.handleRequest(request,response)));
             //Spark.delete("/session", ((request, response) -> LogoutHandler.handleRequest(request,response)));
             //Spark.get("/game",((request, response) -> ListGamesHandler.handleRequest(request,response)));
@@ -39,6 +44,7 @@ public class Server {
         //Spark.exception(ResponseException.class, this::exceptionHandler);
         //}
         //catch ()
+        
 
         Spark.awaitInitialization();
         return Spark.port();
@@ -48,9 +54,17 @@ public class Server {
     //}
 
     private Object clear(Request req, Response res) {
-        clearService.clear();
+        //req.headers("authorization");
+        clearService.clearAll();
         res.status(200);
-        return "";
+        //res.body("[200]");
+        return "{}";
+    }
+
+    private Object register(Request req, Response res) {
+        var user = new Gson().fromJson(req.body(), UserData.class);
+        registerService.register(user);
+
     }
 
     public void stop() {

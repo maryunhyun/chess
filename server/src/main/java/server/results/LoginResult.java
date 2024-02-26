@@ -1,12 +1,13 @@
-package results;
+package server.results;
 
 import java.util.Objects;
 
-public class ClearResult {
+public class LoginResult {
     String message;
     Boolean success;
+    //with success, username and authToken given
 
-    public ClearResult(String message, Boolean success) {
+    public LoginResult(String message, Boolean success) {
         this.message = message;
         this.success = success;
     }
@@ -31,7 +32,7 @@ public class ClearResult {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ClearResult that = (ClearResult) o;
+        LoginResult that = (LoginResult) o;
         return Objects.equals(message, that.message) && Objects.equals(success, that.success);
     }
 
@@ -42,7 +43,7 @@ public class ClearResult {
 
     @Override
     public String toString() {
-        return "ClearResult{" +
+        return "LoginResult{" +
                 "message='" + message + '\'' +
                 ", success=" + success +
                 '}';

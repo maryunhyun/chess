@@ -1,7 +1,7 @@
 package service;
 
-import requests.JoinGameRequest;
-import results.JoinGameResult;
+import server.requests.JoinGameRequest;
+import server.results.JoinGameResult;
 
 public class JoinGameService {
     public JoinGameResult joinGame(JoinGameRequest r) {

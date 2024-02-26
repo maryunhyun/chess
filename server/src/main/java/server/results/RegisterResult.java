@@ -1,13 +1,13 @@
-package results;
+package server.results;
 
 import java.util.Objects;
 
-public class LoginResult {
+public class RegisterResult {
     String message;
     Boolean success;
     //with success, username and authToken given
 
-    public LoginResult(String message, Boolean success) {
+    public RegisterResult(String message, Boolean success) {
         this.message = message;
         this.success = success;
     }
@@ -32,7 +32,7 @@ public class LoginResult {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LoginResult that = (LoginResult) o;
+        RegisterResult that = (RegisterResult) o;
         return Objects.equals(message, that.message) && Objects.equals(success, that.success);
     }
 
@@ -43,7 +43,7 @@ public class LoginResult {
 
     @Override
     public String toString() {
-        return "LoginResult{" +
+        return "RegisterResult{" +
                 "message='" + message + '\'' +
                 ", success=" + success +
                 '}';

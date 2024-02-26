@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class MemoryUserDAO implements UserDAO{
     //private int nextID = 1;
-    final private HashMap<String, UserData> userDatas = new HashMap<>();
+    private HashMap<String, UserData> userDatas = new HashMap<>();
 
     public UserData addUserData(UserData userData) {
         userData = new UserData(userData.getUsername(),userData.getPassword(),userData.getEmail());

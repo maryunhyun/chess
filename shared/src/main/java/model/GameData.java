@@ -1,18 +1,19 @@
 package model;
 
-import chess.ChessBoard;
+import chess.ChessGame;
 
 import java.util.Objects;
 
 public class GameData {
+    //create records
     private int gameID;
     private String whiteUsername;
     private String blackUsername;
     private String gameName;
 
-    private ChessBoard game;
+    private ChessGame game;
 
-    public GameData(int gameID, String whiteUsername, String blackUsername, String gameName, ChessBoard game) {
+    public GameData(int gameID, String whiteUsername, String blackUsername, String gameName, ChessGame game) {
         this.gameID = gameID;
         this.whiteUsername = whiteUsername;
         this.blackUsername = blackUsername;
@@ -52,11 +53,11 @@ public class GameData {
         this.gameName = gameName;
     }
 
-    public ChessBoard getGame() {
+    public ChessGame getGame() {
         return game;
     }
 
-    public void setGame(ChessBoard game) {
+    public void setGame(ChessGame game) {
         this.game = game;
     }
 

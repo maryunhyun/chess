@@ -1,7 +1,7 @@
 package service;
 
-import requests.LogoutRequest;
-import results.LogoutResult;
+import server.requests.LogoutRequest;
+import server.results.LogoutResult;
 
 public class LogoutService {
     public LogoutResult logout(LogoutRequest r) {

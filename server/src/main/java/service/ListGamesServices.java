@@ -1,7 +1,7 @@
 package service;
 
-import requests.ListGamesRequest;
-import results.ListGamesResult;
+import server.requests.ListGamesRequest;
+import server.results.ListGamesResult;
 
 public class ListGamesServices {
     public ListGamesResult listGames(ListGamesRequest r) {

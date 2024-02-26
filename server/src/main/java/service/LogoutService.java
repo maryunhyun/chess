@@ -1,4 +1,10 @@
 package service;
 
+import requests.LogoutRequest;
+import results.LogoutResult;
+
 public class LogoutService {
+    public LogoutResult logout(LogoutRequest r) {
+        return null;
+    }
 }

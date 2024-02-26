@@ -5,6 +5,7 @@ import java.util.Objects;
 public class RegisterResult {
     String message;
     Boolean success;
+    //with success, username and authToken given
 
     public RegisterResult(String message, Boolean success) {
         this.message = message;

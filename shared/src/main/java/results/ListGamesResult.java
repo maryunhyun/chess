@@ -5,6 +5,7 @@ import java.util.Objects;
 public class ListGamesResult {
     String message;
     Boolean success;
+    //with success games [] listed
 
     public ListGamesResult(String message, Boolean success) {
         this.message = message;

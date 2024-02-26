@@ -5,6 +5,7 @@ import java.util.Objects;
 public class CreateGameResult {
     String message;
     Boolean success;
+    //with success, gameID given
 
     public CreateGameResult(String message, Boolean success) {
         this.message = message;

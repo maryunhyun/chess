@@ -5,6 +5,7 @@ import java.util.Objects;
 public class LoginResult {
     String message;
     Boolean success;
+    //with success, username and authToken given
 
     public LoginResult(String message, Boolean success) {
         this.message = message;

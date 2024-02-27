@@ -3,7 +3,6 @@ package serviceTests;
 import chess.ChessGame;
 import dataAccess.*;
 import model.AuthData;
-import model.GameData;
 import model.UserData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ public class ClearServiceTest {
     private AuthData authData2 = new AuthData("23456", "chocoForever");
     private UserData userData1 = new UserData("pandazRock","password123", "panda@gmail.com");
     private UserData userData2 = new UserData("chocoForever","password234","choco@gmail.com");
-    private GameData gameData1 = new GameData(135,"pandazRock","chocoForever","pandaChoco",chessGame1);
+
 
     ClearService clearService = new ClearService(authDAO, gameDAO, userDAO);
 
@@ -35,7 +34,9 @@ public class ClearServiceTest {
         userDAO.addUserData(userData1);
         userDAO.addUserData(userData2);
 
-        gameDAO.addGameData(gameData1);
+        int tempGameID = gameDAO.addGameData("pandaChoco").getGameID();
+        gameDAO.getGameData(tempGameID).setBlackUsername("pandazRock");
+        gameDAO.getGameData(tempGameID).setWhiteUsername("chocoForever");
 
     }
 

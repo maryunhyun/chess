@@ -3,6 +3,7 @@ package server;
 import com.google.gson.Gson;
 import dataAccess.*;
 import model.UserData;
+import server.requests.CreateGameRequest;
 import server.requests.LoginRequest;
 import server.results.*;
 import service.*;
@@ -154,7 +155,31 @@ public class Server {
         }
     }
     private Object createGame(Request req, Response res) throws ResponseException {
-        return null;
+        try {
+            var gameName = new Gson().fromJson(req.body(), CreateGameRequest.class);
+            String authToken = req.headers("authorization");
+            gameName.setAuthToken(authToken);
+            res.status(200);
+            return new Gson().toJson(createGameService.createGame(gameName));
+        }
+        catch (ResponseException e) {
+            CreateGameMessageResult createGameMessageResult = new CreateGameMessageResult(e.getMessage());
+            if (e.StatusCode() == 401) {
+                res.status(401);
+                createGameMessageResult.setMessage("Error: unauthorized");
+            }
+            else if (e.StatusCode() == 400) {
+                res.status(400);
+                createGameMessageResult.setMessage("Error: bad request");
+            }
+            //done correctly?
+            else {
+                res.status(500);
+                createGameMessageResult.setMessage("Error: description");
+            }
+
+            return new Gson().toJson(createGameMessageResult);
+        }
     }
     private Object joinGame(Request req, Response res) throws ResponseException {
         return null;

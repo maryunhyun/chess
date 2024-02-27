@@ -3,8 +3,10 @@ package service;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
+import model.GameData;
+import server.ResponseException;
 import server.requests.CreateGameRequest;
-import server.results.CreateGameResult;
+import server.results.CreateGameIDResult;
 
 public class CreateGameService {
     UserDAO userDAO;
@@ -15,10 +17,22 @@ public class CreateGameService {
         this.userDAO = userDAO;
         this.gameDAO = gameDAO;
     }
-    public CreateGameResult createGame(CreateGameRequest r) {
+    public CreateGameIDResult createGame(CreateGameRequest r) throws ResponseException {
         //getAuth(authToken)
         //createGame(gameName)
+        GameData gameData = new GameData(0,null,null,r.getGameName(),null);
+        if (r.getGameName() == null | r.getAuthToken() == null) {
+            throw new ResponseException(400, "Error: bad request");
+        }
+        else if (authDAO.getAuthData(r.getAuthToken()) == null) {
+            throw new ResponseException(401, "Error: unauthorized");
+        }
+        else {
+            gameData = gameDAO.addGameData(r.getGameName());
+            CreateGameIDResult createGameIDResult = new CreateGameIDResult(gameData.getGameID());
+            return createGameIDResult;
+        }
 
-        return null;
+
     }
 }

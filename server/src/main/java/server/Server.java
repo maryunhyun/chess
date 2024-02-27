@@ -139,7 +139,12 @@ public class Server {
         try {
             String authToken = req.headers("authorization");
             res.status(200);
-            return new Gson().toJson(listGamesService.listGames(authToken));
+            if (gameDAO.listGameDatas().size() == 0) {
+                return "{}";
+            }
+            else {
+                return new Gson().toJson(listGamesService.listGames(authToken));
+            }
         }
         catch(ResponseException e) {
             ListGamesResult listGamesResult = new ListGamesResult(e.getMessage());

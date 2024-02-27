@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import dataAccess.*;
 import model.UserData;
 import server.requests.LoginRequest;
-import server.results.ClearResult;
-import server.results.LoginResult;
-import server.results.RegisterResult;
+import server.results.*;
 import service.*;
 import spark.Request;
 import spark.Response;
@@ -117,10 +115,43 @@ public class Server {
         }
     }
     private Object logout(Request req, Response res) throws ResponseException {
-        return null;
+        try {
+            String authToken = req.headers("authorization");
+            res.status(200);
+            logoutService.logout(authToken);
+            return "{}";
+        }
+        catch(ResponseException e) {
+            LogoutResult logoutResult = new LogoutResult(e.getMessage());
+            if (e.StatusCode() == 401) {
+                res.status(401);
+            }
+            //done correctly?
+            else {
+                res.status(500);
+                logoutResult.setMessage("Error: description");
+            }
+            return new Gson().toJson(logoutResult);
+        }
     }
     private Object listGames(Request req, Response res) throws ResponseException {
-        return null;
+        try {
+            String authToken = req.headers("authorization");
+            res.status(200);
+            return new Gson().toJson(listGamesService.listGames(authToken));
+        }
+        catch(ResponseException e) {
+            ListGamesResult listGamesResult = new ListGamesResult(e.getMessage());
+            if (e.StatusCode() == 401) {
+                res.status(401);
+            }
+            //done correctly?
+            else {
+                res.status(500);
+                listGamesResult.setMessage("Error: description");
+            }
+            return new Gson().toJson(listGamesResult);
+        }
     }
     private Object createGame(Request req, Response res) throws ResponseException {
         return null;

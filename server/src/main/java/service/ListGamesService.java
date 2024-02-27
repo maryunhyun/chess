@@ -3,8 +3,8 @@ package service;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
-import server.requests.ListGamesRequest;
-import server.results.ListGamesResult;
+import model.GameData;
+import server.ResponseException;
 
 public class ListGamesService {
     UserDAO userDAO;
@@ -15,7 +15,7 @@ public class ListGamesService {
         this.userDAO = userDAO;
         this.gameDAO = gameDAO;
     }
-    public ListGamesResult listGames(ListGamesRequest r) {
+    public GameData[] listGames(String authToken) throws ResponseException {
         //getAuth(authToken)
         //getGames()
         return null;

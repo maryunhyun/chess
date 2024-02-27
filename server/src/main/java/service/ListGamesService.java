@@ -3,22 +3,21 @@ package service;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
-import server.requests.CreateGameRequest;
-import server.results.CreateGameResult;
+import server.requests.ListGamesRequest;
+import server.results.ListGamesResult;
 
-public class CreateGameService {
+public class ListGamesService {
     UserDAO userDAO;
     AuthDAO authDAO;
     GameDAO gameDAO;
-    public CreateGameService(UserDAO userDAO, AuthDAO authDAO, GameDAO gameDAO) {
+    public ListGamesService(UserDAO userDAO, AuthDAO authDAO, GameDAO gameDAO) {
         this.authDAO = authDAO;
         this.userDAO = userDAO;
         this.gameDAO = gameDAO;
     }
-    public CreateGameResult createGame(CreateGameRequest r) {
+    public ListGamesResult listGames(ListGamesRequest r) {
         //getAuth(authToken)
-        //createGame(gameName)
-
+        //getGames()
         return null;
     }
 }

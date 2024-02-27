@@ -3,10 +3,11 @@ package server;
 import com.google.gson.Gson;
 import dataAccess.*;
 import model.UserData;
+import server.requests.LoginRequest;
 import server.results.ClearResult;
+import server.results.LoginResult;
 import server.results.RegisterResult;
-import service.ClearService;
-import service.RegisterService;
+import service.*;
 import spark.Request;
 import spark.Response;
 import spark.Spark;
@@ -25,6 +26,11 @@ public class Server {
     public ClearResult clearResult = new ClearResult("",false);
 
     private RegisterService registerService = new RegisterService(userDAO,authDAO,gameDAO);
+    private LoginService loginService = new LoginService(userDAO,authDAO,gameDAO);
+    private LogoutService logoutService = new LogoutService(userDAO,authDAO,gameDAO);
+    private CreateGameService createGameService = new CreateGameService(userDAO, authDAO, gameDAO);
+    private JoinGameService joinGameService = new JoinGameService(userDAO,authDAO,gameDAO);
+    private ListGamesService listGamesService = new ListGamesService(userDAO,authDAO,gameDAO);
 
     //private final WebSocketHandler webSocketHandler;
 
@@ -39,11 +45,11 @@ public class Server {
         //try {
             Spark.delete("/db", this::clear);
             Spark.post("/user", this::register);
-            //Spark.post("/session", ((request, response) -> LoginHandler.handleRequest(request,response)));
-            //Spark.delete("/session", ((request, response) -> LogoutHandler.handleRequest(request,response)));
-            //Spark.get("/game",((request, response) -> ListGamesHandler.handleRequest(request,response)));
-            //Spark.post("/game",((request, response) -> CreateGameHandler.handleRequest(request,response)));
-            //Spark.put("/game",((request, response) -> JoinGameHandler.handleRequest(request,response)));
+            Spark.post("/session", this::login);
+            Spark.delete("/session", this::logout);
+            Spark.get("/game",this::listGames);
+            Spark.post("/game",this::createGame);
+            Spark.put("/game",this::joinGame);
         Spark.exception(ResponseException.class, this::exceptionHandler);
         //}
         //catch ()
@@ -90,6 +96,37 @@ public class Server {
             return new Gson().toJson(registerResult);
         }
 
+    }
+    private Object login(Request req, Response res) throws ResponseException {
+        try {
+            var info = new Gson().fromJson(req.body(), LoginRequest.class);
+            res.status(200);
+            return new Gson().toJson(loginService.login(info));
+        }
+        catch(ResponseException e) {
+            LoginResult loginResult = new LoginResult(e.getMessage());
+            if (e.StatusCode() == 401) {
+                res.status(401);
+            }
+            //done correctly?
+            else {
+                res.status(500);
+                loginResult.setMessage("Error: description");
+            }
+            return new Gson().toJson(loginResult);
+        }
+    }
+    private Object logout(Request req, Response res) throws ResponseException {
+        return null;
+    }
+    private Object listGames(Request req, Response res) throws ResponseException {
+        return null;
+    }
+    private Object createGame(Request req, Response res) throws ResponseException {
+        return null;
+    }
+    private Object joinGame(Request req, Response res) throws ResponseException {
+        return null;
     }
 
     public void stop() {

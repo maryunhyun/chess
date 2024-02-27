@@ -8,6 +8,7 @@ import model.UserData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.ResponseException;
+import server.requests.CreateGameRequest;
 import service.CreateGameService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,26 +31,29 @@ public class CreateGameServiceTest {
     public void setUp() throws DataAccessException {
         //set up any classes or variables we will need for each test
 
-
     }
 
     @Test
     public void createGamePass() throws DataAccessException, ResponseException {
-        // registerService.register(userData1);
+        authDAO.addAuthData(authData1);
+        CreateGameRequest createGameRequest = new CreateGameRequest(gameData1.getGameName(),authData1.getAuthToken());
 
-        assertEquals(authDAO.listAuthDatas().size(), 1);
-        assertEquals(userDAO.listUserDatas().size(), 1);
+        createGameService.createGame(createGameRequest);
+
+        assertEquals(gameDAO.listGameDatas().size(), 1);
 
     }
 
     @Test
     public void createGameFail() throws DataAccessException, ResponseException {
-//        try {
-//            registerService.register(userData1);
-//        }
-//        catch (ResponseException e) {
-//            assertEquals(e.StatusCode(),403);
-//        }
+        try {
+            CreateGameRequest createGameRequest = new CreateGameRequest(gameData1.getGameName(),authData1.getAuthToken());
+
+            createGameService.createGame(createGameRequest);
+        }
+        catch (ResponseException e) {
+            assertEquals(e.StatusCode(),401);
+        }
 
     }
 }

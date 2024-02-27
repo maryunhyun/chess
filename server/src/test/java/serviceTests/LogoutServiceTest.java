@@ -8,7 +8,10 @@ import model.UserData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.ResponseException;
+import server.requests.LoginRequest;
+import service.LoginService;
 import service.LogoutService;
+import service.RegisterService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -27,28 +30,48 @@ public class LogoutServiceTest {
     LogoutService logoutService = new LogoutService(userDAO, authDAO, gameDAO);
 
     @BeforeEach
-    public void setUp() throws DataAccessException {
+    public void setUp() throws DataAccessException ,ResponseException{
         //set up any classes or variables we will need for each test
-
 
     }
 
     @Test
     public void logoutPass() throws DataAccessException, ResponseException {
-        //registerService.register(userData1);
 
-        assertEquals(authDAO.listAuthDatas().size(), 1);
+        RegisterService registerService = new RegisterService(userDAO,authDAO,gameDAO);
+        registerService.register(userData1);
+        LoginRequest loginRequest1 = new LoginRequest(userData1.getUsername(),userData1.getPassword());
+        LoginService loginService = new LoginService(userDAO,authDAO,gameDAO);
+
+        AuthData authData1 = new AuthData(null,null);
+        authData1.setAuthToken(loginService.login(loginRequest1).getAuthToken());
+
+        assertEquals(authDAO.listAuthDatas().size(), 2);
         assertEquals(userDAO.listUserDatas().size(), 1);
+
+        logoutService.logout(authData1.getAuthToken());
+        assertEquals(authDAO.listAuthDatas().size(), 1);
+
 
     }
 
     @Test
     public void logoutFail() throws DataAccessException, ResponseException {
-//        try {
-//           // registerService.register(userData1);
-//        } catch (ResponseException e) {
-//            assertEquals(e.StatusCode(), 403);
-//        }
+        RegisterService registerService = new RegisterService(userDAO,authDAO,gameDAO);
+        registerService.register(userData1);
+        LoginRequest loginRequest1 = new LoginRequest(userData1.getUsername(),userData1.getPassword());
+        LoginService loginService = new LoginService(userDAO,authDAO,gameDAO);
+
+        AuthData authData1 = new AuthData(null,null);
+        authData1.setAuthToken(loginService.login(loginRequest1).getAuthToken());
+
+        try {
+            assertEquals(authDAO.listAuthDatas().size(), 2);
+            assertEquals(userDAO.listUserDatas().size(), 1);
+            logoutService.logout("wrongAuth");
+        } catch (ResponseException e) {
+            assertEquals(e.StatusCode(), 401);
+        }
 
 
     }

@@ -8,9 +8,12 @@ import model.UserData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.ResponseException;
+import server.requests.LoginRequest;
 import service.LoginService;
+import service.RegisterService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class LoginServiceTest {
     private AuthDAO authDAO = new MemoryAuthDAO();
@@ -35,21 +38,26 @@ public class LoginServiceTest {
 
     @Test
     public void loginPass() throws DataAccessException, ResponseException {
-        //registerService.register(userData1);
+        RegisterService registerService = new RegisterService(userDAO,authDAO,gameDAO);
+        registerService.register(userData1);
+        LoginRequest loginRequest1 = new LoginRequest(userData1.getUsername(),userData1.getPassword());
 
-        assertEquals(authDAO.listAuthDatas().size(), 1);
-        assertEquals(userDAO.listUserDatas().size(), 1);
+        AuthData authData1 = new AuthData(null,null);
+        authData1.setAuthToken(loginService.login(loginRequest1).getAuthToken());
+
+        assertNotEquals(authData1.getAuthToken(), null);
 
     }
 
     @Test
     public void loginFail() throws DataAccessException, ResponseException {
-//        try {
-//            //registerService.register(userData1);
-//        }
-//        //catch (ResponseException e) {
-//            assertEquals(e.StatusCode(),403);
-//        }
+        try {
+            LoginRequest loginRequest2 = new LoginRequest(userData2.getUsername(),userData2.getPassword());
+            loginService.login(loginRequest2);
+        }
+        catch (ResponseException e) {
+            assertEquals(e.StatusCode(),401);
+        }
 
 
     }

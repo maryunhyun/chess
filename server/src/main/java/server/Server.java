@@ -2,6 +2,7 @@ package server;
 
 import com.google.gson.Gson;
 import dataAccess.*;
+import model.GameData;
 import model.UserData;
 import server.requests.CreateGameRequest;
 import server.requests.JoinGameRequest;
@@ -12,9 +13,11 @@ import spark.Request;
 import spark.Response;
 import spark.Spark;
 
-//does clear not need a request?
-//is the way I did the status code alright?
+import java.util.Collection;
+import java.util.Map;
+
 //when does failure 500 get thrown? is it correct for register below?
+//how to list games? Arraylist?
 
 
 
@@ -140,11 +143,18 @@ public class Server {
         try {
             String authToken = req.headers("authorization");
             res.status(200);
+            listGamesService.listGames(authToken);
             if (gameDAO.listGameDatas().size() == 0) {
                 return "{}";
             }
             else {
-                return new Gson().toJson(listGamesService.listGames(authToken));
+                var serializer = new Gson();
+                //res.type("application/json");
+                Collection<GameData> list = listGamesService.listGames(authToken);
+                //var json = serializer.toJson(list);
+                return new Gson().toJson(Map.of("games", list));
+                //use Arraylist?
+
             }
         }
         catch(ResponseException e) {

@@ -1,6 +1,5 @@
 package chess;
 
-import java.util.Collection;
 import java.util.HashSet;
 
 /**
@@ -14,7 +13,6 @@ public class ChessGame {
     public ChessBoard chessBoard;
     public ChessBoard tempBoard = new ChessBoard();
 
-    public InvalidMoveException invalidMoveException = new InvalidMoveException();
     //public ChessPiece[][] tempSquares = new ChessPiece[8][8];
     public ChessGame() {
 
@@ -109,10 +107,10 @@ public class ChessGame {
 
         if (chessBoard.squares[move.chessStartPosition.chessRow-1][move.chessStartPosition.chessCol-1] != null) {
             if (chessBoard.squares[move.chessStartPosition.chessRow - 1][move.chessStartPosition.chessCol - 1].chessPieceColor != getTeamTurn()) {
-                throw invalidMoveException;
+                throw new InvalidMoveException();
             }
             else if (move.chessEndPosition.chessRow > 8 | move.chessEndPosition.chessRow < 1 | move.chessEndPosition.chessCol > 8 | move.chessEndPosition.chessCol < 1) {
-                throw invalidMoveException;
+                throw new InvalidMoveException();
             }
             boolean moveValid = false;
             HashSet<ChessMove> validTempMoves = new HashSet<>();
@@ -152,7 +150,7 @@ public class ChessGame {
             danger = true;
         }
         if (danger) {
-            throw invalidMoveException;
+            throw new InvalidMoveException();
         }
 
 

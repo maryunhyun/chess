@@ -3,6 +3,7 @@ package service;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
+import model.AuthData;
 import model.GameData;
 import server.ResponseException;
 
@@ -20,11 +21,13 @@ public class ListGamesService {
     public Collection<GameData> listGames(String authToken) throws ResponseException {
         //getAuth(authToken)
         //getGames()
+        AuthData authData = authDAO.getAuthData(authToken);
 
         if (authDAO.getAuthData(authToken) == null) {
             throw new ResponseException(401,"Error: unauthorized");
         }
         else {
+
             return gameDAO.listGameDatas();
         }
     }

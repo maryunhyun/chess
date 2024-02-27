@@ -5,6 +5,12 @@ import dataAccess.*;
 import model.AuthData;
 import model.GameData;
 import model.UserData;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import server.ResponseException;
+import service.RegisterService;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RegisterServiceTest {
     private AuthDAO authDAO = new MemoryAuthDAO();
@@ -18,38 +24,33 @@ public class RegisterServiceTest {
     private UserData userData2 = new UserData("chocoForever","password234","choco@gmail.com");
     private GameData gameData1 = new GameData(135,"pandazRock","chocoForever","pandaChoco",chessGame1);
 
-    //deal with error possibilities first
-    //RegisterService registerService = new RegisterService()
+    RegisterService registerService = new RegisterService(userDAO,authDAO,gameDAO);
 
-   /* @BeforeEach
+    @BeforeEach
     public void setUp() throws DataAccessException {
         //set up any classes or variables we will need for each test
-        authDAO.addAuthData(authData1);
-        authDAO.addAuthData(authData2);
 
-        userDAO.addUserData(userData1);
-        userDAO.addUserData(userData2);
-
-        gameDAO.addGameData(gameData1);
 
     }
 
     @Test
-    public void clearPass() throws DataAccessException{
-        clearService.clearAll();
+    public void registerPass() throws DataAccessException, ResponseException {
+        registerService.register(userData1);
 
-        assertEquals(authDAO.listAuthDatas().size(),0);
-        assertEquals(gameDAO.listGameDatas().size(),0);
-        assertEquals(userDAO.listUserDatas().size(),0);
+        assertEquals(authDAO.listAuthDatas().size(),1);
+        assertEquals(userDAO.listUserDatas().size(),1);
 
     }
 
     @Test
-    public void clearFail() throws DataAccessException{
+    public void registerFail() throws DataAccessException, ResponseException{
+        try {
+            registerService.register(userData1);
+        }
+        catch (ResponseException e) {
+            assertEquals(e.StatusCode(),403);
+        }
 
-        assertNotEquals(authDAO.listAuthDatas().size(),0);
-        assertNotEquals(gameDAO.listGameDatas().size(),0);
-        assertNotEquals(userDAO.listUserDatas().size(),0);
 
-    }*/
+    }
 }

@@ -148,7 +148,7 @@ public class Server {
             Collection<GameData> list = listGamesService.listGames(authToken);
 
             return new Gson().toJson(Map.of("games", list));
-            
+
         }
         catch(ResponseException e) {
             ListGamesResult listGamesResult = new ListGamesResult(e.getMessage());

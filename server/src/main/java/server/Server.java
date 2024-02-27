@@ -143,19 +143,12 @@ public class Server {
         try {
             String authToken = req.headers("authorization");
             res.status(200);
-            listGamesService.listGames(authToken);
-            if (gameDAO.listGameDatas().size() == 0) {
-                return "{}";
-            }
-            else {
-                var serializer = new Gson();
-                //res.type("application/json");
-                Collection<GameData> list = listGamesService.listGames(authToken);
-                //var json = serializer.toJson(list);
-                return new Gson().toJson(Map.of("games", list));
-                //use Arraylist?
 
-            }
+            var serializer = new Gson();
+            Collection<GameData> list = listGamesService.listGames(authToken);
+
+            return new Gson().toJson(Map.of("games", list));
+            
         }
         catch(ResponseException e) {
             ListGamesResult listGamesResult = new ListGamesResult(e.getMessage());

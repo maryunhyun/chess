@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import dataAccess.*;
 import model.UserData;
 import server.requests.CreateGameRequest;
+import server.requests.JoinGameRequest;
 import server.requests.LoginRequest;
 import server.results.*;
 import service.*;
@@ -187,7 +188,36 @@ public class Server {
         }
     }
     private Object joinGame(Request req, Response res) throws ResponseException {
-        return null;
+        try {
+            var gameInfo = new Gson().fromJson(req.body(), JoinGameRequest.class);
+            String authToken = req.headers("authorization");
+            gameInfo.setAuthToken(authToken);
+            res.status(200);
+            joinGameService.joinGame(gameInfo);
+            return "{}";
+        }
+        catch (ResponseException e) {
+            JoinGameResult joinGameResult = new JoinGameResult(e.getMessage());
+            if (e.StatusCode() == 401) {
+                res.status(401);
+                joinGameResult.setMessage("Error: unauthorized");
+            }
+            else if (e.StatusCode() == 400) {
+                res.status(400);
+                joinGameResult.setMessage("Error: bad request");
+            }
+            else if (e.StatusCode() == 403) {
+                res.status(403);
+                joinGameResult.setMessage("Error: already taken");
+            }
+            //done correctly?
+            else {
+                res.status(500);
+                joinGameResult.setMessage("Error: description");
+            }
+
+            return new Gson().toJson(joinGameResult);
+        }
     }
 
     public void stop() {

@@ -1,24 +1,24 @@
 package server.requests;
 
-import java.util.Objects;
+import chess.ChessGame;
 
 public class JoinGameRequest {
-    String ClientColor;
+    ChessGame.TeamColor playerColor;
     int gameID;
     String authToken;
 
-    public JoinGameRequest(String clientColor, int gameID, String authToken) {
-        ClientColor = clientColor;
+    public JoinGameRequest(ChessGame.TeamColor playerColor, int gameID, String authToken) {
+        this.playerColor = playerColor;
         this.gameID = gameID;
         this.authToken = authToken;
     }
 
-    public String getClientColor() {
-        return ClientColor;
+    public ChessGame.TeamColor getPlayerColor() {
+        return playerColor;
     }
 
-    public void setClientColor(String clientColor) {
-        ClientColor = clientColor;
+    public void setPlayerColor(ChessGame.TeamColor playerColor) {
+        this.playerColor = playerColor;
     }
 
     public int getGameID() {
@@ -37,25 +37,4 @@ public class JoinGameRequest {
         this.authToken = authToken;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        JoinGameRequest that = (JoinGameRequest) o;
-        return gameID == that.gameID && Objects.equals(ClientColor, that.ClientColor) && Objects.equals(authToken, that.authToken);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ClientColor, gameID, authToken);
-    }
-
-    @Override
-    public String toString() {
-        return "JoinGameRequest{" +
-                "ClientColor='" + ClientColor + '\'' +
-                ", gameID=" + gameID +
-                ", authToken='" + authToken + '\'' +
-                '}';
-    }
 }

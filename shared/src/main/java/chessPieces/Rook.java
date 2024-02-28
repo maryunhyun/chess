@@ -1,4 +1,8 @@
-package chess;
+package chessPieces;
+
+import chess.ChessBoard;
+import chess.ChessMove;
+import chess.ChessPosition;
 
 import java.util.HashSet;
 
@@ -10,7 +14,6 @@ public class Rook {
         ChessMove [] chessMoves8 = new ChessMove[10];
         int z = 0;
         for (int i = myPosition.getRow()+1; i < 9; i++ ) {
-
             if (j > 8) {
                 break;
             }
@@ -28,8 +31,7 @@ public class Rook {
                 }
                 break;
             }
-        }
-        //decreasing column
+        }//decreasing column
         j = myPosition.getColumn();
         ChessPosition [] chessPositions9 = new ChessPosition[10];
         ChessMove [] chessMoves9 = new ChessMove[10];
@@ -53,14 +55,12 @@ public class Rook {
                 }
                 break;
             }
-        }
-        //decreasing row
+        }//decreasing row
         j = myPosition.getColumn();
         ChessPosition [] chessPositions10 = new ChessPosition[10];
         ChessMove [] chessMoves10 = new ChessMove[10];
         z = 0;
         for (int i = myPosition.getRow()-1; i > 0; i-- ) {
-
             if (j < 1) {
                 break;
             }
@@ -78,8 +78,7 @@ public class Rook {
                 }
                 break;
             }
-        }
-        //increasing column
+        }//increasing column
         j = myPosition.getColumn();
         ChessPosition [] chessPositions11 = new ChessPosition[10];
         ChessMove [] chessMoves11 = new ChessMove[10];
@@ -103,7 +102,6 @@ public class Rook {
                 }
                 break;
             }
-        }
-        return movesCollection;
+        }return movesCollection;
     }
 }

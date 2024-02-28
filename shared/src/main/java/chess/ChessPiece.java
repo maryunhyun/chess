@@ -1,5 +1,7 @@
 package chess;
 
+import chessPieces.*;
+
 import java.util.*;
 
 /**

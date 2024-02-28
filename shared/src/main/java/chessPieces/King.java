@@ -60,7 +60,7 @@ public class King {
         return movesCollection;
     }
 
-    HashSet<ChessMove> place(int i, int j, int z, ChessBoard board, ChessPosition myPosition, ChessPosition[] chessPositions5, ChessMove[] chessMoves5, HashSet<ChessMove> movesCollection) {
+    HashSet<ChessMove> place(int i, int j, int z, ChessPosition myPosition, ChessPosition[] chessPositions5, ChessMove[] chessMoves5, HashSet<ChessMove> movesCollection) {
         chessPositions5[z] = new ChessPosition(i, j);
         chessMoves5[z] = new ChessMove(myPosition, chessPositions5[z], null);
         movesCollection.add(chessMoves5[z]);
@@ -71,10 +71,10 @@ public class King {
     HashSet<ChessMove> check(int i, int j, int z, ChessBoard board, ChessPosition myPosition, ChessPosition[] chessPositions5, ChessMove[] chessMoves5, HashSet<ChessMove> movesCollection) {
         if (j < 9 && j > 0 && i < 9 && i > 0) {
             if (board.getBoardSquares()[i - 1][j - 1] == null) {
-                place(i, j, z, board, myPosition, chessPositions5, chessMoves5, movesCollection);
+                place(i, j, z, myPosition, chessPositions5, chessMoves5, movesCollection);
             } else {
                 if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                    place(i, j, z, board, myPosition, chessPositions5, chessMoves5, movesCollection);
+                    place(i, j, z, myPosition, chessPositions5, chessMoves5, movesCollection);
                 }
             }
         }

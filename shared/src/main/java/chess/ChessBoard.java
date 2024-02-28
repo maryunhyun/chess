@@ -55,9 +55,7 @@ public class ChessBoard {
      */
     public void resetBoard() {
         ChessPiece tempPiece = new ChessPiece(BLACK, ROOK);
-        //putting a rook on the top left and right for black team
-        //tempPiece.setChessPieceColor(BLACK);
-        //tempPiece.setChessType(ROOK);
+
         squares[7][0] = tempPiece;
         squares[7][7] = tempPiece;
 
@@ -166,9 +164,6 @@ public class ChessBoard {
                         }
 
                     }
-                    //stringBuilder.append(squares[i][j].getTeamColor());
-                    //stringBuilder.append(",");
-                    //stringBuilder.append(squares[i][j].getPieceType());
                 }
                 else {
                     stringBuilder.append("| ");

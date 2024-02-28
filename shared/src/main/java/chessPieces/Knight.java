@@ -57,21 +57,15 @@ public class Knight {
         return movesCollection;
     }
 
-    HashSet<ChessMove> placeKnight(int i, int j, int z, ChessPosition myPosition, ChessPosition[] chessPositions6, ChessMove[] chessMoves6, HashSet<ChessMove> movesCollection) {
-        chessPositions6[z] = new ChessPosition(i, j);
-        chessMoves6[z] = new ChessMove(myPosition, chessPositions6[z], null);
-        movesCollection.add(chessMoves6[z]);
-        z++;
-        return movesCollection;
-    }
 
     HashSet<ChessMove> checkKnight(int i, int j, int z, ChessPosition myPosition, ChessBoard board, ChessPosition[] chessPositions6, ChessMove[] chessMoves6, HashSet<ChessMove> movesCollection) {
+        King king = new King();
         if (j < 9 && j > 0 && i < 9 && i > 0) {
             if (board.getBoardSquares()[i - 1][j - 1] == null) {
-                placeKnight(i, j, z, myPosition, chessPositions6, chessMoves6, movesCollection);
+                king.place(i, j, z, myPosition, chessPositions6, chessMoves6, movesCollection);
             } else {
                 if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                    placeKnight(i, j, z, myPosition, chessPositions6, chessMoves6, movesCollection);
+                    king.place(i, j, z, myPosition, chessPositions6, chessMoves6, movesCollection);
                 }
             }
         }

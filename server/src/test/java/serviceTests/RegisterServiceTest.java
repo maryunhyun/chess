@@ -48,7 +48,7 @@ public class RegisterServiceTest {
             registerService.register(userData1);
         }
         catch (ResponseException e) {
-            assertEquals(e.StatusCode(),403);
+            assertEquals(e.statusCode(),403);
         }
 
 

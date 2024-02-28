@@ -59,7 +59,7 @@ public class JoinGameServiceTest {
             joinGameService.joinGame(joinGameRequest);
         }
         catch (ResponseException e) {
-            assertEquals(e.StatusCode(),401);
+            assertEquals(e.statusCode(),401);
         }
 
 

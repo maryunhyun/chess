@@ -10,7 +10,4 @@ public class CreateGameIDResult {
         return gameID;
     }
 
-    public void setGameID(int gameID) {
-        this.gameID = gameID;
-    }
 }

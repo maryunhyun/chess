@@ -25,9 +25,6 @@ public class MemoryGameDAO implements GameDAO{
         return gameDatas.get(gameID);
     }
 
-    public void deleteGameData(Integer gameID) {
-        gameDatas.remove(gameID);
-    }
 
     public void clearGameDatas() {
         gameDatas.clear();

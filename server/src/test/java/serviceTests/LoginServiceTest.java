@@ -56,7 +56,7 @@ public class LoginServiceTest {
             loginService.login(loginRequest2);
         }
         catch (ResponseException e) {
-            assertEquals(e.StatusCode(),401);
+            assertEquals(e.statusCode(),401);
         }
 
 

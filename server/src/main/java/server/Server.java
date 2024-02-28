@@ -26,7 +26,7 @@ public class Server {
     GameDAO gameDAO = new MemoryGameDAO();
     UserDAO userDAO = new MemoryUserDAO();
     private ClearService clearService = new ClearService(authDAO,gameDAO,userDAO);
-    public ClearResult clearResult = new ClearResult("",false);
+    public ClearResult clearResult = new ClearResult("");
 
     private RegisterService registerService = new RegisterService(userDAO,authDAO,gameDAO);
     private LoginService loginService = new LoginService(userDAO,authDAO,gameDAO);
@@ -65,7 +65,7 @@ public class Server {
         //res.status(ex.StatusCode());
     //}
     private void exceptionHandler(ResponseException ex, Request req, Response res) {
-        res.status(ex.StatusCode());
+        res.status(ex.statusCode());
     }
 
     private Object clear(Request req, Response res) {
@@ -84,10 +84,10 @@ public class Server {
         }
         catch (ResponseException e) {
             RegisterResult registerResult = new RegisterResult(e.getMessage());
-            if (e.StatusCode() == 403) {
+            if (e.statusCode() == 403) {
                 res.status(403);
             }
-            else if (e.StatusCode() == 400) {
+            else if (e.statusCode() == 400) {
                 res.status(400);
             }
             //done correctly?
@@ -108,7 +108,7 @@ public class Server {
         }
         catch(ResponseException e) {
             LoginResult loginResult = new LoginResult(e.getMessage());
-            if (e.StatusCode() == 401) {
+            if (e.statusCode() == 401) {
                 res.status(401);
             }
             //done correctly?
@@ -128,7 +128,7 @@ public class Server {
         }
         catch(ResponseException e) {
             LogoutResult logoutResult = new LogoutResult(e.getMessage());
-            if (e.StatusCode() == 401) {
+            if (e.statusCode() == 401) {
                 res.status(401);
             }
             //done correctly?
@@ -152,7 +152,7 @@ public class Server {
         }
         catch(ResponseException e) {
             ListGamesResult listGamesResult = new ListGamesResult(e.getMessage());
-            if (e.StatusCode() == 401) {
+            if (e.statusCode() == 401) {
                 res.status(401);
             }
             //done correctly?
@@ -173,11 +173,11 @@ public class Server {
         }
         catch (ResponseException e) {
             CreateGameMessageResult createGameMessageResult = new CreateGameMessageResult(e.getMessage());
-            if (e.StatusCode() == 401) {
+            if (e.statusCode() == 401) {
                 res.status(401);
                 createGameMessageResult.setMessage("Error: unauthorized");
             }
-            else if (e.StatusCode() == 400) {
+            else if (e.statusCode() == 400) {
                 res.status(400);
                 createGameMessageResult.setMessage("Error: bad request");
             }
@@ -201,15 +201,15 @@ public class Server {
         }
         catch (ResponseException e) {
             JoinGameResult joinGameResult = new JoinGameResult(e.getMessage());
-            if (e.StatusCode() == 401) {
+            if (e.statusCode() == 401) {
                 res.status(401);
                 joinGameResult.setMessage("Error: unauthorized");
             }
-            else if (e.StatusCode() == 400) {
+            else if (e.statusCode() == 400) {
                 res.status(400);
                 joinGameResult.setMessage("Error: bad request");
             }
-            else if (e.StatusCode() == 403) {
+            else if (e.statusCode() == 403) {
                 res.status(403);
                 joinGameResult.setMessage("Error: already taken");
             }

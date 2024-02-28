@@ -70,7 +70,7 @@ public class LogoutServiceTest {
             assertEquals(userDAO.listUserDatas().size(), 1);
             logoutService.logout("wrongAuth");
         } catch (ResponseException e) {
-            assertEquals(e.StatusCode(), 401);
+            assertEquals(e.statusCode(), 401);
         }
 
 

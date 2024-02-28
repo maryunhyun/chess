@@ -56,7 +56,7 @@ public class ListGamesServiceTest {
             listGamesService.listGames(authData1.getAuthToken()).size();
         }
         catch (ResponseException e) {
-            assertEquals(e.StatusCode(),401);
+            assertEquals(e.statusCode(),401);
         }
 
     }
@@ -67,7 +67,7 @@ public class ListGamesServiceTest {
             listGamesService.listGames(authData2.getAuthToken());
         }
         catch (ResponseException e) {
-            assertEquals(e.StatusCode(),401);
+            assertEquals(e.statusCode(),401);
         }
 
 

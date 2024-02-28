@@ -52,7 +52,7 @@ public class CreateGameServiceTest {
             createGameService.createGame(createGameRequest);
         }
         catch (ResponseException e) {
-            assertEquals(e.StatusCode(),401);
+            assertEquals(e.statusCode(),401);
         }
 
     }

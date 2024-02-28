@@ -126,17 +126,9 @@ public class Pawn {
             }
             //checking for enemies in diagonal
             j--;
-            if (board.getBoardSquares()[i - 1][j - 1] != null) {
-                if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                    promotionEndofBoardBlack(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
-                }
-            }
+            diagonalCheck(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
             j = j + 2;
-            if (board.getBoardSquares()[i - 1][j - 1] != null) {
-                if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                    promotionEndofBoardBlack(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
-                }
-            }
+            diagonalCheck(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
             i = myPosition.getRow();
             j = myPosition.getColumn();
 
@@ -153,19 +145,11 @@ public class Pawn {
             //checking for enemies in diagonal
             j++;
             if (j < 9) {
-                if (board.getBoardSquares()[i - 1][j - 1] != null) {
-                    if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                        promotionEndofBoardWhite(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
-                    }
-                }
+                diagonalCheck(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
             }
             j = j - 2;
             if (j > 0) {
-                if (board.getBoardSquares()[i - 1][j - 1] != null) {
-                    if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                        promotionEndofBoardWhite(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
-                    }
-                }
+                diagonalCheck(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
             }
             i = myPosition.getRow();
             j = myPosition.getColumn();
@@ -250,6 +234,14 @@ public class Pawn {
             chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
             movesCollection.add(chessMoves7[z]);
             z++;
+        }
+        return movesCollection;
+    }
+    HashSet<ChessMove> diagonalCheck(int i, int j, int z, ChessBoard board, ChessPosition myPosition, ChessPosition[] chessPositions7, ChessMove[] chessMoves7, HashSet<ChessMove> movesCollection) {
+        if (board.getBoardSquares()[i - 1][j - 1] != null) {
+            if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
+                promotionEndofBoardBlack(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
+            }
         }
         return movesCollection;
     }

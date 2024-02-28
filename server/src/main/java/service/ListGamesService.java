@@ -19,8 +19,6 @@ public class ListGamesService {
         this.gameDAO = gameDAO;
     }
     public Collection<GameData> listGames(String authToken) throws ResponseException {
-        //getAuth(authToken)
-        //getGames()
         AuthData authData = authDAO.getAuthData(authToken);
 
         if (authDAO.getAuthData(authToken) == null) {

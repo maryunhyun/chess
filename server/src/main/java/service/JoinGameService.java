@@ -17,9 +17,6 @@ public class JoinGameService {
         this.gameDAO = gameDAO;
     }
     public void joinGame(JoinGameRequest r) throws ResponseException {
-        //getAuth(authToken)
-        //getGame(gameID)
-        //addPlayer(gameID, username(which username to update determined with ClientColor)
         boolean taken = false;
 
 

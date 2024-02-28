@@ -15,8 +15,6 @@ public class LogoutService {
         this.gameDAO = gameDAO;
     }
     public void logout(String authToken) throws ResponseException {
-        //getAuth(authToken)
-        //deleteAuth(authData? or authToken/username)
         if (authDAO.getAuthData(authToken) == null) {
             throw new ResponseException(401,"Error: unauthorized");
         }

@@ -18,8 +18,6 @@ public class CreateGameService {
         this.gameDAO = gameDAO;
     }
     public CreateGameIDResult createGame(CreateGameRequest r) throws ResponseException {
-        //getAuth(authToken)
-        //createGame(gameName)
         GameData gameData = new GameData(0,null,null,r.getGameName(),null);
         if (r.getGameName() == null | r.getAuthToken() == null) {
             throw new ResponseException(400, "Error: bad request");

@@ -19,8 +19,6 @@ public class LoginService {
         this.gameDAO = gameDAO;
     }
     public AuthData login(LoginRequest loginRequest) throws ResponseException {
-        //getUser(username)
-        //createAuth(username)
         AuthData tempAuthData = new AuthData(UUID.randomUUID().toString(),loginRequest.getUsername());
 
 

@@ -35,7 +35,7 @@ public class Server {
     private JoinGameService joinGameService = new JoinGameService(userDAO,authDAO,gameDAO);
     private ListGamesService listGamesService = new ListGamesService(userDAO,authDAO,gameDAO);
 
-    //private final WebSocketHandler webSocketHandler;
+
 
 
     public int run(int desiredPort) {
@@ -45,34 +45,30 @@ public class Server {
 
         // Register your endpoints and handle exceptions here.
 
-        //try {
-            Spark.delete("/db", this::clear);
-            Spark.post("/user", this::register);
-            Spark.post("/session", this::login);
-            Spark.delete("/session", this::logout);
-            Spark.get("/game",this::listGames);
-            Spark.post("/game",this::createGame);
-            Spark.put("/game",this::joinGame);
+
+        Spark.delete("/db", this::clear);
+        Spark.post("/user", this::register);
+        Spark.post("/session", this::login);
+        Spark.delete("/session", this::logout);
+        Spark.get("/game",this::listGames);
+        Spark.post("/game",this::createGame);
+        Spark.put("/game",this::joinGame);
         Spark.exception(ResponseException.class, this::exceptionHandler);
-        //}
-        //catch ()
+
         
 
         Spark.awaitInitialization();
         return Spark.port();
     }
-    //private void exceptionHandler(ResponseException ex, Request req, Response res) {
-        //res.status(ex.StatusCode());
-    //}
+
     private void exceptionHandler(ResponseException ex, Request req, Response res) {
         res.status(ex.statusCode());
     }
 
     private Object clear(Request req, Response res) {
-        //req.headers("authorization");
         clearService.clearAll();
         res.status(200);
-        //res.body("[200]");
+
         return "{}";
     }
 
@@ -95,7 +91,7 @@ public class Server {
                 res.status(500);
                 registerResult.setMessage("Error: description");
             }
-            //res.body(e.getMessage());
+
             return new Gson().toJson(registerResult);
         }
 
@@ -131,7 +127,6 @@ public class Server {
             if (e.statusCode() == 401) {
                 res.status(401);
             }
-            //done correctly?
             else {
                 res.status(500);
                 logoutResult.setMessage("Error: description");
@@ -155,7 +150,6 @@ public class Server {
             if (e.statusCode() == 401) {
                 res.status(401);
             }
-            //done correctly?
             else {
                 res.status(500);
                 listGamesResult.setMessage("Error: description");
@@ -181,7 +175,6 @@ public class Server {
                 res.status(400);
                 createGameMessageResult.setMessage("Error: bad request");
             }
-            //done correctly?
             else {
                 res.status(500);
                 createGameMessageResult.setMessage("Error: description");
@@ -213,7 +206,6 @@ public class Server {
                 res.status(403);
                 joinGameResult.setMessage("Error: already taken");
             }
-            //done correctly?
             else {
                 res.status(500);
                 joinGameResult.setMessage("Error: description");

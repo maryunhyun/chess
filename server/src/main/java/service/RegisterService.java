@@ -19,9 +19,7 @@ public class RegisterService {
         this.gameDAO = gameDAO;
     }
     public AuthData register(UserData userData) throws ResponseException {
-        //getUser(username)
-        //createUser(username, password)
-        //createAuth(username)
+
         AuthData authData = new AuthData(UUID.randomUUID().toString(),userData.getUsername());
 
         if (userData.getUsername() == null | userData.getEmail() == null | userData.getPassword() == null) {
@@ -38,9 +36,7 @@ public class RegisterService {
         else {
             throw new ResponseException(500, "Error: description");
         }
-        //else {
-            //return "User already registered.";
-        //}
+
 
 
     }

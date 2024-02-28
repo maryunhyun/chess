@@ -67,10 +67,8 @@ public class ChessPiece {
         HashSet<ChessMove> movesCollection = new HashSet<>();
         //ChessMove tempChessMove = new ChessMove(myPosition,null, null);
         //a specific move the bishop can make of going to the diagonal one space up and to the left
-
         if (board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1] != null) {
             if (board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getPieceType() == PieceType.BISHOP) {
-
                 //increasing row and column
                 int j = myPosition.getColumn();
                 ChessPosition [] chessPositions1 = new ChessPosition[10];
@@ -92,13 +90,10 @@ public class ChessPiece {
                             chessPositions1[z] = new ChessPosition(i, j);
                             chessMoves1[z] = new ChessMove(myPosition, chessPositions1[z], null);
                             movesCollection.add(chessMoves1[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
                 }
-
                 //increasing row and decreasing column
                 j = myPosition.getColumn();
                 ChessPosition [] chessPositions2 = new ChessPosition[10];
@@ -120,8 +115,6 @@ public class ChessPiece {
                             chessPositions2[z] = new ChessPosition(i, j);
                             chessMoves2[z] = new ChessMove(myPosition, chessPositions2[z], null);
                             movesCollection.add(chessMoves2[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
@@ -147,13 +140,10 @@ public class ChessPiece {
                             chessPositions3[z] = new ChessPosition(i, j);
                             chessMoves3[z] = new ChessMove(myPosition, chessPositions3[z], null);
                             movesCollection.add(chessMoves3[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
                 }
-
                 //decreasing row and increasing column
                 j = myPosition.getColumn();
                 ChessPosition [] chessPositions4 = new ChessPosition[10];
@@ -175,8 +165,6 @@ public class ChessPiece {
                             chessPositions4[z] = new ChessPosition(i, j);
                             chessMoves4[z] = new ChessMove(myPosition, chessPositions4[z], null);
                             movesCollection.add(chessMoves4[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
@@ -189,7 +177,6 @@ public class ChessPiece {
                 int i = myPosition.getRow();
                 int j = myPosition.getColumn();
                 int z = 0;
-
                 //increasing row and column
                 i++;
                 j++;
@@ -204,13 +191,10 @@ public class ChessPiece {
                             chessPositions5[z] = new ChessPosition(i, j);
                             chessMoves5[z] = new ChessMove(myPosition, chessPositions5[z], null);
                             movesCollection.add(chessMoves5[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
                 }
-
                 //increasing row
                 i = myPosition.getRow();
                 j = myPosition.getColumn();
@@ -227,13 +211,10 @@ public class ChessPiece {
                             chessPositions5[z] = new ChessPosition(i, j);
                             chessMoves5[z] = new ChessMove(myPosition, chessPositions5[z], null);
                             movesCollection.add(chessMoves5[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
                 }
-
                 //increasing row and decreasing column
                 i = myPosition.getRow();
                 j = myPosition.getColumn();
@@ -250,13 +231,10 @@ public class ChessPiece {
                             chessPositions5[z] = new ChessPosition(i, j);
                             chessMoves5[z] = new ChessMove(myPosition, chessPositions5[z], null);
                             movesCollection.add(chessMoves5[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
                 }
-
                 //decreasing column
                 i = myPosition.getRow();
                 j = myPosition.getColumn();
@@ -272,13 +250,10 @@ public class ChessPiece {
                             chessPositions5[z] = new ChessPosition(i, j);
                             chessMoves5[z] = new ChessMove(myPosition, chessPositions5[z], null);
                             movesCollection.add(chessMoves5[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
                 }
-
                 //decreasing row and decreasing column
                 i = myPosition.getRow();
                 j = myPosition.getColumn();
@@ -295,13 +270,10 @@ public class ChessPiece {
                             chessPositions5[z] = new ChessPosition(i, j);
                             chessMoves5[z] = new ChessMove(myPosition, chessPositions5[z], null);
                             movesCollection.add(chessMoves5[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
                 }
-
                 //decreasing row
                 i = myPosition.getRow();
                 j = myPosition.getColumn();
@@ -318,13 +290,10 @@ public class ChessPiece {
                             chessPositions5[z] = new ChessPosition(i, j);
                             chessMoves5[z] = new ChessMove(myPosition, chessPositions5[z], null);
                             movesCollection.add(chessMoves5[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
                 }
-
                 //decreasing row and increasing column
                 i = myPosition.getRow();
                 j = myPosition.getColumn();
@@ -341,13 +310,10 @@ public class ChessPiece {
                             chessPositions5[z] = new ChessPosition(i, j);
                             chessMoves5[z] = new ChessMove(myPosition, chessPositions5[z], null);
                             movesCollection.add(chessMoves5[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
                 }
-
                 //increasing column
                 i = myPosition.getRow();
                 j = myPosition.getColumn();
@@ -363,9 +329,6 @@ public class ChessPiece {
                             chessPositions5[z] = new ChessPosition(i, j);
                             chessMoves5[z] = new ChessMove(myPosition, chessPositions5[z], null);
                             movesCollection.add(chessMoves5[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
-                            z++;
                         }
                     }
                 }
@@ -393,8 +356,6 @@ public class ChessPiece {
                             chessPositions6[z] = new ChessPosition(i, j);
                             chessMoves6[z] = new ChessMove(myPosition, chessPositions6[z], null);
                             movesCollection.add(chessMoves6[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
@@ -413,13 +374,10 @@ public class ChessPiece {
                             chessPositions6[z] = new ChessPosition(i, j);
                             chessMoves6[z] = new ChessMove(myPosition, chessPositions6[z], null);
                             movesCollection.add(chessMoves6[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
                 }
-
                 //decreasing row
                 i = myPosition.getRow();
                 j = myPosition.getColumn();
@@ -437,13 +395,10 @@ public class ChessPiece {
                             chessPositions6[z] = new ChessPosition(i, j);
                             chessMoves6[z] = new ChessMove(myPosition, chessPositions6[z], null);
                             movesCollection.add(chessMoves6[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
                 }
-
                 j = myPosition.getColumn();
                 j--;
                 if (j < 9 && j > 0 && i < 9 && i > 0) {
@@ -457,19 +412,14 @@ public class ChessPiece {
                             chessPositions6[z] = new ChessPosition(i, j);
                             chessMoves6[z] = new ChessMove(myPosition, chessPositions6[z], null);
                             movesCollection.add(chessMoves6[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
                 }
-
-
                 //increasing column
                 i = myPosition.getRow();
                 j = myPosition.getColumn();
                 j = j + 2;
-
                 i++;
                 if (j < 9 && j > 0 && i < 9 && i > 0) {
                     if (board.getBoardSquares()[i - 1][j - 1] == null) {
@@ -482,13 +432,10 @@ public class ChessPiece {
                             chessPositions6[z] = new ChessPosition(i, j);
                             chessMoves6[z] = new ChessMove(myPosition, chessPositions6[z], null);
                             movesCollection.add(chessMoves6[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
                 }
-
                 i = myPosition.getRow();
                 i--;
                 if (j < 9 && j > 0 && i < 9 && i > 0) {
@@ -502,13 +449,10 @@ public class ChessPiece {
                             chessPositions6[z] = new ChessPosition(i, j);
                             chessMoves6[z] = new ChessMove(myPosition, chessPositions6[z], null);
                             movesCollection.add(chessMoves6[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
                 }
-
                 //decreasing column
                 i = myPosition.getRow();
                 j = myPosition.getColumn();
@@ -526,8 +470,6 @@ public class ChessPiece {
                             chessPositions6[z] = new ChessPosition(i, j);
                             chessMoves6[z] = new ChessMove(myPosition, chessPositions6[z], null);
                             movesCollection.add(chessMoves6[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
@@ -546,8 +488,6 @@ public class ChessPiece {
                             chessPositions6[z] = new ChessPosition(i, j);
                             chessMoves6[z] = new ChessMove(myPosition, chessPositions6[z], null);
                             movesCollection.add(chessMoves6[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                             z++;
                         }
                     }
@@ -562,7 +502,6 @@ public class ChessPiece {
                 int j = myPosition.getColumn();
                 if (myPosition.getRow() == 7 && board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getTeamColor() == ChessGame.TeamColor.BLACK) {
                     //move like first move for black piece
-
                     //move two spaces
                     i = i - 2;
                     if (j < 9 && j > 0 && i < 9 && i > 0) {
@@ -573,7 +512,6 @@ public class ChessPiece {
                             z++;
                         }
                             //checking for enemies in diagonal
-
                             j--;
                             if (j > 0) {
                                 if (board.getBoardSquares()[i - 1][j - 1] != null) {
@@ -594,17 +532,13 @@ public class ChessPiece {
                                         chessPositions7[z] = new ChessPosition(i, j);
                                         chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
                                         movesCollection.add(chessMoves7[z]);
-                                        //to move piece in
-                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                                         z++;
                                     }
                                 }
                             }
                             i = myPosition.getRow();
                             j = myPosition.getColumn();
-
                     }
-
                     //move one space
                     i = myPosition.getRow();
                     i = i - 1;
@@ -616,7 +550,6 @@ public class ChessPiece {
                             z++;
                         }
                             //checking for enemies in diagonal
-
                             j--;
                             if (j > 0) {
                                 if (board.getBoardSquares()[i - 1][j - 1] != null) {
@@ -624,8 +557,6 @@ public class ChessPiece {
                                         chessPositions7[z] = new ChessPosition(i, j);
                                         chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
                                         movesCollection.add(chessMoves7[z]);
-                                        //to move piece in
-                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                                         z++;
                                     }
                                 }
@@ -637,15 +568,12 @@ public class ChessPiece {
                                         chessPositions7[z] = new ChessPosition(i, j);
                                         chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
                                         movesCollection.add(chessMoves7[z]);
-                                        //to move piece in
-                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                                         z++;
                                     }
                                 }
                             }
                             i = myPosition.getRow();
                             j = myPosition.getColumn();
-
                     }
 
                 }
@@ -662,7 +590,6 @@ public class ChessPiece {
                             z++;
                         }
                             //checking for enemies in diagonal
-
                             j++;
                             if (j < 9) {
                                 if (board.getBoardSquares()[i - 1][j - 1] != null) {
@@ -670,8 +597,6 @@ public class ChessPiece {
                                         chessPositions7[z] = new ChessPosition(i, j);
                                         chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
                                         movesCollection.add(chessMoves7[z]);
-                                        //to move piece in
-                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                                         z++;
                                     }
                                 }
@@ -683,17 +608,13 @@ public class ChessPiece {
                                         chessPositions7[z] = new ChessPosition(i, j);
                                         chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
                                         movesCollection.add(chessMoves7[z]);
-                                        //to move piece in
-                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                                         z++;
                                     }
                                 }
                             }
                             i = myPosition.getRow();
                             j = myPosition.getColumn();
-
                     }
-
                     //move one space
                     i = myPosition.getRow();
                     i = i + 1;
@@ -705,7 +626,6 @@ public class ChessPiece {
                             z++;
                         }
                             //checking for enemies in diagonal
-
                             j++;
                             if (j < 9) {
                                 if (board.getBoardSquares()[i - 1][j - 1] != null) {
@@ -713,8 +633,6 @@ public class ChessPiece {
                                         chessPositions7[z] = new ChessPosition(i, j);
                                         chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
                                         movesCollection.add(chessMoves7[z]);
-                                        //to move piece in
-                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                                         z++;
                                     }
                                 }
@@ -726,18 +644,14 @@ public class ChessPiece {
                                         chessPositions7[z] = new ChessPosition(i, j);
                                         chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
                                         movesCollection.add(chessMoves7[z]);
-                                        //to move piece in
-                                        //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                                         z++;
                                     }
                                 }
                             }
                             i = myPosition.getRow();
                             j = myPosition.getColumn();
-
                     }
                 }
-
                 //make sure moving forward in correct direction depending on color
                 else if (board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getTeamColor() == ChessGame.TeamColor.BLACK){
                     i--;
@@ -771,7 +685,6 @@ public class ChessPiece {
                             }
                         }
                             //checking for enemies in diagonal
-
                             j--;
                             if (board.getBoardSquares()[i-1][j-1] != null) {
                                 if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
@@ -872,7 +785,6 @@ public class ChessPiece {
                             }
                         }
                             //checking for enemies in diagonal
-
                             j++;
                             if (j < 9) {
                                 if (board.getBoardSquares()[i - 1][j - 1] != null) {
@@ -939,13 +851,11 @@ public class ChessPiece {
                             }
                             i = myPosition.getRow();
                             j = myPosition.getColumn();
-
                     }
                 }
             }
             else if (board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1].getPieceType() == PieceType.QUEEN) {
                 //moving like ROOK
-
                 //increasing row
                 int j = myPosition.getColumn();
                 ChessPosition [] chessPositions12 = new ChessPosition[10];
@@ -967,13 +877,10 @@ public class ChessPiece {
                             chessPositions12[z] = new ChessPosition(i, j);
                             chessMoves12[z] = new ChessMove(myPosition, chessPositions12[z], null);
                             movesCollection.add(chessMoves12[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
                 }
-
                 //decreasing column
                 j = myPosition.getColumn();
                 ChessPosition [] chessPositions13 = new ChessPosition[10];
@@ -995,8 +902,6 @@ public class ChessPiece {
                             chessPositions13[z] = new ChessPosition(myPosition.getRow(), j);
                             chessMoves13[z] = new ChessMove(myPosition, chessPositions13[z], null);
                             movesCollection.add(chessMoves13[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
@@ -1022,13 +927,10 @@ public class ChessPiece {
                             chessPositions14[z] = new ChessPosition(i, j);
                             chessMoves14[z] = new ChessMove(myPosition, chessPositions14[z], null);
                             movesCollection.add(chessMoves14[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
                 }
-
                 //increasing column
                 j = myPosition.getColumn();
                 ChessPosition [] chessPositions15 = new ChessPosition[10];
@@ -1050,14 +952,11 @@ public class ChessPiece {
                             chessPositions15[z] = new ChessPosition(myPosition.getRow(), j);
                             chessMoves15[z] = new ChessMove(myPosition, chessPositions15[z], null);
                             movesCollection.add(chessMoves15[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
                 }
                 //moving like BISHOP
-
                 //increasing row and column
                 j = myPosition.getColumn();
                 ChessPosition [] chessPositions16 = new ChessPosition[10];
@@ -1079,13 +978,10 @@ public class ChessPiece {
                             chessPositions16[z] = new ChessPosition(i, j);
                             chessMoves16[z] = new ChessMove(myPosition, chessPositions16[z], null);
                             movesCollection.add(chessMoves16[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
                 }
-
                 //increasing row and decreasing column
                 j = myPosition.getColumn();
                 ChessPosition [] chessPositions17 = new ChessPosition[10];
@@ -1107,8 +1003,6 @@ public class ChessPiece {
                             chessPositions17[z] = new ChessPosition(i, j);
                             chessMoves17[z] = new ChessMove(myPosition, chessPositions17[z], null);
                             movesCollection.add(chessMoves17[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
@@ -1134,13 +1028,10 @@ public class ChessPiece {
                             chessPositions18[z] = new ChessPosition(i, j);
                             chessMoves18[z] = new ChessMove(myPosition, chessPositions18[z], null);
                             movesCollection.add(chessMoves18[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
                 }
-
                 //decreasing row and increasing column
                 j = myPosition.getColumn();
                 ChessPosition [] chessPositions19 = new ChessPosition[10];
@@ -1162,8 +1053,6 @@ public class ChessPiece {
                             chessPositions19[z] = new ChessPosition(i, j);
                             chessMoves19[z] = new ChessMove(myPosition, chessPositions19[z], null);
                             movesCollection.add(chessMoves19[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
@@ -1191,13 +1080,10 @@ public class ChessPiece {
                             chessPositions8[z] = new ChessPosition(i, j);
                             chessMoves8[z] = new ChessMove(myPosition, chessPositions8[z], null);
                             movesCollection.add(chessMoves8[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
                 }
-
                 //decreasing column
                 j = myPosition.getColumn();
                 ChessPosition [] chessPositions9 = new ChessPosition[10];
@@ -1219,8 +1105,6 @@ public class ChessPiece {
                             chessPositions9[z] = new ChessPosition(myPosition.getRow(), j);
                             chessMoves9[z] = new ChessMove(myPosition, chessPositions9[z], null);
                             movesCollection.add(chessMoves9[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
@@ -1246,13 +1130,10 @@ public class ChessPiece {
                             chessPositions10[z] = new ChessPosition(i, j);
                             chessMoves10[z] = new ChessMove(myPosition, chessPositions10[z], null);
                             movesCollection.add(chessMoves10[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }
                 }
-
                 //increasing column
                 j = myPosition.getColumn();
                 ChessPosition [] chessPositions11 = new ChessPosition[10];
@@ -1274,8 +1155,6 @@ public class ChessPiece {
                             chessPositions11[z] = new ChessPosition(myPosition.getRow(), j);
                             chessMoves11[z] = new ChessMove(myPosition, chessPositions11[z], null);
                             movesCollection.add(chessMoves11[z]);
-                            //to move piece in
-                            //board.getBoardSquares()[i-1][j-1] = board.getBoardSquares()[myPosition.getRow()-1][myPosition.getColumn()-1];
                         }
                         break;
                     }

@@ -226,7 +226,6 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        //all of king's possible moves are isInCheck (true for function isInCheck)
         boolean checkMate = true;
         HashSet<ChessMove> kingPossibleMoves = new HashSet<>();
         HashSet<ChessPosition> pawnPossiblePlaces = new HashSet<>();
@@ -235,11 +234,8 @@ public class ChessGame {
         ChessPosition [] tempPiecePositions = new ChessPosition[70];
         ChessPosition [] pawnPositions = new ChessPosition[70];
         HashSet<ChessMove> movesCollectionCheck = new HashSet<>();
-        //ChessMove tempMove1 = new ChessMove(null, null, null);
-        //ChessMove tempMove2 = new ChessMove(null, null, null);
         int z = 0;
         int d = 0;
-
         //find the correct king's position
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -256,7 +252,6 @@ public class ChessGame {
                             pawnPossiblePlaces.add(pawnPositions[z]);
                             z++;
                         }
-
                         movesCollectionCheck.addAll(chessBoard.squares[i][j].pieceMoves(this.chessBoard, tempPiecePositions[d]));
                         d++;
                     }
@@ -264,11 +259,6 @@ public class ChessGame {
             }
         }
         boolean spaceCanBeTaken = false;
-
-        // if (!isInCheck(teamColor)) {
-        //checkMate = false;
-        // }
-        // else {
 
         //check if pawn close by and add to new set of close pawns
         for (ChessPosition chessPosition : pawnPossiblePlaces) {
@@ -305,8 +295,6 @@ public class ChessGame {
                     ChessPiece tempPiece = new ChessPiece(null,null);
                     tempPiece.setChessPieceColor(tempBoard.squares[chessMoveKing.chessStartPosition.getRow()-1][chessMoveKing.chessStartPosition.getColumn()-1].getTeamColor());
                     tempPiece.setChessType(tempBoard.squares[chessMoveKing.chessStartPosition.getRow()-1][chessMoveKing.chessStartPosition.getColumn()-1].getPieceType());
-
-
                     tempBoard.squares[chessMoveKing.chessStartPosition.getRow()-1][chessMoveKing.chessStartPosition.getColumn()-1] = null;
 
                     tempBoard.squares[chessMoveKing.chessEndPosition.getRow()-1][chessMoveKing.chessEndPosition.getColumn()-1] = tempPiece;
@@ -315,12 +303,6 @@ public class ChessGame {
                         spaceCanBeTaken = true;
                     }
                 }
-                //check if move of king is a move someone else could make if the king killed a person and opened that space to an enemy cokming to get him
-                //if king's move is != null (killed someone from enemy team)...
-                //make new temporary board that copies old board and moves king (make funtion copy board? - for loop through old board and add into new one)
-                //then see all possible moves of pieces with new setup
-                //check if king's move matches with an enemy's
-                //else if ()
             }
             if (!spaceCanBeTaken) {
                 checkMate = false;
@@ -338,9 +320,6 @@ public class ChessGame {
                 checkMate = false;
             }
         }
-
-
-
         return checkMate;
     }
 

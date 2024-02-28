@@ -45,24 +45,17 @@ public class Pawn {
         //move two spaces
         i = i - 2;
         if (j < 9 && j > 0 && i < 9 && i > 0) {
-            if (board.getBoardSquares()[i - 1][j - 1] == null && board.getBoardSquares()[i][j-1] == null){
-                chessPositions7[z] = new ChessPosition(i, j);
-                chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                movesCollection.add(chessMoves7[z]);
-                z++;
-            }
+            twoSpacesMove(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
             //checking for enemies in diagonal
             j--;
             if (j > 0) {
-                if (board.getBoardSquares()[i - 1][j - 1] != null) {
-                    diagonalMove(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
-                }
+                diagonalMove(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
+
             }
             j = j+2;
             if (j < 9) {
-                if (board.getBoardSquares()[i - 1][j - 1] != null) {
-                    diagonalMove(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
-                }
+                diagonalMove(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
+
             }
             i = myPosition.getRow();
             j = myPosition.getColumn();
@@ -97,12 +90,7 @@ public class Pawn {
         //move two spaces
         i = i + 2;
         if (j < 9 && j > 0 && i < 9 && i > 0) {
-            if (board.getBoardSquares()[i - 1][j - 1] == null && board.getBoardSquares()[i - 2][j - 1] == null) {
-                chessPositions7[z] = new ChessPosition(i, j);
-                chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                movesCollection.add(chessMoves7[z]);
-                z++;
-            }
+            twoSpacesMove(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
             //checking for enemies in diagonal
             j++;
             if (j < 9) {
@@ -145,23 +133,7 @@ public class Pawn {
             if (board.getBoardSquares()[i - 1][j - 1] == null) {
                 //promotion if reach end of board
                 if (i == 1) {
-                    //get chosen promotion option and insert
-                    chessPositions7[z] = new ChessPosition(i, j);
-                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.BISHOP);
-                    movesCollection.add(chessMoves7[z]);
-                    z++;
-                    chessPositions7[z] = new ChessPosition(i, j);
-                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.KNIGHT);
-                    movesCollection.add(chessMoves7[z]);
-                    z++;
-                    chessPositions7[z] = new ChessPosition(i, j);
-                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.QUEEN);
-                    movesCollection.add(chessMoves7[z]);
-                    z++;
-                    chessPositions7[z] = new ChessPosition(i, j);
-                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.ROOK);
-                    movesCollection.add(chessMoves7[z]);
-                    z++;
+                    promotion(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
                 }
                 else {
                     chessPositions7[z] = new ChessPosition(i, j);
@@ -176,23 +148,7 @@ public class Pawn {
                 if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
                     //promotion if reach end of board
                     if (i == 1) {
-                        //get chosen promotion option and insert
-                        chessPositions7[z] = new ChessPosition(i, j);
-                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.BISHOP);
-                        movesCollection.add(chessMoves7[z]);
-                        z++;
-                        chessPositions7[z] = new ChessPosition(i, j);
-                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.KNIGHT);
-                        movesCollection.add(chessMoves7[z]);
-                        z++;
-                        chessPositions7[z] = new ChessPosition(i, j);
-                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.QUEEN);
-                        movesCollection.add(chessMoves7[z]);
-                        z++;
-                        chessPositions7[z] = new ChessPosition(i, j);
-                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.ROOK);
-                        movesCollection.add(chessMoves7[z]);
-                        z++;
+                        promotion(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
                     }
                     else {
                         chessPositions7[z] = new ChessPosition(i, j);
@@ -207,23 +163,7 @@ public class Pawn {
                 if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
                     //promotion if reach end of board
                     if (i == 1) {
-                        //get chosen promotion option and insert
-                        chessPositions7[z] = new ChessPosition(i, j);
-                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.BISHOP);
-                        movesCollection.add(chessMoves7[z]);
-                        z++;
-                        chessPositions7[z] = new ChessPosition(i, j);
-                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.KNIGHT);
-                        movesCollection.add(chessMoves7[z]);
-                        z++;
-                        chessPositions7[z] = new ChessPosition(i, j);
-                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.QUEEN);
-                        movesCollection.add(chessMoves7[z]);
-                        z++;
-                        chessPositions7[z] = new ChessPosition(i, j);
-                        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.ROOK);
-                        movesCollection.add(chessMoves7[z]);
-                        z++;
+                        promotion(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
                     }
                     else {
                         chessPositions7[z] = new ChessPosition(i, j);
@@ -245,23 +185,7 @@ public class Pawn {
             if (board.getBoardSquares()[i - 1][j - 1] == null) {
                 //promotion if reach end of board
                 if (i == 8) {
-                    //get chosen promotion option and insert
-                    chessPositions7[z] = new ChessPosition(i, j);
-                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.BISHOP);
-                    movesCollection.add(chessMoves7[z]);
-                    z++;
-                    chessPositions7[z] = new ChessPosition(i, j);
-                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.KNIGHT);
-                    movesCollection.add(chessMoves7[z]);
-                    z++;
-                    chessPositions7[z] = new ChessPosition(i, j);
-                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.QUEEN);
-                    movesCollection.add(chessMoves7[z]);
-                    z++;
-                    chessPositions7[z] = new ChessPosition(i, j);
-                    chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.ROOK);
-                    movesCollection.add(chessMoves7[z]);
-                    z++;
+                    promotion(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
                 }
                 else {
                     chessPositions7[z] = new ChessPosition(i, j);
@@ -277,23 +201,7 @@ public class Pawn {
                     if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
                         //promotion if reach end of board
                         if (i == 8) {
-                            //get chosen promotion option and insert
-                            chessPositions7[z] = new ChessPosition(i, j);
-                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.BISHOP);
-                            movesCollection.add(chessMoves7[z]);
-                            z++;
-                            chessPositions7[z] = new ChessPosition(i, j);
-                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.KNIGHT);
-                            movesCollection.add(chessMoves7[z]);
-                            z++;
-                            chessPositions7[z] = new ChessPosition(i, j);
-                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.QUEEN);
-                            movesCollection.add(chessMoves7[z]);
-                            z++;
-                            chessPositions7[z] = new ChessPosition(i, j);
-                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.ROOK);
-                            movesCollection.add(chessMoves7[z]);
-                            z++;
+                            promotion(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
                         } else {
                             chessPositions7[z] = new ChessPosition(i, j);
                             chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
@@ -309,23 +217,7 @@ public class Pawn {
                     if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
                         //promotion if reach end of board
                         if (i == 8) {
-                            //get chosen promotion option and insert
-                            chessPositions7[z] = new ChessPosition(i, j);
-                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.BISHOP);
-                            movesCollection.add(chessMoves7[z]);
-                            z++;
-                            chessPositions7[z] = new ChessPosition(i, j);
-                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.KNIGHT);
-                            movesCollection.add(chessMoves7[z]);
-                            z++;
-                            chessPositions7[z] = new ChessPosition(i, j);
-                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.QUEEN);
-                            movesCollection.add(chessMoves7[z]);
-                            z++;
-                            chessPositions7[z] = new ChessPosition(i, j);
-                            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.ROOK);
-                            movesCollection.add(chessMoves7[z]);
-                            z++;
+                            promotion(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
                         } else {
                             chessPositions7[z] = new ChessPosition(i, j);
                             chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
@@ -351,5 +243,36 @@ public class Pawn {
         }
         return movesCollection;
 
+    }
+    HashSet<ChessMove> twoSpacesMove(int i, int j,int z, ChessBoard board, ChessPosition myPosition, ChessPosition[] chessPositions7, ChessMove[] chessMoves7, HashSet<ChessMove> movesCollection) {
+
+        if (board.getBoardSquares()[i - 1][j - 1] == null && board.getBoardSquares()[i][j - 1] == null) {
+            chessPositions7[z] = new ChessPosition(i, j);
+            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
+            movesCollection.add(chessMoves7[z]);
+            z++;
+        }
+        return movesCollection;
+    }
+    HashSet<ChessMove> promotion(int i, int j,int z, ChessBoard board, ChessPosition myPosition, ChessPosition[] chessPositions7, ChessMove[] chessMoves7, HashSet<ChessMove> movesCollection) {
+
+        //get chosen promotion option and insert
+        chessPositions7[z] = new ChessPosition(i, j);
+        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.BISHOP);
+        movesCollection.add(chessMoves7[z]);
+        z++;
+        chessPositions7[z] = new ChessPosition(i, j);
+        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.KNIGHT);
+        movesCollection.add(chessMoves7[z]);
+        z++;
+        chessPositions7[z] = new ChessPosition(i, j);
+        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.QUEEN);
+        movesCollection.add(chessMoves7[z]);
+        z++;
+        chessPositions7[z] = new ChessPosition(i, j);
+        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], ChessPiece.PieceType.ROOK);
+        movesCollection.add(chessMoves7[z]);
+        z++;
+        return movesCollection;
     }
 }

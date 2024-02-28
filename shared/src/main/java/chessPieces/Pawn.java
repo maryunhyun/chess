@@ -160,10 +160,7 @@ public class Pawn {
     HashSet<ChessMove> diagonalMove(int i, int j, int z, ChessBoard board, ChessPosition myPosition, ChessPosition[] chessPositions7, ChessMove[] chessMoves7, HashSet<ChessMove> movesCollection) {
         if (board.getBoardSquares()[i - 1][j - 1] != null) {
             if (board.getBoardSquares()[i - 1][j - 1].getTeamColor() != board.getBoardSquares()[myPosition.getRow() - 1][myPosition.getColumn() - 1].getTeamColor()) {
-                chessPositions7[z] = new ChessPosition(i, j);
-                chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-                movesCollection.add(chessMoves7[z]);
-                z++;
+                place(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
             }
         }
         return movesCollection;
@@ -173,10 +170,7 @@ public class Pawn {
     HashSet<ChessMove> twoSpacesMove(int i, int j, int z, ChessBoard board, ChessPosition myPosition, ChessPosition[] chessPositions7, ChessMove[] chessMoves7, HashSet<ChessMove> movesCollection) {
 
         if (board.getBoardSquares()[i - 1][j - 1] == null && board.getBoardSquares()[i][j - 1] == null) {
-            chessPositions7[z] = new ChessPosition(i, j);
-            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-            movesCollection.add(chessMoves7[z]);
-            z++;
+            place(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
         }
         return movesCollection;
     }
@@ -205,10 +199,7 @@ public class Pawn {
 
     HashSet<ChessMove> normalMove(int i, int j, int z, ChessBoard board, ChessPosition myPosition, ChessPosition[] chessPositions7, ChessMove[] chessMoves7, HashSet<ChessMove> movesCollection) {
         if (board.getBoardSquares()[i - 1][j - 1] == null) {
-            chessPositions7[z] = new ChessPosition(i, j);
-            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-            movesCollection.add(chessMoves7[z]);
-            z++;
+            place(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
         }
         return movesCollection;
     }
@@ -217,10 +208,7 @@ public class Pawn {
         if (i == 8) {
             promotion(i, j, z, board, myPosition, chessPositions7, chessMoves7, movesCollection);
         } else {
-            chessPositions7[z] = new ChessPosition(i, j);
-            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-            movesCollection.add(chessMoves7[z]);
-            z++;
+            place(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
         }
         return movesCollection;
     }
@@ -230,10 +218,7 @@ public class Pawn {
         if (i == 1) {
             promotion(i, j, z, board, myPosition, chessPositions7, chessMoves7, movesCollection);
         } else {
-            chessPositions7[z] = new ChessPosition(i, j);
-            chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
-            movesCollection.add(chessMoves7[z]);
-            z++;
+            place(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
         }
         return movesCollection;
     }
@@ -243,6 +228,13 @@ public class Pawn {
                 promotionEndofBoardBlack(i,j,z,board,myPosition,chessPositions7,chessMoves7,movesCollection);
             }
         }
+        return movesCollection;
+    }
+    HashSet<ChessMove> place(int i, int j, int z, ChessBoard board, ChessPosition myPosition, ChessPosition[] chessPositions7, ChessMove[] chessMoves7, HashSet<ChessMove> movesCollection) {
+        chessPositions7[z] = new ChessPosition(i, j);
+        chessMoves7[z] = new ChessMove(myPosition, chessPositions7[z], null);
+        movesCollection.add(chessMoves7[z]);
+        z++;
         return movesCollection;
     }
 }

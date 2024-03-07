@@ -10,9 +10,6 @@ import java.util.Collection;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 import static java.sql.Types.NULL;
-//create statements good
-//execute update
-//only need json part for game to convert it
 
 public class AuthSQLDataAccess implements AuthDAO{
     public AuthSQLDataAccess() throws ResponseException, DataAccessException {
@@ -101,7 +98,7 @@ public class AuthSQLDataAccess implements AuthDAO{
     @Override
     public AuthData getAuthData(String authToken) throws ResponseException {
         try (var conn = DatabaseManager.getConnection()) {
-            var statement = "SELECT authToken FROM auth WHERE authToken=?";
+            var statement = "SELECT authToken, username FROM auth WHERE authToken=?";
             try (var ps = conn.prepareStatement(statement)) {
                 ps.setString(1,authToken);
                 try (var rs = ps.executeQuery()) {

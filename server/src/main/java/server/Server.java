@@ -35,7 +35,18 @@ public class Server {
     }
 
     GameDAO gameDAO = new MemoryGameDAO();
-    UserDAO userDAO = new MemoryUserDAO();
+    UserDAO userDAO;
+
+    {
+        try {
+            userDAO = new UserSQLDataAccess();
+        } catch (ResponseException e) {
+            throw new RuntimeException(e);
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private ClearService clearService = new ClearService(authDAO,gameDAO,userDAO);
     public ClearResult clearResult = new ClearResult("");
 

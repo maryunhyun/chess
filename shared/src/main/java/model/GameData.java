@@ -46,6 +46,9 @@ public class GameData {
         return gameName;
     }
 
+    public ChessGame getGame() {
+        return game;
+    }
 
     @Override
     public boolean equals(Object o) {

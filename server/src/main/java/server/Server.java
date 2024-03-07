@@ -34,7 +34,18 @@ public class Server {
         }
     }
 
-    GameDAO gameDAO = new MemoryGameDAO();
+    GameDAO gameDAO;
+
+    {
+        try {
+            gameDAO = new GameSQLDataAccess();
+        } catch (ResponseException e) {
+            throw new RuntimeException(e);
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     UserDAO userDAO;
 
     {

@@ -7,7 +7,9 @@ import model.UserData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.ResponseException;
+import server.requests.CreateGameRequest;
 import service.ClearService;
+import service.CreateGameService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -22,9 +24,12 @@ public class ClearServiceTest {
     private AuthData authData2 = new AuthData("23456", "chocoForever");
     private UserData userData1 = new UserData("pandazRock","password123", "panda@gmail.com");
     private UserData userData2 = new UserData("chocoForever","password234","choco@gmail.com");
+    CreateGameRequest createGameRequest = new CreateGameRequest("pandaChoco",authData1.getAuthToken());
+
 
 
     ClearService clearService = new ClearService(authDAO, gameDAO, userDAO);
+    CreateGameService createGameService = new CreateGameService(userDAO,authDAO,gameDAO);
 
     @BeforeEach
     public void setUp() throws DataAccessException, ResponseException {
@@ -35,7 +40,7 @@ public class ClearServiceTest {
         userDAO.addUserData(userData1);
         userDAO.addUserData(userData2);
 
-        int tempGameID = gameDAO.addGameData("pandaChoco").getGameID();
+        int tempGameID = createGameService.createGame(createGameRequest).getGameID();
         gameDAO.getGameData(tempGameID).setBlackUsername("pandazRock");
         gameDAO.getGameData(tempGameID).setWhiteUsername("chocoForever");
 

@@ -1,5 +1,6 @@
 package service;
 
+import chess.ChessGame;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
@@ -12,13 +13,15 @@ public class CreateGameService {
     UserDAO userDAO;
     AuthDAO authDAO;
     GameDAO gameDAO;
+    public int nextID = 1;
     public CreateGameService(UserDAO userDAO, AuthDAO authDAO, GameDAO gameDAO) {
         this.authDAO = authDAO;
         this.userDAO = userDAO;
         this.gameDAO = gameDAO;
     }
     public CreateGameIDResult createGame(CreateGameRequest r) throws ResponseException {
-        GameData gameData = new GameData(0,null,null,r.getGameName(),null);
+        ChessGame chessGame = new ChessGame();
+        GameData gameData = new GameData(nextID++, null, null, r.getGameName(), chessGame);
         if (r.getGameName() == null | r.getAuthToken() == null) {
             throw new ResponseException(400, "Error: bad request");
         }
@@ -26,7 +29,7 @@ public class CreateGameService {
             throw new ResponseException(401, "Error: unauthorized");
         }
         else {
-            gameData = gameDAO.addGameData(r.getGameName());
+            gameData = gameDAO.addGameData(gameData);
             CreateGameIDResult createGameIDResult = new CreateGameIDResult(gameData.getGameID());
             return createGameIDResult;
         }

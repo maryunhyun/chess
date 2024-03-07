@@ -1,18 +1,14 @@
 package dataAccess;
 
-import chess.ChessGame;
 import model.GameData;
+import server.ResponseException;
 
 import java.util.Collection;
 import java.util.HashMap;
 
 public class MemoryGameDAO implements GameDAO{
-    private int nextID = 1;
     private HashMap<Integer, GameData> gameDatas = new HashMap<>();
-    public GameData addGameData(String gameName) {
-        ChessGame chessGame = new ChessGame();
-        GameData gameData = new GameData(nextID++, null, null, gameName, chessGame);
-
+    public GameData addGameData(GameData gameData) {
         gameDatas.put(gameData.getGameID(), gameData);
         return gameData;
     }
@@ -28,5 +24,9 @@ public class MemoryGameDAO implements GameDAO{
 
     public void clearGameDatas() {
         gameDatas.clear();
+    }
+
+    public void deleteGameData(int gameID) throws ResponseException {
+        gameDatas.remove(gameID);
     }
 }

@@ -4,6 +4,8 @@ import chess.ChessGame;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
+import model.AuthData;
+import model.GameData;
 import server.ResponseException;
 import server.requests.JoinGameRequest;
 
@@ -43,10 +45,26 @@ public class JoinGameService {
         }
         else {
             if (r.getPlayerColor() == ChessGame.TeamColor.WHITE) {
-                gameDAO.getGameData(r.getGameID()).setWhiteUsername(authDAO.getAuthData(r.getAuthToken()).getUsername());
+                String tempAuthToken = r.getAuthToken();
+                AuthData authData3 = authDAO.getAuthData(tempAuthToken);
+                String tempUsername = authData3.getUsername();
+                GameData gameData2 = gameDAO.getGameData(r.getGameID());
+                gameData2.setWhiteUsername(tempUsername);
+                //remove old game to insert new one with new username;
+                gameDAO.deleteGameData(gameData2.getGameID());
+                gameDAO.addGameData(gameData2);
+                //gameDAO.getGameData(r.getGameID()).setWhiteUsername(authDAO.getAuthData(r.getAuthToken()).getUsername());
             }
             else if (r.getPlayerColor() == ChessGame.TeamColor.BLACK) {
-                gameDAO.getGameData(r.getGameID()).setBlackUsername(authDAO.getAuthData(r.getAuthToken()).getUsername());
+                String tempAuthToken = r.getAuthToken();
+                AuthData authData3 = authDAO.getAuthData(tempAuthToken);
+                String tempUsername = authData3.getUsername();
+                GameData gameData2 = gameDAO.getGameData(r.getGameID());
+                gameData2.setBlackUsername(tempUsername);
+                //remove old game to insert new one with new username;
+                gameDAO.deleteGameData(gameData2.getGameID());
+                gameDAO.addGameData(gameData2);
+                //gameDAO.getGameData(r.getGameID()).setBlackUsername(authDAO.getAuthData(r.getAuthToken()).getUsername());
             }
         }
     }

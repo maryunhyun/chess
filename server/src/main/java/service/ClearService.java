@@ -3,6 +3,7 @@ package service;
 import dataAccess.AuthDAO;
 import dataAccess.GameDAO;
 import dataAccess.UserDAO;
+import server.ResponseException;
 
 public class ClearService {
     //public ClearResult clear() {
@@ -19,9 +20,14 @@ public class ClearService {
         this.userDAO = userDAO;
     }
     public void clearAll() {
-        authDAO.clearAuthDatas();
-        gameDAO.clearGameDatas();
-        userDAO.clearUserDatas();
+        try {
+            authDAO.clearAuthDatas();
+            gameDAO.clearGameDatas();
+            userDAO.clearUserDatas();
+        }
+        catch (ResponseException e) {
+            String error = e.getMessage();
+        }
     }
 
 }

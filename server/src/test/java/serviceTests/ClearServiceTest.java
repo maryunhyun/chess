@@ -6,6 +6,7 @@ import model.AuthData;
 import model.UserData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import server.ResponseException;
 import service.ClearService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,7 +27,7 @@ public class ClearServiceTest {
     ClearService clearService = new ClearService(authDAO, gameDAO, userDAO);
 
     @BeforeEach
-    public void setUp() throws DataAccessException {
+    public void setUp() throws DataAccessException, ResponseException {
         //set up any classes or variables we will need for each test
         authDAO.addAuthData(authData1);
         authDAO.addAuthData(authData2);

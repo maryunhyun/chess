@@ -22,7 +22,18 @@ import java.util.Map;
 
 
 public class Server {
-    AuthDAO authDAO = new MemoryAuthDAO();
+    AuthDAO authDAO;
+
+    {
+        try {
+            authDAO = new AuthSQLDataAccess();
+        } catch (ResponseException e) {
+            throw new RuntimeException(e);
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     GameDAO gameDAO = new MemoryGameDAO();
     UserDAO userDAO = new MemoryUserDAO();
     private ClearService clearService = new ClearService(authDAO,gameDAO,userDAO);

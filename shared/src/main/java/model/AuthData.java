@@ -25,6 +25,7 @@ public class AuthData {
         this.authToken = authToken;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

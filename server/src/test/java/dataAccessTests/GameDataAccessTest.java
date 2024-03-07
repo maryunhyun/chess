@@ -3,15 +3,14 @@ package dataAccessTests;
 import chess.ChessGame;
 import dataAccess.*;
 import model.AuthData;
+import model.GameData;
 import model.UserData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.ResponseException;
 import server.requests.CreateGameRequest;
-import server.requests.LoginRequest;
 import service.ClearService;
 import service.CreateGameService;
-import service.LoginService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -22,10 +21,13 @@ public class GameDataAccessTest {
 
     private GameDAO gameDAO = new MemoryGameDAO();
     private ChessGame chessGame1 = new ChessGame();
+    private ChessGame chessGame2 = new ChessGame();
     private AuthData authData1 = new AuthData("123456", "pandazRock");
     private AuthData authData2 = new AuthData("23456", "chocoForever");
     private UserData userData1 = new UserData("pandazRock","password123", "panda@gmail.com");
     private UserData userData2 = new UserData("chocoForever","password234","choco@gmail.com");
+    private GameData gameData1 = new GameData(135, "pandazRock", "chocoForever", "pandaChoco", chessGame1);
+    private GameData gameData2 = new GameData(3,null,null,"subz",chessGame2);
     CreateGameRequest createGameRequest = new CreateGameRequest("pandaChoco",authData1.getAuthToken());
 
 
@@ -43,27 +45,26 @@ public class GameDataAccessTest {
     @Test
     public void addGameDataPass() throws DataAccessException, ResponseException {
         try {
-            authDAO.getAuthData(authData1.getAuthToken());
+            gameDAO.getGameData(gameData1.getGameID());
         } catch (ResponseException e) {
             assertEquals(e.statusCode(),401);
         }
-        AuthData authData = new AuthData(null,null);
-        authData = authDAO.addAuthData(authData1);
-        assertEquals(authDAO.getAuthData(authData1.getAuthToken()).getAuthToken(),authData.getAuthToken());
-        assertEquals(authDAO.getAuthData(authData1.getAuthToken()).getUsername(),authData.getUsername());
+        GameData gameData = new GameData(0,null,null,null,null);
+        gameData = gameDAO.addGameData(gameData1);
+        assertEquals(gameDAO.getGameData(gameData1.getGameID()).getGameID(),gameData.getGameID());
+        assertEquals(gameDAO.getGameData(gameData1.getGameID()).getGameName(),gameData.getGameName());
 
     }
 
     @Test
     public void addGameDataFail() throws DataAccessException, ResponseException {
-        authDAO.addAuthData(authData1);
-        assertNotEquals(authDAO.listAuthDatas().size(),0);
-        LoginService loginService = new LoginService(userDAO,authDAO,gameDAO);
-        LoginRequest loginRequest = new LoginRequest(null,userData1.getPassword());
+        gameDAO.addGameData(gameData1);
+        assertNotEquals(gameDAO.listGameDatas().size(),0);
+        CreateGameService createGameService1 = new CreateGameService(userDAO,authDAO,gameDAO);
 
 
         try {
-            loginService.login(loginRequest);
+            createGameService1.createGame(createGameRequest);
         }
         catch (ResponseException e) {
             assertEquals(e.statusCode(),401);
@@ -73,71 +74,71 @@ public class GameDataAccessTest {
     @Test
     public void listGameDatasPass() throws DataAccessException, ResponseException {
         clearService.clearAll();
-        assertEquals(authDAO.listAuthDatas().size(),0);
-        authDAO.addAuthData(authData1);
-        assertEquals(authDAO.listAuthDatas().size(),1);
-        authDAO.addAuthData(authData2);
-        assertEquals(true,authDAO.listAuthDatas().contains(authData1));
-        assertEquals(true,authDAO.listAuthDatas().contains(authData2));
+        assertEquals(gameDAO.listGameDatas().size(),0);
+        gameDAO.addGameData(gameData1);
+        assertEquals(gameDAO.listGameDatas().size(),1);
+        gameDAO.addGameData(gameData2);
+        assertEquals(true,gameDAO.listGameDatas().contains(gameData1));
+        assertEquals(true,gameDAO.listGameDatas().contains(gameData2));
     }
 
     @Test
     public void listGameDatasFail() throws DataAccessException, ResponseException {
-        authDAO.addAuthData(authData1);
-        assertEquals(true,authDAO.listAuthDatas().contains(authData1));
-        authDAO.addAuthData(authData2);
+        gameDAO.addGameData(gameData1);
+        assertEquals(true,gameDAO.listGameDatas().contains(gameData1));
+        gameDAO.addGameData(gameData2);
         clearService.clearAll();
-        assertNotEquals(true,authDAO.listAuthDatas().contains(authData1));
-        assertEquals(authDAO.listAuthDatas().size(),0);
+        assertNotEquals(true,gameDAO.listGameDatas().contains(gameData1));
+        assertEquals(gameDAO.listGameDatas().size(),0);
 
     }
     @Test
     public void getGameDataPass() throws DataAccessException, ResponseException {
         clearService.clearAll();
-        authDAO.addAuthData(authData1);
-        assertEquals(authDAO.getAuthData(authData1.getAuthToken()).getAuthToken(),authData1.getAuthToken());
-        assertEquals(authDAO.getAuthData(authData1.getAuthToken()).getUsername(),authData1.getUsername());
+        gameDAO.addGameData(gameData1);
+        assertEquals(gameDAO.getGameData(gameData1.getGameID()).getGameID(),gameData1.getGameID());
+        assertEquals(gameDAO.getGameData(gameData1.getGameID()).getGameName(),gameData1.getGameName());
 
     }
 
     @Test
     public void getGameDataFail() throws DataAccessException, ResponseException {
         clearService.clearAll();
-        authDAO.addAuthData(authData1);
-        assertNotEquals(authDAO.getAuthData(authData1.getAuthToken()).getAuthToken(),authData2.getAuthToken());
-        assertNotEquals(authDAO.getAuthData(authData1.getAuthToken()).getUsername(),authData2.getUsername());
+        gameDAO.addGameData(gameData1);
+        assertNotEquals(gameDAO.getGameData(gameData1.getGameID()).getGameName(),gameData2.getGameName());
+        assertNotEquals(gameDAO.getGameData(gameData1.getGameID()).getGameID(),gameData2.getGameID());
 
     }
     @Test
     public void deleteGameDataPass() throws DataAccessException, ResponseException {
         clearService.clearAll();
-        authDAO.addAuthData(authData1);
-        authDAO.addAuthData(authData2);
-        assertEquals(2,authDAO.listAuthDatas().size());
-        authDAO.deleteAuthData(authData1.getAuthToken());
-        assertEquals(1,authDAO.listAuthDatas().size());
-        assertEquals(true,authDAO.listAuthDatas().contains(authData2));
+        gameDAO.addGameData(gameData1);
+        gameDAO.addGameData(gameData2);
+        assertEquals(2,gameDAO.listGameDatas().size());
+        gameDAO.deleteGameData(gameData1.getGameID());
+        assertEquals(1,gameDAO.listGameDatas().size());
+        assertEquals(true,gameDAO.listGameDatas().contains(gameData2));
 
     }
     @Test
     public void deleteGameDataFail() throws DataAccessException, ResponseException {
         clearService.clearAll();
-        authDAO.addAuthData(authData1);
-        authDAO.addAuthData(authData2);
-        assertNotEquals(0,authDAO.listAuthDatas().size());
-        authDAO.deleteAuthData(authData1.getAuthToken());
-        assertNotEquals(2,authDAO.listAuthDatas().size());
-        assertEquals(false,authDAO.listAuthDatas().contains(authData1));
+        gameDAO.addGameData(gameData1);
+        gameDAO.addGameData(gameData2);
+        assertNotEquals(0,gameDAO.listGameDatas().size());
+        gameDAO.deleteGameData(gameData1.getGameID());
+        assertNotEquals(2,gameDAO.listGameDatas().size());
+        assertEquals(false,gameDAO.listGameDatas().contains(gameData1));
     }
 
 
     @Test
     public void clearGameDatasPass() throws DataAccessException, ResponseException {
-        authDAO.addAuthData(authData1);
-        authDAO.addAuthData(authData2);
+        gameDAO.addGameData(gameData1);
+        gameDAO.addGameData(gameData2);
         clearService.clearAll();
 
-        assertEquals(authDAO.listAuthDatas().size(),0);
+        assertEquals(gameDAO.listGameDatas().size(),0);
 
 
     }

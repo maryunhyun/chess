@@ -6,6 +6,7 @@ import model.GameData;
 import model.UserData;
 import server.ResponseException;
 import server.requests.CreateGameRequest;
+import server.requests.JoinGameRequest;
 import server.requests.LoginRequest;
 import server.results.CreateGameIDResult;
 
@@ -58,6 +59,11 @@ public class ServerFacade {
     public CreateGameIDResult createGame(CreateGameRequest r) throws ResponseException {
         var path = "/game";
         return this.makeRequest("POST", path, r, CreateGameIDResult.class);
+    }
+
+    public void joinGame(JoinGameRequest r) throws ResponseException {
+        var path = "/game";
+        this.makeRequest("PUT", path, r, null);
     }
 
     private <T> T makeRequest(String method, String path, Object request, Class<T> responseClass) throws ResponseException {

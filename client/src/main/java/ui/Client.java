@@ -63,9 +63,9 @@ public class Client {
         throw new ResponseException(400, "Expected: <name> <CAT|DOG|FROG>");
     }
 
-    public String listPets() throws ResponseException {
+    public String listGames() throws ResponseException {
         assertSignedIn();
-        var pets = server.listPets();
+        var pets = server.listGames();
         var result = new StringBuilder();
         var gson = new Gson();
         for (var pet : pets) {

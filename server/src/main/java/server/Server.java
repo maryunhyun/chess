@@ -16,9 +16,6 @@ import spark.Spark;
 import java.util.Collection;
 import java.util.Map;
 
-//when does failure 500 get thrown? is it correct for register below?
-//how to list games? Arraylist?
-
 
 
 public class Server {

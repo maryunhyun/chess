@@ -120,17 +120,20 @@ public class Client {
     public String help() {
         if (state == State.SIGNEDOUT) {
             return """
-                    - signIn <yourname>
-                    - quit
+                    register <USERNAME> <PASSWORD> <EMAIL> - to create an account
+                    login <USERNAME> <PASSWORD> - to play chess
+                    quit - playing chess
+                    help - with possible commands
                     """;
         }
         return """
-                - list
-                - adopt <pet id>
-                - rescue <name> <CAT|DOG|FROG|FISH>
-                - adoptAll
-                - signOut
-                - quit
+                create <NAME> - a game
+                list - games
+                join <ID> [WHITE|BLACK|<empty>] - a game
+                observe <ID> - a game
+                logout - when you are done
+                quit - playing chess
+                help - with possible commands
                 """;
     }
 

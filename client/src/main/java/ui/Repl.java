@@ -2,6 +2,8 @@ package ui;
 
 import java.util.Scanner;
 
+import static java.awt.Color.BLUE;
+
 public class Repl {
     private final Client client;
 
@@ -11,7 +13,7 @@ public class Repl {
 
     public void run() {
         //output board here?
-        System.out.println("\uD83D\uDC36 Welcome to the pet store. Sign in to start.");
+        System.out.println("♕ Welcome to 240 Chess. Type Help to get started. ♕");
         System.out.print(client.help());
 
         Scanner scanner = new Scanner(System.in);
@@ -21,7 +23,7 @@ public class Repl {
 
             try {
                 result = client.eval(line);
-                //System.out.print(BLUE + result);
+                System.out.print(BLUE + result);
             } catch (Throwable e) {
                 var msg = e.toString();
                 System.out.print(msg);

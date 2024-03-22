@@ -32,11 +32,11 @@ public class ServerFacade {
         var path = "/user";
         return this.makeRequest("POST", path, userData, AuthData.class);
     }
-
-    public void clearAll() throws ResponseException {
-        var path = "/db";
-        this.makeRequest("DELETE", path, null, null);
-    }
+//need a clear?
+//    public void clearAll() throws ResponseException {
+//        var path = "/db";
+//        this.makeRequest("DELETE", path, null, null);
+//    }
 
     public AuthData login(LoginRequest loginRequest) throws ResponseException {
         var path = "/session";
@@ -71,7 +71,13 @@ public class ServerFacade {
             URL url = (new URI(serverUrl + path)).toURL();
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(method);
-            http.setDoOutput(true);
+            //is this correct???
+            if (method == "GET" | method == "DELETE") {
+                //http.setDoOutput(false);
+            }
+            else {
+                http.setDoOutput(true);
+            }
 
             writeBody(request, http);
             http.connect();

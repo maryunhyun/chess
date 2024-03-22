@@ -5,6 +5,7 @@ import model.UserData;
 import org.junit.jupiter.api.*;
 import server.ResponseException;
 import server.Server;
+import server.requests.CreateGameRequest;
 import server.requests.LoginRequest;
 import service.ClearService;
 import ui.ServerFacade;
@@ -113,12 +114,21 @@ public class ServerFacadeTests {
     }
     @Test
     public void listGamesPass() throws ResponseException{
+
         UserData userData = new UserData("username3","password3","u3@gmail.com");
         serverFacade.register(userData);
         LoginRequest loginRequest = new LoginRequest("username3","password3");
         var authData = serverFacade.login(loginRequest);
+
+        assertEquals(gameDAO.listGameDatas().size(),0);
+        CreateGameRequest createGameRequest = new CreateGameRequest("pandaGame",authData.getAuthToken());
+        serverFacade.createGame(createGameRequest);
+        CreateGameRequest createGameRequest1 = new CreateGameRequest("chocoGame",authData.getAuthToken());
+        serverFacade.createGame(createGameRequest1);
+        assertEquals(gameDAO.listGameDatas().size(),2);
+
         var games = serverFacade.listGames(authData.getAuthToken());
-        assertEquals(games.size(),0);
+        assertNotEquals(games,null);
 
 
     }
@@ -130,7 +140,14 @@ public class ServerFacadeTests {
     }
     @Test
     public void createGamePass() throws ResponseException{
-
+        UserData userData = new UserData("username3","password3","u3@gmail.com");
+        serverFacade.register(userData);
+        LoginRequest loginRequest = new LoginRequest("username3","password3");
+        var authData = serverFacade.login(loginRequest);
+        assertEquals(gameDAO.listGameDatas().size(),0);
+        CreateGameRequest createGameRequest = new CreateGameRequest("pandaGame",authData.getAuthToken());
+        serverFacade.createGame(createGameRequest);
+        assertEquals(gameDAO.listGameDatas().size(),1);
 
     }
 

@@ -22,6 +22,7 @@ public class Client {
     //need to be able to get authToken for authorization for some like list games
     //correct or not how I did it with tempAuthData?
     private String userName = null;
+    public boolean drawBoard = false;
     private final ServerFacade server;
     private AuthData tempAuthData = new AuthData(null,null);
     private int tempGameIDResult = 0;
@@ -58,6 +59,7 @@ public class Client {
     }
 
     public String login(String... params) throws ResponseException {
+        drawBoard = false;
         if (params.length == 2) {
             AuthData tempLoginAuthData = new AuthData(null,null);
             userName = String.join("-", params);
@@ -75,6 +77,7 @@ public class Client {
     }
 
     public String register(String... params) throws ResponseException {
+        drawBoard = false;
         if (params.length == 3) {
             AuthData tempRegisterAuthData = new AuthData(null,null);
             userName = String.join("-", params);
@@ -95,6 +98,7 @@ public class Client {
 
     public String list() throws ResponseException {
         assertSignedIn();
+        drawBoard = false;
         int i = 1;
         var games = server.listGames(tempAuthData.getAuthToken());
         if (games == null) {
@@ -113,16 +117,22 @@ public class Client {
 
     public String create(String... params) throws ResponseException {
         assertSignedIn();
+        drawBoard = false;
         if (params.length == 1) {
             CreateGameRequest createGameRequest = new CreateGameRequest(params[0],tempAuthData.getAuthToken());
             tempGameIDResult = server.createGame(createGameRequest).getGameID();
+            return "You created the game " + params[0];
         }
         throw new ResponseException(400, "Expected: <NAME>");
     }
 
     public String join(String... params) throws ResponseException {
         assertSignedIn();
+        drawBoard = true;
         if (params.length == 2 | params.length == 1) {
+            if (gameListNumberAndID.size() == 0) {
+                return "No games available or list to find games and their numbers";
+            }
             int gameID = gameListNumberAndID.get(params[0]);
             ChessGame.TeamColor teamColor = null;
             if (params.length == 2) {
@@ -135,29 +145,37 @@ public class Client {
             }
             JoinGameRequest joinGameRequest = new JoinGameRequest(teamColor,gameID,tempAuthData.getAuthToken());
             server.joinGame(joinGameRequest);
+            return "You joined the " + params[0] + " game with the gameID of " + gameID;
         }
         throw new ResponseException(400, "Expected: <ID> [WHITE|BLACK|<empty>]");
     }
 
     public String observe(String... params) throws ResponseException {
         assertSignedIn();
+        drawBoard = true;
         if ( params.length == 1) {
+            if (gameListNumberAndID.size() == 0) {
+                return "No games available or list to find games and their numbers";
+            }
             int gameID = gameListNumberAndID.get(params[0]);
 
             JoinGameRequest joinGameRequest = new JoinGameRequest(null,gameID,tempAuthData.getAuthToken());
             server.joinGame(joinGameRequest);
+            return "You are observing the " + params[0] + " game with the gameID of " + gameID;
         }
         throw new ResponseException(400, "Expected: <ID> [WHITE|BLACK|<empty>]");
     }
 
     public String logout() throws ResponseException {
         assertSignedIn();
+        drawBoard = false;
         server.logout(tempAuthData.getAuthToken());
         state = State.SIGNEDOUT;
         return String.format("You logged out");
     }
 
     public String help() {
+        drawBoard = false;
         if (state == State.SIGNEDOUT) {
             return """
                     register <USERNAME> <PASSWORD> <EMAIL> - to create an account

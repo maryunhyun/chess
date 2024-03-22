@@ -51,10 +51,10 @@ public class ServerFacade {
 
     public Collection<GameData> listGames(String authToken) throws ResponseException {
         var path = "/game";
-        record listGameDataResponse(Collection<GameData> gameDataCollection) {
+        record ListGameDataResponse(Collection<GameData> games) {
         }
-        var response = this.makeRequest("GET", path, authToken,null, listGameDataResponse.class);
-        return response.gameDataCollection();
+        var response = this.makeRequest("GET", path, authToken,null, ListGameDataResponse.class);
+        return response.games();
     }
 
     public CreateGameIDResult createGame(CreateGameRequest r) throws ResponseException {

@@ -1,11 +1,14 @@
 package ui;
 
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import static ui.EscapeSequences.*;
 
 public class Repl {
     private final Client client;
+    private ChessBoardDraw chessBoardDraw = new ChessBoardDraw();
 
     public Repl(String serverUrl) {
         client = new Client(serverUrl);
@@ -30,6 +33,15 @@ public class Repl {
 
             try {
                 result = client.eval(line);
+                if (client.drawBoard) {
+                    var out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
+                    out.print(ERASE_SCREEN);
+                    //chessBoardDraw.drawHeaders(out);
+                    chessBoardDraw.drawTicTacToeBoard(out);
+                    //chessBoardDraw.drawHeaders(out);
+
+                }
+                //System.out.print(SET_BG_COLOR_MATCH_SCREEN);
                 System.out.print(SET_TEXT_COLOR_BLUE + result);
                 System.out.println();
                 //find the '-' and then output in PURPLE??

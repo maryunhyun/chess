@@ -97,6 +97,9 @@ public class Client {
         assertSignedIn();
         int i = 1;
         var games = server.listGames(tempAuthData.getAuthToken());
+        if (games == null) {
+            return "no games available, please create a game to observe or play";
+        }
         var result = new StringBuilder();
         var gson = new Gson();
         for (var game : games) {

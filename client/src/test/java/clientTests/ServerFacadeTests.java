@@ -1,24 +1,37 @@
 package clientTests;
 
-import dataAccess.DataAccessException;
+import dataAccess.*;
+import model.UserData;
 import org.junit.jupiter.api.*;
 import server.ResponseException;
 import server.Server;
+import server.requests.LoginRequest;
 import service.ClearService;
 import ui.ServerFacade;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class ServerFacadeTests {
 
     private static Server server;
-    private ClearService clearService;
-    private ServerFacade serverFacade;
+    AuthDAO authDAO = new AuthSQLDataAccess();
+    GameDAO gameDAO = new GameSQLDataAccess();
+    UserDAO userDAO = new UserSQLDataAccess();
+    private ClearService clearService = new ClearService(authDAO,gameDAO,userDAO);
+    private static ServerFacade serverFacade = new ServerFacade("http://localhost:");
+
+    public ServerFacadeTests() throws ResponseException, DataAccessException {
+    }
 
     @BeforeAll
     public static void init() {
         server = new Server();
         var port = server.run(0);
         System.out.println("Started test HTTP server on " + port);
+        serverFacade = new ServerFacade("http://localhost:" + port);
+        //need to have a url to put into serverFacade?
+        //or need client initiated?
     }
 
     @AfterAll
@@ -29,7 +42,7 @@ public class ServerFacadeTests {
 
     @Test
     public void sampleTest() {
-        Assertions.assertTrue(true);
+        assertTrue(true);
     }
 
     @BeforeEach
@@ -40,40 +53,72 @@ public class ServerFacadeTests {
     }
 
     @Test
-    public void registerPass() throws DataAccessException{
+    public void registerPass() throws ResponseException{
+        UserData userData = new UserData("username3","password3","u3@gmail.com");
+        var authData = serverFacade.register(userData);
+        assertTrue(authData.getAuthToken().length() > 10);
+
+    }
+
+    @Test
+    public void registerFail() throws ResponseException {
+        UserData userData = new UserData("username3","password3","u3@gmail.com");
+        serverFacade.register(userData);
+        try {
+            serverFacade.register(userData);
+        }
+        catch (ResponseException e) {
+            assertEquals(e.statusCode(),500);
+        }
+
+    }
+    @Test
+    public void loginPass() throws ResponseException{
+        UserData userData = new UserData("username3","password3","u3@gmail.com");
+        serverFacade.register(userData);
+        LoginRequest loginRequest = new LoginRequest("username3","password3");
+        var authData = serverFacade.login(loginRequest);
+        assertTrue(authData.getAuthToken().length() > 10);
+    }
+
+    @Test
+    public void loginFail() throws ResponseException{
+        LoginRequest loginRequest = new LoginRequest("username3","password3");
+        try {
+            var authData = serverFacade.login(loginRequest);
+        }
+        catch (ResponseException e) {
+            assertEquals(e.statusCode(),500);
+        }
+
+
+    }
+    @Test
+    public void logoutPass() throws ResponseException{
+        UserData userData = new UserData("username3","password3","u3@gmail.com");
+        serverFacade.register(userData);
+        LoginRequest loginRequest = new LoginRequest("username3","password3");
+        var authData = serverFacade.login(loginRequest);
+        assertEquals(authDAO.getAuthData(authData.getAuthToken()).getAuthToken(),authData.getAuthToken());
+        serverFacade.logout(authData.getAuthToken());
+        assertEquals(authDAO.getAuthData(authData.getAuthToken()),null);
 
 
     }
 
     @Test
-    public void registerFail() throws DataAccessException{
+    public void logoutFail() throws ResponseException{
 
 
     }
     @Test
-    public void loginPass() throws DataAccessException{
-
-
-    }
-
-    @Test
-    public void loginFail() throws DataAccessException{
-
-
-    }
-    @Test
-    public void logoutPass() throws DataAccessException{
-
-
-    }
-
-    @Test
-    public void logoutFail() throws DataAccessException{
-
-
-    }
-    @Test
-    public void listGamesPass() throws DataAccessException{
+    public void listGamesPass() throws ResponseException{
+        UserData userData = new UserData("username3","password3","u3@gmail.com");
+        serverFacade.register(userData);
+        LoginRequest loginRequest = new LoginRequest("username3","password3");
+        var authData = serverFacade.login(loginRequest);
+        var games = serverFacade.listGames(authData.getAuthToken());
+        assertEquals(games.size(),0);
 
 
     }
@@ -84,24 +129,24 @@ public class ServerFacadeTests {
 
     }
     @Test
-    public void createGamePass() throws DataAccessException{
+    public void createGamePass() throws ResponseException{
 
 
     }
 
     @Test
-    public void createGameFail() throws DataAccessException{
+    public void createGameFail() throws ResponseException{
 
 
     }
     @Test
-    public void joinGamePass() throws DataAccessException{
+    public void joinGamePass() throws ResponseException{
 
 
     }
 
     @Test
-    public void joinGameFail() throws DataAccessException{
+    public void joinGameFail() throws ResponseException{
 
 
     }

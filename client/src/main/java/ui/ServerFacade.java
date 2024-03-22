@@ -27,10 +27,11 @@ public class ServerFacade {
         serverUrl = url;
     }
 
+
     //calling the web apis in server class
     public AuthData register(UserData userData) throws ResponseException {// make this line look the service? But calling handler in server class
         var path = "/user";
-        return this.makeRequest("POST", path, userData, AuthData.class);
+        return this.makeRequest("POST", path,null, userData, AuthData.class);
     }
 //need a clear?
 //    public void clearAll() throws ResponseException {
@@ -40,46 +41,63 @@ public class ServerFacade {
 
     public AuthData login(LoginRequest loginRequest) throws ResponseException {
         var path = "/session";
-        return this.makeRequest("POST", path, loginRequest, AuthData.class);
+        return this.makeRequest("POST", path, null, loginRequest, AuthData.class);
     }
 
     public void logout(String authToken) throws ResponseException {
         var path = "/session";
-        this.makeRequest("DELETE", path, authToken, null);
+        this.makeRequest("DELETE", path, authToken,null, null);
     }
 
     public Collection<GameData> listGames(String authToken) throws ResponseException {
         var path = "/game";
         record listGameDataResponse(Collection<GameData> gameDataCollection) {
         }
-        var response = this.makeRequest("GET", path, authToken, listGameDataResponse.class);
+        var response = this.makeRequest("GET", path, authToken,null, listGameDataResponse.class);
         return response.gameDataCollection();
     }
 
     public CreateGameIDResult createGame(CreateGameRequest r) throws ResponseException {
         var path = "/game";
-        return this.makeRequest("POST", path, r, CreateGameIDResult.class);
+        //need to separate authToken from gameName for body part
+        record CreateGameBody(String gameName){}
+        CreateGameBody createGameBody = new CreateGameBody(r.getGameName());
+
+        return this.makeRequest("POST", path, r.getAuthToken(),createGameBody, CreateGameIDResult.class);
     }
 
     public void joinGame(JoinGameRequest r) throws ResponseException {
         var path = "/game";
-        this.makeRequest("PUT", path, r, null);
+        this.makeRequest("PUT", path,r.getAuthToken(),r, null);
     }
 
-    private <T> T makeRequest(String method, String path, Object request, Class<T> responseClass) throws ResponseException {
+    private <T> T makeRequest(String method, String path, String authorization, Object request, Class<T> responseClass) throws ResponseException {
         try {
             URL url = (new URI(serverUrl + path)).toURL();
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
             http.setRequestMethod(method);
-            //is this correct???
-            if (method == "GET" | method == "DELETE") {
-                //http.setDoOutput(false);
+//            if (method == "GET" | method == "DELETE") {
+//                //http.setDoOutput(false);
+//                http.addRequestProperty("authorization", authorization);//authorization
+//            }
+//            else if (method == "PUT") {
+//                http.setDoOutput(true);
+//                writeBody(request, http);
+//                //need to also write a header here
+//            }
+//            else {
+//                http.setDoOutput(true);
+//                writeBody(request, http);
+//                //need to also write a header here if authorizing
+//            }
+            if (authorization != null) {
+                http.addRequestProperty("authorization", authorization);
             }
-            else {
+            if (request != null) {
                 http.setDoOutput(true);
+                writeBody(request, http);
             }
 
-            writeBody(request, http);
             http.connect();
             throwIfNotSuccessful(http);
             return readBody(http, responseClass);
@@ -91,7 +109,9 @@ public class ServerFacade {
 
     private static void writeBody(Object request, HttpURLConnection http) throws IOException {
         if (request != null) {
+            //header
             http.addRequestProperty("Content-Type", "application/json");
+            //body
             String reqData = new Gson().toJson(request);
             try (OutputStream reqBody = http.getOutputStream()) {
                 reqBody.write(reqData.getBytes());

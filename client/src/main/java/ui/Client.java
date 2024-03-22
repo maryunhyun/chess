@@ -1,12 +1,16 @@
 package ui;
 
+import chess.ChessGame;
 import com.google.gson.Gson;
 import model.AuthData;
 import model.UserData;
 import server.ResponseException;
+import server.requests.CreateGameRequest;
+import server.requests.JoinGameRequest;
 import server.requests.LoginRequest;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Client {
     //prelogin
@@ -20,7 +24,9 @@ public class Client {
     private String userName = null;
     private final ServerFacade server;
     private AuthData tempAuthData = new AuthData(null,null);
+    private int tempGameIDResult = 0;
     private final String serverUrl;
+    HashMap<Integer, Integer> gameListNumberAndID = new HashMap<>();
 
     private State state = State.SIGNEDOUT;
 
@@ -40,8 +46,8 @@ public class Client {
                 case "list" -> list();
                 case "logout" -> logout();
                 case "create" -> create(params);
-//                case "join" -> join(params);
-//                case "observe" -> observe(params);
+                case "join" -> join(params);
+                case "observe" -> observe(params);
                 case "quit" -> "Goodbye!";
                 case "help" -> help();
                 default -> "";
@@ -65,7 +71,7 @@ public class Client {
 
             return String.format("You logged in as %s.", userName);
         }
-        throw new ResponseException(400, "Expected: <username> <password>");
+        throw new ResponseException(400, "Expected: <USERNAME> <PASSWORD>");
     }
 
     public String register(String... params) throws ResponseException {
@@ -83,7 +89,7 @@ public class Client {
 
             return String.format("You registered as %s.", userName);
         }
-        throw new ResponseException(400, "Expected: <username> <password> <email>");
+        throw new ResponseException(400, "Expected: <USERNAME> <PASSWORD> <EMAIL>");
     }
 
 //    public String rescuePet(String... params) throws ResponseException {
@@ -107,6 +113,7 @@ public class Client {
         for (var game : games) {
             result.append(i);
             result.append(gson.toJson(game)).append('\n');
+            gameListNumberAndID.put(i,game.getGameID());
             i++;
         }
         return result.toString();
@@ -115,17 +122,40 @@ public class Client {
     public String create(String... params) throws ResponseException {
         assertSignedIn();
         if (params.length == 1) {
-            try {
-                var id = Integer.parseInt(params[0]);
-                var pet = getPet(id);
-                if (pet != null) {
-                    server.deletePet(id);
-                    return String.format("%s says %s", pet.name(), pet.sound());
-                }
-            } catch (NumberFormatException ignored) {
-            }
+            CreateGameRequest createGameRequest = new CreateGameRequest(params[0],tempAuthData.getAuthToken());
+            tempGameIDResult = server.createGame(createGameRequest).getGameID();
         }
-        throw new ResponseException(400, "Expected: <pet id>");
+        throw new ResponseException(400, "Expected: <NAME>");
+    }
+
+    public String join(String... params) throws ResponseException {
+        assertSignedIn();
+        if (params.length == 2 | params.length == 1) {
+            int gameID = gameListNumberAndID.get(params[0]);
+            ChessGame.TeamColor teamColor = null;
+            if (params.length == 2) {
+                if (params[1] == "WHITE" | params[1] == "white") {
+                    teamColor = ChessGame.TeamColor.WHITE;
+                }
+                else if (params[1] == "BLACK" | params[1] == "black") {
+                    teamColor = ChessGame.TeamColor.BLACK;
+                }
+            }
+            JoinGameRequest joinGameRequest = new JoinGameRequest(teamColor,gameID,tempAuthData.getAuthToken());
+            server.joinGame(joinGameRequest);
+        }
+        throw new ResponseException(400, "Expected: <ID> [WHITE|BLACK|<empty>]");
+    }
+
+    public String observe(String... params) throws ResponseException {
+        assertSignedIn();
+        if ( params.length == 1) {
+            int gameID = gameListNumberAndID.get(params[0]);
+
+            JoinGameRequest joinGameRequest = new JoinGameRequest(null,gameID,tempAuthData.getAuthToken());
+            server.joinGame(joinGameRequest);
+        }
+        throw new ResponseException(400, "Expected: <ID> [WHITE|BLACK|<empty>]");
     }
 //    public String create(String... params) throws ResponseException {
 //        assertSignedIn();

@@ -17,6 +17,9 @@ public class JoinGameRequest {
         return playerColor;
     }
 
+    public void setPlayerColor(ChessGame.TeamColor playerColor) {
+        this.playerColor = playerColor;
+    }
 
     public int getGameID() {
         return gameID;

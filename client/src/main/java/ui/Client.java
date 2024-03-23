@@ -111,7 +111,7 @@ public class Client {
         for (var game : games) {
             result.append(i);
             result.append(". ");
-            result.append(gson.toJson(game.getGameName())).append(" GAMEID: ").append(gson.toJson(game.getGameID())).append('\n');
+            result.append(gson.toJson(game.getGameName())).append(" White username: ").append(game.getWhiteUsername()).append(" Black username: ").append(game.getBlackUsername()).append('\n');
             gameListNumberAndID.put(i,game.getGameID());
             i++;
         }
@@ -138,15 +138,16 @@ public class Client {
             }
             int gameID = gameListNumberAndID.get(parseInt(params[0]));
             ChessGame.TeamColor teamColor = null;
+            JoinGameRequest joinGameRequest = new JoinGameRequest(teamColor,gameID,tempAuthData.getAuthToken());
             if (params.length == 2) {
-                if (params[1] == "WHITE" | params[1] == "white") {
-                    teamColor = ChessGame.TeamColor.WHITE;
+                if (params[1].equals( "WHITE") | params[1].equals("white")) {
+                    joinGameRequest.setPlayerColor(ChessGame.TeamColor.WHITE);
                 }
-                else if (params[1] == "BLACK" | params[1] == "black") {
-                    teamColor = ChessGame.TeamColor.BLACK;
+                else if (params[1].equals( "BLACK") | params[1].equals("black")) {
+                    joinGameRequest.setPlayerColor(ChessGame.TeamColor.BLACK);
                 }
             }
-            JoinGameRequest joinGameRequest = new JoinGameRequest(teamColor,gameID,tempAuthData.getAuthToken());
+
             server.joinGame(joinGameRequest);
             StringBuilder sb = new StringBuilder();
             sb.append("You joined the " + params[0] + " game with the gameID of " + gameID);
@@ -164,6 +165,9 @@ public class Client {
         if ( params.length == 1) {
             if (gameListNumberAndID.size() == 0) {
                 return "No games available or list to find games and their numbers";
+            }
+            else if (gameListNumberAndID.get(parseInt(params[0])) == null) {
+                return "No game exists with that number, you can 'list' to see options :)";
             }
             int gameID = gameListNumberAndID.get(parseInt(params[0]));
 

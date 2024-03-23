@@ -1,11 +1,13 @@
 package clientTests;
 
+import chess.ChessGame;
 import dataAccess.*;
 import model.UserData;
 import org.junit.jupiter.api.*;
 import server.ResponseException;
 import server.Server;
 import server.requests.CreateGameRequest;
+import server.requests.JoinGameRequest;
 import server.requests.LoginRequest;
 import service.ClearService;
 import ui.ServerFacade;
@@ -109,7 +111,12 @@ public class ServerFacadeTests {
 
     @Test
     public void logoutFail() throws ResponseException{
-
+        try {
+            serverFacade.logout("wrong authToken/does not exist");
+        }
+        catch (ResponseException e) {
+            assertEquals(e.statusCode(),500);
+        }
 
     }
     @Test
@@ -129,13 +136,19 @@ public class ServerFacadeTests {
 
         var games = serverFacade.listGames(authData.getAuthToken());
         assertNotEquals(games,null);
+        assertEquals(games.size(),2);
 
 
     }
 
     @Test
     public void listGamesFail() throws DataAccessException{
-
+        try {
+            var games = serverFacade.listGames("authToken that does not exist");
+        }
+        catch (ResponseException e) {
+            assertEquals(e.statusCode(),500);
+        }
 
     }
     @Test
@@ -153,18 +166,46 @@ public class ServerFacadeTests {
 
     @Test
     public void createGameFail() throws ResponseException{
-
+        try {
+            CreateGameRequest createGameRequest = new CreateGameRequest("pandaGame","authToken that does not exist");
+            serverFacade.createGame(createGameRequest);
+        }
+        catch (ResponseException e) {
+            assertEquals(e.statusCode(),500);
+        }
 
     }
     @Test
     public void joinGamePass() throws ResponseException{
+        UserData userData = new UserData("username3","password3","u3@gmail.com");
+        serverFacade.register(userData);
+        LoginRequest loginRequest = new LoginRequest("username3","password3");
+        var authData = serverFacade.login(loginRequest);
 
+        CreateGameRequest createGameRequest = new CreateGameRequest("pandaGame",authData.getAuthToken());
+        serverFacade.createGame(createGameRequest);
+        CreateGameRequest createGameRequest1 = new CreateGameRequest("chocoGame",authData.getAuthToken());
+        var tempGameIDResult = serverFacade.createGame(createGameRequest1);
+
+        JoinGameRequest joinGameRequest = new JoinGameRequest(ChessGame.TeamColor.BLACK,tempGameIDResult.getGameID(),authData.getAuthToken());
+
+        serverFacade.joinGame(joinGameRequest);
+        assertEquals(gameDAO.getGameData(tempGameIDResult.getGameID()).getWhiteUsername(),null);
+        assertNotEquals(gameDAO.getGameData(tempGameIDResult.getGameID()).getBlackUsername(),null);
 
     }
 
     @Test
     public void joinGameFail() throws ResponseException{
+        try {
+            JoinGameRequest joinGameRequest = new JoinGameRequest(ChessGame.TeamColor.BLACK,7,"authToken not there");
 
+            serverFacade.joinGame(joinGameRequest);
+
+        }
+        catch (ResponseException e) {
+            assertEquals(e.statusCode(),500);
+        }
 
     }
 

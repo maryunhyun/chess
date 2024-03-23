@@ -12,6 +12,8 @@ import server.requests.LoginRequest;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import static java.lang.Integer.parseInt;
+
 public class Client {
     //prelogin
     //help, quit, login, register
@@ -108,7 +110,8 @@ public class Client {
         var gson = new Gson();
         for (var game : games) {
             result.append(i);
-            result.append(gson.toJson(game)).append('\n');
+            result.append(". ");
+            result.append(gson.toJson(game.getGameName())).append(" GAMEID: ").append(gson.toJson(game.getGameID())).append('\n');
             gameListNumberAndID.put(i,game.getGameID());
             i++;
         }
@@ -133,7 +136,7 @@ public class Client {
             if (gameListNumberAndID.size() == 0) {
                 return "No games available or list to find games and their numbers";
             }
-            int gameID = gameListNumberAndID.get(params[0]);
+            int gameID = gameListNumberAndID.get(parseInt(params[0]));
             ChessGame.TeamColor teamColor = null;
             if (params.length == 2) {
                 if (params[1] == "WHITE" | params[1] == "white") {
@@ -145,7 +148,12 @@ public class Client {
             }
             JoinGameRequest joinGameRequest = new JoinGameRequest(teamColor,gameID,tempAuthData.getAuthToken());
             server.joinGame(joinGameRequest);
-            return "You joined the " + params[0] + " game with the gameID of " + gameID;
+            StringBuilder sb = new StringBuilder();
+            sb.append("You joined the " + params[0] + " game with the gameID of " + gameID);
+            if (params.length == 2) {
+                sb.append(" on the " + params[1] + " team!");
+            }
+            return sb.toString();
         }
         throw new ResponseException(400, "Expected: <ID> [WHITE|BLACK|<empty>]");
     }
@@ -157,7 +165,7 @@ public class Client {
             if (gameListNumberAndID.size() == 0) {
                 return "No games available or list to find games and their numbers";
             }
-            int gameID = gameListNumberAndID.get(params[0]);
+            int gameID = gameListNumberAndID.get(parseInt(params[0]));
 
             JoinGameRequest joinGameRequest = new JoinGameRequest(null,gameID,tempAuthData.getAuthToken());
             server.joinGame(joinGameRequest);

@@ -21,7 +21,8 @@ public class ChessBoardDraw {
 
         //setBlack(out);
 
-        String[] headers = { " h ", " g ", " f ", " e ", " d ", " c ", " b ", " a " };
+        String[] headers = { " h ", " g ", " f ", " e ", " d ", " c ", " b ", " a " ,"\n"};
+
         for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; ++boardCol) {
             drawHeader(out, headers[boardCol]);
 
@@ -42,33 +43,330 @@ public class ChessBoardDraw {
         //out.print(EMPTY.repeat(suffixLength));
     }
 
-    private static void printHeaderText(PrintStream out, String player) {
+    private static void printHeaderText(PrintStream out, String columnLabels) {
         out.print(SET_BG_COLOR_BLACK);
         out.print(SET_TEXT_COLOR_CREME_YELLOW);
 
-        out.print(player);
+        out.print(columnLabels);
+
 
         //setBlack(out);
     }
-
-    public void drawTicTacToeBoard(PrintStream out) {
-
-        for (int boardRow = 0; boardRow < BOARD_SIZE_IN_SQUARES; ++boardRow) {
-
-            drawRowOfSquares(out);
-
-            if (boardRow < BOARD_SIZE_IN_SQUARES - 1) {
-                //drawVerticalLine(out);
-
+    public void drawChessRowOddHeadRows(PrintStream out) {
+        //changes how long the board is vertically/how many rows
+        String[] pieces = {" R "," N "," B "," K "," Q "," B "," N "," R "};
+        for (int boardRow = 0; boardRow < 1; ++boardRow) {
+            //drawRowOfSquares(out,boardRow, boardCol);
+            for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; boardCol++) {
+                if (((boardCol + 1) % 2) == 1) {
+                    isOdd = true;
+                }
+                else {
+                    isOdd = false;
+                }
+                printPlayer(out, pieces[boardCol]);
             }
+
+        }
+    }
+    public void drawChessRowEvenHeadRows(PrintStream out) {
+        //changes how long the board is vertically/how many rows
+        String[] pieces = {" R "," N "," B "," K "," Q "," B "," N "," R "};
+        for (int boardRow = 0; boardRow < 1; ++boardRow) {
+            //drawRowOfSquares(out,boardRow, boardCol);
+            for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; boardCol++) {
+                if (((boardCol + 1) % 2) == 1) {
+                    isOdd = false;
+                }
+                else {
+                    isOdd = true;
+                }
+                printPlayer(out, pieces[boardCol]);
+            }
+
+        }
+    }
+    public void drawChessRowTopLeadRow(PrintStream out) {
+        //changes how long the board is vertically/how many rows
+        String[] pieces = { " h ", " g ", " f ", " e ", " d ", " c ", " b ", " a "};
+        for (int boardRow = 0; boardRow < 1; ++boardRow) {
+            //drawRowOfSquares(out,boardRow, boardCol);
+            for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; boardCol++) {
+
+                out.print(SET_BG_COLOR_BLACK);
+                out.print(SET_TEXT_COLOR_CREME_YELLOW);
+                out.print(pieces[boardCol]);
+            }
+
         }
     }
 
-    private void drawRowOfSquares(PrintStream out) {
+    public void drawChessRowBottomLeadRows(PrintStream out) {
+        //changes how long the board is vertically/how many rows
+        String[] pieces = { " h ", " g ", " f ", " e ", " d ", " c ", " b ", " a "};
+        for (int boardRow = 0; boardRow < 1; ++boardRow) {
+            //drawRowOfSquares(out,boardRow, boardCol);
+            for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; boardCol++) {
 
+                out.print(SET_BG_COLOR_BLACK);
+                out.print(SET_TEXT_COLOR_CREME_YELLOW);
+                out.print(pieces[boardCol]);
+            }
+
+        }
+    }
+
+    public void drawChessRowOddRows(PrintStream out) {
+        //changes how long the board is vertically/how many rows
+        for (int boardRow = 0; boardRow < 1; ++boardRow) {
+            //drawRowOfSquares(out,boardRow, boardCol);
+            for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; boardCol++) {
+                if (((boardCol + 1) % 2) == 1) {
+                    isOdd = true;
+                }
+                else {
+                    isOdd = false;
+                }
+                printPlayer(out, "   ");
+            }
+
+        }
+    }
+    public void drawFillerRows(PrintStream out) {
+        //changes how long the board is vertically/how many rows
+        for (int boardRow = 0; boardRow < 1; ++boardRow) {
+            //drawRowOfSquares(out,boardRow, boardCol);
+            for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; boardCol++) {
+                isOdd = true;
+                printPlayer(out, "   ");
+            }
+
+        }
+    }
+    public void drawChessRowOddSecondHeaderRows(PrintStream out) {
+        //changes how long the board is vertically/how many rows
+        for (int boardRow = 0; boardRow < 1; ++boardRow) {
+            //drawRowOfSquares(out,boardRow, boardCol);
+            for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; boardCol++) {
+                if (((boardCol + 1) % 2) == 1) {
+                    isOdd = true;
+                }
+                else {
+                    isOdd = false;
+                }
+                printPlayer(out, " P ");
+            }
+
+        }
+    }
+    public void drawChessRowEvenSecondHeaderRows(PrintStream out) {
+        //changes how long the board is vertically/how many rows
+        for (int boardRow = 0; boardRow < 1; ++boardRow) {
+            //drawRowOfSquares(out,boardRow, boardCol);
+            for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; boardCol++) {
+                if (((boardCol + 1) % 2) == 1) {
+                    isOdd = false;
+                }
+                else {
+                    isOdd = true;
+                }
+                printPlayer(out, " P ");
+            }
+
+        }
+    }
+    public void drawChessRowEvenRows(PrintStream out) {
+        //changes how long the board is vertically/how many rows
+
+        for (int boardRow = 0; boardRow < 1; ++boardRow) {
+            //drawRowOfSquares(out,boardRow, boardCol);
+            for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; boardCol++) {
+                if (((boardCol + 1) % 2) == 1) {
+                    isOdd = false;
+                }
+                else {
+                    isOdd = true;
+                }
+                printPlayer(out, "   ");
+            }
+
+        }
+    }
+    public void drawChessBoard1(PrintStream out) {
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print("   ");
+            drawChessRowTopLeadRow(out);
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print("   ");
+            out.println();
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 1 ");
+            drawChessRowOddHeadRows(out);
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 1 ");
+            out.println();
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 2 ");
+            drawChessRowEvenSecondHeaderRows(out);
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 2 ");
+            out.println();
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 3 ");
+            drawChessRowOddRows(out);
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 3 ");
+            out.println();
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 4 ");
+            drawChessRowEvenRows(out);
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 4 ");
+            out.println();
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 5 ");
+            drawChessRowOddRows(out);
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 5 ");
+            out.println();
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 6 ");
+            drawChessRowEvenRows(out);
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 6 ");
+            out.println();
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 7 ");
+            drawChessRowOddSecondHeaderRows(out);
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 7 ");
+            out.println();
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 8 ");
+            drawChessRowEvenHeadRows(out);
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print(" 8 ");
+            out.println();
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print("   ");
+            drawChessRowBottomLeadRows(out);
+            out.print(SET_BG_COLOR_BLACK);
+            out.print(SET_TEXT_COLOR_CREME_YELLOW);
+            out.print("   ");
+            out.println();
+            drawFillerRows(out);
+
+    }
+    public void drawChessBoard2(PrintStream out) {
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print("   ");
+        drawChessRowTopLeadRow(out);
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print("   ");
+        out.println();
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 1 ");
+        drawChessRowOddHeadRows(out);
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 1 ");
+        out.println();
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 2 ");
+        drawChessRowEvenSecondHeaderRows(out);
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 2 ");
+        out.println();
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 3 ");
+        drawChessRowOddRows(out);
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 3 ");
+        out.println();
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 4 ");
+        drawChessRowEvenRows(out);
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 4 ");
+        out.println();
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 5 ");
+        drawChessRowOddRows(out);
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 5 ");
+        out.println();
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 6 ");
+        drawChessRowEvenRows(out);
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 6 ");
+        out.println();
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 7 ");
+        drawChessRowOddSecondHeaderRows(out);
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 7 ");
+        out.println();
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 8 ");
+        drawChessRowEvenHeadRows(out);
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print(" 8 ");
+        out.println();
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print("   ");
+        drawChessRowBottomLeadRows(out);
+        out.print(SET_BG_COLOR_BLACK);
+        out.print(SET_TEXT_COLOR_CREME_YELLOW);
+        out.print("   ");
+        out.println();
+
+    }
+
+    private void drawRowOfSquares(PrintStream out, int boardRow, int boardCol) {
+        //changes distance between rows
         for (int squareRow = 0; squareRow < SQUARE_SIZE_IN_CHARS; ++squareRow) {
-            for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; ++boardCol) {
-                setWhite(out);
+            //changes how wide the board is or how many columns
+            while(boardCol < BOARD_SIZE_IN_SQUARES) {
+                //changed colors between rows
+                //setWhite(out);
 
 
                 if (squareRow == SQUARE_SIZE_IN_CHARS / 2) {
@@ -76,35 +374,26 @@ public class ChessBoardDraw {
                     int suffixLength = SQUARE_SIZE_IN_CHARS - prefixLength - 1;
 
                     out.print(EMPTY.repeat(prefixLength));
-                    printPlayer(out, rand.nextBoolean() ? X : O);
+                    //printPlayer(out, rand.nextBoolean() ? X : O);
+
                     out.print(EMPTY.repeat(suffixLength));
-                    if ((squareRow % 2) == 0) {
-                        isOdd = true;
-                        if ((boardCol % 2) == 1) {
-                            isOdd = false;
-                        }
-                    }
-                    else {
-                        isOdd = true;
-                        if ((boardCol % 2) == 1) {
-                            isOdd = false;
-                        }
-                    }
+
+
                 }
                 else {
-                    out.print(EMPTY.repeat(SQUARE_SIZE_IN_CHARS));
-                    if ((squareRow % 2) == 0) {
-                        isOdd = true;
-                        if ((boardCol % 2) == 1) {
-                            isOdd = false;
-                        }
-                    }
-                    else {
-                        isOdd = false;
-                        if ((boardCol % 2) == 1) {
-                            isOdd = true;
-                        }
-                    }
+//                    out.print(EMPTY.repeat(SQUARE_SIZE_IN_CHARS));
+//                    if ((boardRow % 2) == 0) {
+//                        isOdd = true;
+//                        if ((boardCol % 2) == 1) {
+//                            isOdd = false;
+//                        }
+//                    }
+//                    else {
+//                        isOdd = false;
+//                        if ((boardCol % 2) == 1) {
+//                            isOdd = true;
+//                        }
+//                    }
                 }
 
 //                if (boardCol < BOARD_SIZE_IN_SQUARES - 1) {
@@ -112,23 +401,10 @@ public class ChessBoardDraw {
 //                    setRed(out);
 //                    out.print(EMPTY.repeat(LINE_WIDTH_IN_CHARS));
 //                }
-
+                boardCol++;
                 out.print(SET_BG_COLOR_DARK_GREY);
             }
-            out.println();
-        }
-    }
 
-    private static void drawVerticalLine(PrintStream out) {
-
-        int boardSizeInSpaces = BOARD_SIZE_IN_SQUARES * SQUARE_SIZE_IN_CHARS +
-                (BOARD_SIZE_IN_SQUARES - 1) * LINE_WIDTH_IN_CHARS;
-
-        for (int lineRow = 0; lineRow < LINE_WIDTH_IN_CHARS; ++lineRow) {
-            setRed(out);
-            out.print(EMPTY.repeat(boardSizeInSpaces));
-
-            setBlack(out);
             out.println();
         }
     }
@@ -136,16 +412,6 @@ public class ChessBoardDraw {
     private static void setWhite(PrintStream out) {
         out.print(SET_BG_COLOR_WHITE);
         out.print(SET_TEXT_COLOR_WHITE);
-    }
-
-    private static void setRed(PrintStream out) {
-        out.print(SET_BG_COLOR_RED);
-        out.print(SET_TEXT_COLOR_RED);
-    }
-
-    private static void setBlack(PrintStream out) {
-        out.print(SET_BG_COLOR_BLACK);
-        out.print(SET_TEXT_COLOR_BLACK);
     }
 
     private void printPlayer(PrintStream out, String player) {
@@ -159,7 +425,7 @@ public class ChessBoardDraw {
 
         out.print(player);
 
-        setWhite(out);
+        //setWhite(out);
     }
 }
 

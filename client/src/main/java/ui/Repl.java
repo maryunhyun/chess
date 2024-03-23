@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import static ui.EscapeSequences.*;
+//login maryunhyun password123
 
 public class Repl {
     private final Client client;
@@ -33,20 +34,22 @@ public class Repl {
 
             try {
                 result = client.eval(line);
-                if (client.drawBoard) {
-                    var out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
-                    out.print(ERASE_SCREEN);
-                    //chessBoardDraw.drawHeaders(out);
-                    chessBoardDraw.drawTicTacToeBoard(out);
-                    //chessBoardDraw.drawHeaders(out);
 
-                }
                 //System.out.print(SET_BG_COLOR_MATCH_SCREEN);
                 System.out.print(SET_TEXT_COLOR_BLUE + result);
                 System.out.println();
                 //find the '-' and then output in PURPLE??
+                if (client.drawBoard) {
+                    var out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
+                    out.print(ERASE_SCREEN);
+                    //chessBoardDraw.drawHeaders(out);
+                    chessBoardDraw.drawChessBoard1(out);
+                    chessBoardDraw.drawChessBoard2(out);
+                    //chessBoardDraw.drawHeaders(out);
 
-                System.out.print(SET_TEXT_COLOR_WHITE);
+                }
+                System.out.print('\n');
+
                 if (!result.equals("quit") && !result.equals("Goodbye!")) {
                     System.out.print("[");
                     if (client.getState() == State.SIGNEDIN) {
@@ -55,6 +58,7 @@ public class Repl {
                         System.out.print("LOGGED_OUT] >>> ");
                     }
                 }
+
             } catch (Throwable e) {
                 var msg = e.toString();
                 System.out.print(msg);
